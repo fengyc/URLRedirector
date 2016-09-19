@@ -29,7 +29,4 @@ function OnlineRules(url, enable) {
     }
     this.updatedAt = null;
     this.rules = [];
-
-    this.update = function() {}
-
 }

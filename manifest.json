@@ -21,6 +21,6 @@
   ],
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["rule.js", "storage.js", "background.js"]
   }
 }
