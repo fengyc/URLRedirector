@@ -60,7 +60,7 @@ function redirect(details) {
             var rule = db[key];
             if (rule.enable && re.test(details.url)) {
                 var url = details.url.replace(key, rule.dstURL);
-                return {url: url};
+                return {redirectUrl: url};
             }
         }
     }

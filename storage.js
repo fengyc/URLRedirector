@@ -3,9 +3,23 @@
  */
 
 function Storage(){
+    this.enable = true;
     this.updatedAt = null;
     this.onlineRules = [];
     this.customRules = [];
+
+    this.getEnabled = function() {
+        browser.storage.local.get(
+            "enabled",
+            function (item) {
+                if (browser.runtime.lastError) {
+                    console.log(browser.runtime.lastError);
+                } else {
+                    this.customRules = item;
+                }
+            }
+        );
+    };
 
     this.saveOnlineRules = function(urls) {
         browser.storage.local.set(
