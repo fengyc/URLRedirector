@@ -1,0 +1,21 @@
+{
+  "name": "URLRedirector",
+  "homepage": "https://github.com/fengyc/URLRedirector",
+  "authors": [
+    "fengyingcai <fengyc.work@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.9.1",
+    "bootstrap": "^3.3.7"
+  }
+}

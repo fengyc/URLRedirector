@@ -2,6 +2,11 @@
  * The background script to handle url redirection.
  */
 
+/* Initialization: Load configuration from local storage and setup timers */
+var storage = new Storage();
+refresh_timer_id = setInterval(storage.reload, 300);
+
+
 var db =  {
     "ajax.googleapis.com": {
         "dstURL": "ajax.lug.ustc.edu.cn",
@@ -40,18 +45,6 @@ var db =  {
     }
 };
 
-
-function replaceWildcard(origin, dstURL) {
-    var reverse = function(str) {
-        return str.split("").reverse().join("");
-    };
-    var reversedUrl = reverse(url);
-    return reverse(reversedUrl.replace(/([\*|\?])(?!\\)/g,"$1."));
-}
-
-function replaceRegExp() {
-    
-}
 
 function redirect(details) {
     if (details.url) {
