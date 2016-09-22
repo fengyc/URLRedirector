@@ -4,7 +4,14 @@
 
 /* Initialization: Load configuration from local storage and setup timers */
 var storage = new Storage();
-refresh_timer_id = setInterval(storage.reload, 300);
+/* Reload rules every 60s */
+reload_timer_id = setInterval(storage.reload, 60000);
+/* Download online rules */
+for (var url in storage.onlineURLs) {
+    if (url["enable"]) {
+
+    }
+}
 
 
 var db =  {
