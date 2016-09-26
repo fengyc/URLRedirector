@@ -2,110 +2,110 @@
  * Storage of redirect rules.
  */
 
+var _local = browser.storage.local;
+
 function Storage(){
     this.enable = true;
     this.onlineURLs = [];
     this.updateInterval = 3600;
-    this.updatedAt = Data();
+    this.updatedAt = new Date();
     this.customRules = [];
 
-    this.getEnabled = function() {
-        browser.storage.local.get(
-            "enabled",
-            function (item) {
-                if (browser.runtime.lastError) {
-                    console.log(browser.runtime.lastError);
-                } else {
-                    if (item != null) {
-                        this.customRules = item;
-                    }
+    this._logError = function () {
+        if (browser.runtime.lastError) {
+            console.log(browser.runtime.lastError);
+        }
+    };
+
+    this._logErrorAndCache = function(attr) {
+        function setItem(item) {
+            if (browser.runtime.lastError) {
+                console.log(browser.runtime.lastError);
+            } else {
+                if (attr && item) {
+                    this[attr] = item;
                 }
             }
+        }
+        return setItem
+    };
+
+    this.getEnable = function() {
+        _local.get(
+            "enabled",
+            this._logErrorAndCache("enable")
         );
     };
 
-    this.saveOnlineURLs = function(urls) {
-        browser.storage.local.set(
-            {"online_urls": urls},
-            function () {
-                if (browser.runtime.lastError) {
-                    console.log(browser.runtime.lastError);
-                }
-            }
+    this.saveEnable = function () {
+        _local.set(
+            {"enabled": this.enabled},
+            this._logError
         );
     };
 
     this.getOnlineURLs = function(urls) {
-        urls = browser.storage.local.get(
+        urls = _local.get(
             "online_urls",
-            function (item) {
-                if (browser.runtime.lastError) {
-                    console.log(browser.runtime.lastError);
-                } else {
-                    if (item != null) {
-                        this.onlineURLs = item;
-                    }
-                }
-            }
+            this._logErrorAndCache("onlineURLs")
+        );
+    };
+
+    this.saveOnlineURLs = function() {
+        _local.set(
+            {"online_urls": this.onlineURLs},
+            this._logError
         );
     };
 
     this.getUpdateInterval = function() {
-        browser.storage.local.get(
+        _local.get(
             "update_interval",
-            function (item) {
-                if (browser.runtime.lastError) {
-                    console.log(browser.runtime.lastError);
-                } else {
-                    if (item != null) {
-                        this.updateInterval = item;
-                    }
-                }
-            }
+            this._logErrorAndCache("updateInterval")
         );
     };
 
-    this.saveUpdateInterval = function(interval) {
-        browser.storage.local.set(
-            {"update_interval": interval},
-            function () {
-                if (chrome.runtime.lastError) {
-                    console.log(chrome.runtime.lastError);
-                }
-            }
+    this.saveUpdateInterval = function() {
+        _local.set(
+            {"update_interval": this.updateInterval},
+            this._logError
         );
     };
 
     this.getCustomRules = function() {
-        rules = browser.storage.local.get(
+        rules = _local.get(
             "custom_ruls",
-            function (item) {
-                if (browser.runtime.lastError) {
-                    console.log(browser.runtime.lastError);
-                } else {
-                    if (item != null)
-                    this.customRules = item;
-                }
-            }
+            this._logErrorAndCache("customRules")
         );
     };
 
-    this.saveCustomRules = function(rules) {
-        browser.storage.local.set(
-            {"custom_rules": rules},
-            function () {
-                if (chrome.runtime.lastError) {
-                    console.log(chrome.runtime.lastError);
-                }
-            }
+    this.saveCustomRules = function() {
+        _local.set(
+            {"custom_rules": this.customRules},
+            this._logError
+        );
+    };
+
+    this.getUpdatedAt = function() {
+        _local.get(
+            "updated_at",
+            this._logErrorAndCache("updatedAt")
+        );
+    };
+
+    this.saveUpdatedAt = function() {
+        _local.set(
+            {"updated_at": this.updatedAt},
+            this._logError
         );
     };
 
     this.reload = function () {
-        this.getEnabled();
+        console.log(this);
+        this.getEnable();
         this.getOnlineURLs();
         this.getCustomRules();
+        this.getUpdateInterval();
+        this.getUpdatedAt();
     };
-
-    this.reload();
 }

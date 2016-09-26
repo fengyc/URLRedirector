@@ -1,27 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
-
-<!DOCTYPE html>
 <html>
-<head>
+<head lang="zh-cn">
     <meta charset="utf-8">
+    <style>
+        .main {
+            width: 150px;
+        }
+        .group {
+            margin: 5px;
+        }
+        ul li {
+            margin: 10px;
+            list-style-type: none;
+        }
+    </style>
 </head>
 <body>
-<div class="group">
-    <label>
-        <input type="checkbox" id="enable" />开启重定向
-    </label>
+<div class="main">
+    <div class="group">
+        <input type="checkbox" id="chbEnable">
+        <label for="chbEnable">开启重定向</label>
+    </div>
+    <div class="group">
+        <button type="button" id="btnOption">重定向配置</button>
+    </div>
+    <hr>
+    <div class="group">
+        <span id="spanUpdate">更新时间:</span>
+    </div>
 </div>
-<div class="group">
-    <button type="button" id="btnOption">自定义规则</button>
-</div>
+<script src="../assert/jquery.min.js"></script>
+<script src="popup.js"></script>
 </body>
 </html>

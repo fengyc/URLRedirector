@@ -4,15 +4,59 @@
 
 /* Initialization: Load configuration from local storage and setup timers */
 var storage = new Storage();
-/* Reload rules every 60s */
-reload_timer_id = setInterval(storage.reload, 60000);
-/* Download online rules */
-for (var url in storage.onlineURLs) {
-    if (url["enable"]) {
+storage.reload();
 
+/* Reload rules every 60s */
+reload_timer_id = setInterval(function () {
+    storage.reload();
+}, 60000);
+
+/* Download online rules */
+function downloadRulesFrom(url){
+    jQuery.ajax({
+        async: false,
+        url: url,
+        type: "GET",
+        success: function (result, status, xhr) {
+            try {
+                return result;
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    });
+    return null;
+}
+
+function downloadOnlineURLs(){
+    for (var onlineURL in storage.onlineURLs) {
+        if (onlineURL.enable) {
+            var result = downloadRulesFrom(url);
+            if (result) {
+                var json = JSON.parse(result);
+
+            }
+        }
     }
 }
 
+
+/* Handle runtime messages */
+function handleMessage(message, sender, sendResponse) {
+    if (message.method == "getEnable") {
+        return sendResponse(storage.enable);
+    }
+    else if (message.method == "getUpdatedAt") {
+        return sendResponse(storage.updatedAt);
+    }
+    else if (message.method == "toggleEnable") {
+        storage.enable = message.args.enable;
+        storage.saveEnable()
+    }
+    else if (message.method = "addOnlineURL") {
+    }
+}
+browser.runtime.onMessage.addListener(handleMessage);
 
 var db =  {
     "ajax.googleapis.com": {
@@ -54,7 +98,7 @@ var db =  {
 
 
 function redirect(details) {
-    if (details.url) {
+    if (storage.enable && details.url) {
         for (var key in db) {
             var re = RegExp(key);
             var rule = db[key];

@@ -17,10 +17,17 @@
   },
 
   "permissions": [
-    "webRequest", "webRequestBlocking", "<all_urls>"
+    "storage", "webRequest", "webRequestBlocking", "<all_urls>"
   ],
 
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": "icons/border-48.png",
+    "default_title": "URLRedirector popup",
+    "default_popup": "popup/popup.html"
+  },
+
   "background": {
-    "scripts": ["rule.js", "storage.js", "background.js"]
+    "scripts": ["assert/jquery.min.js", "entity.js", "storage.js", "background.js"]
   }
 }
