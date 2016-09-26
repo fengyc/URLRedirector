@@ -28,6 +28,7 @@
   },
 
   "background": {
-    "scripts": ["assert/jquery.min.js", "entity.js", "storage.js", "background.js"]
+    "scripts": ["assert/jquery.min.js", "common.js", "entity.js", "storage.js",
+      "background.js"]
   }
 }

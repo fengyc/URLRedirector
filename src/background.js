@@ -29,31 +29,77 @@ function downloadRulesFrom(url){
 }
 
 function downloadOnlineURLs(){
-    for (var onlineURL in storage.onlineURLs) {
+    for (var i = 0; i < storage.onlineURLs.length; i++) {
+        var onlineURL = storage.onlineURLs[i];
         if (onlineURL.enable) {
-            var result = downloadRulesFrom(url);
+            var result = downloadRulesFrom(onlineURL.url);
             if (result) {
-                var json = JSON.parse(result);
-
+                var resultJson = null;
+                try {
+                    resultJson = JSON.parse(result);
+                } catch (err) {
+                    console.error(err);
+                    continue;
+                }
+                var resultJson = JSON.parse(result);
+                if (!resultJson.hasOwnProperty("version") ||
+                    resultJson.version <= "1.0") {
+                    resultJson.url = onlineURL.url;
+                    resultJson.enable = onlineURL.enable;
+                    resultJson.lastUpdatedAt = new Date();
+                    storage.onlineURLs[i] = resultJson;
+                }
             }
         }
     }
+    storage.saveOnlineURLs();
 }
 
 
 /* Handle runtime messages */
 function handleMessage(message, sender, sendResponse) {
     if (message.method == "getEnable") {
-        return sendResponse(storage.enable);
+        sendResponse(storage.enable);
     }
     else if (message.method == "getUpdatedAt") {
-        return sendResponse(storage.updatedAt);
+        sendResponse(storage.updatedAt);
     }
     else if (message.method == "toggleEnable") {
         storage.enable = message.args.enable;
         storage.saveEnable()
     }
-    else if (message.method = "addOnlineURL") {
+    else if (message.method == "getOnlineURLs") {
+        sendResponse(storage.onlineURLs);
+    }
+    else if (message.method == "addOnlineURL") {
+        var url = message.args["url"];
+        storage.onlineURLs.push(url);
+        storage.saveOnlineURLs();
+    }
+    else if (message.method == "deleteOnlineURL") {
+        var index = message.args["index"];
+        storage.onlineURLs.removeAt(index);
+        storage.saveOnlineURLs();
+    }
+    else if (message.method == "getCustomeRules") {
+        sendResponse(storage.customRules);
+    }
+    else if (message.method == "addCustomeRule") {
+        var rule = {};
+        rule.origin = message.args["origin"];
+        rule.target = message.args["target"];
+        rule.kind = message.args["kind"];
+        rule.enable = message.args["enable"];
+        storage.customRules.push(rule);
+        storage.saveCustomRules();
+    }
+    else if (message.method == "deleteCustomRule") {
+        var index = message.args["index"];
+        storage.customRules.removeAt(index);
+        storage.saveCustomRules();
+    }
+    else {
+        console.error("Unknown method");
     }
 }
 browser.runtime.onMessage.addListener(handleMessage);
