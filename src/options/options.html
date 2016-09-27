@@ -16,6 +16,17 @@
 <div class="main">
     <h1>URLRedirector 配置</h1>
     <hr>
+    <button type="button" id="btnSave" class="btn btn-warning" title="保存">
+        <i class="glyphicon glyphicon-floppy-disk"></i> 保存配置
+    </button>
+    <div class="btn-group">
+        <button type="button" id="btnImport" class="btn btn-default" title="导出">
+            <i class="glyphicon glyphicon-save-file"></i> 导出规则
+        </button>
+        <button type="button" id="btnExport" class="btn btn-default" title="导入">
+            <i class="glyphicon glyphicon-folder-open"></i> 导入规则
+        </button>
+    </div>
     <div>
         <h2 style="display: inline-block">在线规则</h2>
         <div class="btn-group btn-group-sm" style="display: inline-block">
@@ -25,22 +36,8 @@
             <button type="button" id="btnDeleteOnlineURL" class="btn btn-default" title="删除">
                 <i class="glyphicon glyphicon-minus-sign"></i>
             </button>
-            <button type="button" id="btnSaveOnlineURL" class="btn btn-default" title="保存">
-                <i class="glyphicon glyphicon-floppy-disk"></i>
-            </button>
         </div>
-        <table id="tblOnlineURLs" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th style="width: 20px">
-                    <input type="checkbox" class="checkbox">
-                </th>
-                <th style="width: 60px">开启</th>
-                <th>URL</th>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+
         <label for="onlineInterval">更新间隔:</label>
         <select id="onlineInterval">
             <option value="15">15 分钟</option>
@@ -52,6 +49,24 @@
             <option value="720">12 小时</option>
             <option value="1440">1 天</option>
         </select>
+        <button type="button" class="btn btn-sm btn-default" title="开始下载在线规则">
+            <i class="glyphicon glyphicon-download"></i>
+        </button>
+
+
+        <table id="tblOnlineURLs" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th style="width: 20px">
+                    <input type="checkbox" class="checkbox" style="margin: auto">
+                </th>
+                <th>URL</th>
+                <th style="width: 60px">启用</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
     </div>
 
     <div>
@@ -60,12 +75,10 @@
             <button type="button" id="btnAddCustomRule" class="btn btn-default" title="添加">
                 <i class="glyphicon glyphicon-plus-sign"></i>
             </button>
-            <button type="button" class="btn btn-default" title="删除">
+            <button type="button" id="btnDeleteCustomRule" class="btn btn-default" title="删除">
                 <i class="glyphicon glyphicon-minus-sign"></i>
             </button>
-            <button type="button" class="btn btn-default" title="保存">
-                <i class="glyphicon glyphicon-floppy-disk"></i>
-            </button>
+
         </div>
         <table id="tblCustomRules" class="table table-bordered table-striped">
             <thead>
@@ -73,9 +86,9 @@
                 <th style="width: 20px">
                     <input type="checkbox" class="checkbox"/>
                 </th>
-                <th style="width: 60px">开启</th>
                 <th>源地址</th>
                 <th>目标地址</th>
+                <th style="width: 60px">启用</th>
             </tr>
             </thead>
             <tbody></tbody>
