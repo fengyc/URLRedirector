@@ -4,32 +4,33 @@
     <meta charset="utf-8">
     <style>
         .main {
-            width: 150px;
+            width: 250px;
         }
-        .group {
+        .item {
             margin: 5px;
-        }
-        ul li {
-            margin: 10px;
-            list-style-type: none;
         }
     </style>
 </head>
 <body>
 <div class="main">
-    <div class="group">
+    <div class="item">
         <input type="checkbox" id="chbEnable">
         <label for="chbEnable">开启重定向</label>
     </div>
-    <div class="group">
-        <button type="button" id="btnOption">重定向配置</button>
+    <div class="item">
+        <button type="button" id="btnOptions">规则配置</button>
     </div>
     <hr>
-    <div class="group">
-        <span id="spanUpdate">更新时间:</span>
+    <div class="item">
+        更新间隔:<span id="updateInterval"></span>秒
+    </div>
+    <div class="item">
+        更新时间:<span id="updatedAt"></span>
     </div>
 </div>
 <script src="../assert/jquery.min.js"></script>
+<script src="../assert/moment.min.js"></script>
+<script src="../storage.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>URLRedirector 配置</title>
+    <link rel="stylesheet" href="../assert/css/bootstrap.min.css"/>
+    <style>
+        .main {
+            width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <h1>URLRedirector 配置</h1>
+    <hr>
+    <div>
+        <h2 style="display: inline-block">在线规则</h2>
+        <div class="btn-group btn-group-sm" style="display: inline-block">
+            <button type="button" id="btnAddOnlineURL" class="btn btn-default" title="添加">
+                <i class="glyphicon glyphicon-plus-sign"></i>
+            </button>
+            <button type="button" id="btnDeleteOnlineURL" class="btn btn-default" title="删除">
+                <i class="glyphicon glyphicon-minus-sign"></i>
+            </button>
+            <button type="button" id="btnSaveOnlineURL" class="btn btn-default" title="保存">
+                <i class="glyphicon glyphicon-floppy-disk"></i>
+            </button>
+        </div>
+        <table id="tblOnlineURLs" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th style="width: 20px">
+                    <input type="checkbox" class="checkbox">
+                </th>
+                <th style="width: 60px">开启</th>
+                <th>URL</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <label for="onlineInterval">更新间隔:</label>
+        <select id="onlineInterval">
+            <option value="15">15 分钟</option>
+            <option value="30">30 分钟</option>
+            <option value="45">45 分钟</option>
+            <option value="60" selected="selected">1 小时</option>
+            <option value="180">3 小时</option>
+            <option value="360">6 小时</option>
+            <option value="720">12 小时</option>
+            <option value="1440">1 天</option>
+        </select>
+    </div>
+
+    <div>
+        <h2 style="display: inline-block">用户规则</h2>
+        <div class="btn-group btn-group-sm" style="display: inline-block">
+            <button type="button" id="btnAddCustomRule" class="btn btn-default" title="添加">
+                <i class="glyphicon glyphicon-plus-sign"></i>
+            </button>
+            <button type="button" class="btn btn-default" title="删除">
+                <i class="glyphicon glyphicon-minus-sign"></i>
+            </button>
+            <button type="button" class="btn btn-default" title="保存">
+                <i class="glyphicon glyphicon-floppy-disk"></i>
+            </button>
+        </div>
+        <table id="tblCustomRules" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th style="width: 20px">
+                    <input type="checkbox" class="checkbox"/>
+                </th>
+                <th style="width: 60px">开启</th>
+                <th>源地址</th>
+                <th>目标地址</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="../assert/jquery.min.js"></script>
+<script src="../assert/js/bootstrap.min.js"></script>
+<script src="../common.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

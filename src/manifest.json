@@ -28,7 +28,13 @@
   },
 
   "background": {
-    "scripts": ["assert/jquery.min.js", "common.js", "entity.js", "storage.js",
-      "background.js"]
+    "scripts": [
+      "assert/jquery.min.js", "assert/moment.min.js", "common.js", "entity.js",
+      "storage.js", "background.js"]
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
   }
 }

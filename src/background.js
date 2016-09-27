@@ -2,14 +2,42 @@
  * The background script to handle url redirection.
  */
 
-/* Initialization: Load configuration from local storage and setup timers */
-var storage = new Storage();
-storage.reload();
+/* Initialization: Load configuration from local storage */
+var storage = {};
 
-/* Reload rules every 60s */
-reload_timer_id = setInterval(function () {
-    storage.reload();
-}, 60000);
+function reloadDB() {
+    browser.storage.local.get(
+        "storage",
+        function (item) {
+            if (browser.runtime.lastError) {
+                console.error(browser.runtime.lastError);
+            }
+            storage = item.storage;
+            console.log(storage);
+        }
+    );
+}
+
+function saveDB() {
+    browser.storage.local.set(
+        {"storage": storage},
+        function () {
+            if (browser.runtime.lastError) {
+                console.error(browser.runtime.lastError);
+            }
+        }
+    );
+}
+
+browser.storage.onChanged.addListener(function (changes, area) {
+    if (area == "local") {
+        reloadDB();
+    }
+});
+
+reloadDB();
+
+
 
 /* Download online rules */
 function downloadRulesFrom(url){
@@ -52,51 +80,34 @@ function downloadOnlineURLs(){
             }
         }
     }
-    storage.saveOnlineURLs();
+    storage.updatedAt = new Date();
+    saveDB();
 }
+
+var updateTimer = null;
+
+function resetUpdateTimer() {
+    if (updateTimer != null) {
+        clearInterval(updateTimer);
+    }
+    var interval = 60000;
+    if (storage.updateInterval && storage.updateInterval >= 0) {
+        interval = storage.updateInterval * 1000;
+    }
+    updateTimer = setInterval(function () {
+        if (storage.enable) {
+            downloadOnlineURLs();
+        }
+    }, interval);
+}
+
+resetUpdateTimer();
 
 
 /* Handle runtime messages */
 function handleMessage(message, sender, sendResponse) {
-    if (message.method == "getEnable") {
-        sendResponse(storage.enable);
-    }
-    else if (message.method == "getUpdatedAt") {
-        sendResponse(storage.updatedAt);
-    }
-    else if (message.method == "toggleEnable") {
-        storage.enable = message.args.enable;
-        storage.saveEnable()
-    }
-    else if (message.method == "getOnlineURLs") {
-        sendResponse(storage.onlineURLs);
-    }
-    else if (message.method == "addOnlineURL") {
-        var url = message.args["url"];
-        storage.onlineURLs.push(url);
-        storage.saveOnlineURLs();
-    }
-    else if (message.method == "deleteOnlineURL") {
-        var index = message.args["index"];
-        storage.onlineURLs.removeAt(index);
-        storage.saveOnlineURLs();
-    }
-    else if (message.method == "getCustomeRules") {
-        sendResponse(storage.customRules);
-    }
-    else if (message.method == "addCustomeRule") {
-        var rule = {};
-        rule.origin = message.args["origin"];
-        rule.target = message.args["target"];
-        rule.kind = message.args["kind"];
-        rule.enable = message.args["enable"];
-        storage.customRules.push(rule);
-        storage.saveCustomRules();
-    }
-    else if (message.method == "deleteCustomRule") {
-        var index = message.args["index"];
-        storage.customRules.removeAt(index);
-        storage.saveCustomRules();
+    if (message) {
+        console.log("Calling " + message.method + " from " + sender);
     }
     else {
         console.error("Unknown method");

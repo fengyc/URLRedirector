@@ -2,7 +2,6 @@
  * Javascript of popup
  */
 
-
 /* Send message to background */
 function sendMessage(method, args, callback) {
     if (arguments.length == 2){
@@ -18,46 +17,41 @@ function sendMessage(method, args, callback) {
     }
 }
 
+var storage = new Storage();
 
-/* Get enable */
-function displayEnable() {
-    sendMessage('getEnable', {}, function(response){
-        if (response != null) {
-            $("#chbEnable").attr('checked', response);
+/* Display all */
+function displayAll() {
+    browser.storage.local.get(
+        "storage",
+        function (item) {
+            if (browser.runtime.lastError) {
+                console.error(browser.runtime.lastError);
+            } else {
+                storage = item.storage;
+                console.log(storage);
+                $("#chbEnable").attr('checked', storage.enable);
+                $("#updateInterval").html(storage.updateInterval);
+                var updatedAt = new moment(storage.updatedAt);
+                $("#updatedAt").html(updatedAt.format("YYYY-MM-DD HH:mm:ss"));
+            }
         }
-    })
+    );
 }
-//setInterval(displayEnable, 3000);
 
-
-/* Get updated time */
-function displayUpdatedAt() {
-    sendMessage('getUpdatedAt', {}, function(response) {
-        if (response) {
-            $("#spanUpdate").html("更新时间:" + response);
-        }
-    });
-}
-//setInterval(displayUpdatedAt, 3000);
-
-
-/* Handle events */
-$("#chbEnable").click(function () {
-    if($('#chbEnable').is(':checked')) {
-        sendMessage("toggleEnable", {enabled:true});
-    } else {
-        sendMessage("toggleEnable", {enabled:false});
+browser.storage.onChanged.addListener(function (changes, area) {
+    if (area == "local") {
+        displayAll();
     }
 });
 
-$("#btnOption").click(function () {
-    // go to options page
+$("#chbEnable").click(function () {
+    storage.enable = $('#chbEnable').is(':checked');
+    save(storage);
 });
 
+$("#btnOptions").click(function () {
+    browser.runtime.openOptionsPage();
+    window.close();
+});
 
-/* Init */
-function init() {
-    displayEnable();
-    displayUpdatedAt();
-}
-init();
+displayAll();
