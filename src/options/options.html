@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>URLRedirector 配置</title>
-    <link rel="stylesheet" href="../assert/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
     <style>
         .main {
             width: 800px;
@@ -16,17 +16,16 @@
 <div class="main">
     <h1>URLRedirector 配置</h1>
     <hr>
-    <button type="button" id="btnSave" class="btn btn-warning" title="保存">
-        <i class="glyphicon glyphicon-floppy-disk"></i> 保存配置
-    </button>
-    <div class="btn-group">
-        <button type="button" id="btnImport" class="btn btn-default" title="导出">
-            <i class="glyphicon glyphicon-save-file"></i> 导出规则
+    更新时间：<span id="lblUpdatedAt"></span>
+    <div class="pull-right" style="display: inline-block">
+        <button type="button" id="btnSave" class="btn btn-info" title="保存">
+            <i class="glyphicon glyphicon-floppy-disk"></i> 保存
         </button>
-        <button type="button" id="btnExport" class="btn btn-default" title="导入">
-            <i class="glyphicon glyphicon-folder-open"></i> 导入规则
+        <button type="button" id="btnReset" class="btn btn-warning" title="重置">
+            <i class="glyphicon glyphicon-refresh"></i> 重置
         </button>
     </div>
+
     <div>
         <h2 style="display: inline-block">在线规则</h2>
         <div class="btn-group btn-group-sm" style="display: inline-block">
@@ -49,8 +48,8 @@
             <option value="720">12 小时</option>
             <option value="1440">1 天</option>
         </select>
-        <button type="button" id="btnDownload" class="btn btn-sm btn-default" title="开始下载在线规则">
-            <i class="glyphicon glyphicon-download"></i>
+        <button type="button" id="btnDownload" class="btn btn-sm btn-default" title="下载在线规则">
+            <i class="glyphicon glyphicon-save"></i>
         </button>
         <label id="downloadState"></label>
 
@@ -60,7 +59,7 @@
                 <th style="width: 20px">
                     <input type="checkbox" class="checkbox" style="margin: auto">
                 </th>
-                <th>在线规则 URL</th>
+                <th colspan="2">在线规则 URL</th>
                 <th style="width: 60px">启用</th>
             </tr>
             </thead>
@@ -96,25 +95,9 @@
     </div>
 </div>
 
-<div id="dlgDisplay" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<script src="../assert/jquery.min.js"></script>
-<script src="../assert/js/bootstrap.min.js"></script>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/moment.min.js"></script>
 <script src="../common.js"></script>
 <script src="options.js"></script>
 </body>

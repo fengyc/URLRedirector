@@ -29,9 +29,7 @@ $("#chbEnable").click(function () {
             storage = item.storage;
         }
         storage.enable = $("#chbEnable").is(":checked");
-        save(
-            {storage: storage}
-        );
+        save({storage: storage});
     });
 });
 

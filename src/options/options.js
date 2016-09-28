@@ -9,6 +9,7 @@ var ruleToRemoves = [];
 var urlTemp =
     "<tr data-index='{0}'><td><input type='checkbox' class='checkbox'/></td>" +
     "<td><input type='text' class='form-control' value='{2}'/></td>" +
+    "<td style='width: 60px'><a>查看</a></td>" +
     "<td><input type='checkbox' class='checkbox' {1} /></td></tr>";
 
 var ruleTemp =
@@ -16,6 +17,15 @@ var ruleTemp =
     "<td><input type='text' class='form-control' data-name='origin' value='{2}'/></td>" +
     "<td><input type='text' class='form-control' data-name='target' value='{3}'/></td>" +
     "<td><input type='checkbox' class='checkbox' {1} ></td></tr>";
+
+function bindDisplayURL() {
+    $("#tblOnlineURLs tbody a").click(function () {
+        var url = $(this).closest("tr").find(":text").val();
+        if (url) {
+            browser.tabs.create({url: url});
+        }
+    });
+}
 
 function displayAll() {
     load("storage", function (item) {
@@ -26,6 +36,10 @@ function displayAll() {
         if (storage.updateInterval) {
             var intervalMinutes = Math.round(storage.updateInterval / 60);
             $("select").val(intervalMinutes);
+        }
+        if (storage.updatedAt) {
+            var updatedAt = new moment(storage.updatedAt);
+            $("#lblUpdatedAt").text(updatedAt.format("YYYY-MM-DD HH:mm:ss"))
         }
         /* online urls */
         var body = $("#tblOnlineURLs tbody");
@@ -38,13 +52,15 @@ function displayAll() {
                 body.append(html);
             }
         }
+        bindDisplayURL();
+
         /* custom rules */
         body = $("#tblCustomRules tbody");
         body.html("");
         if (storage.customRules) {
             for (var i = 0; i < storage.customRules.length; i++) {
                 var rule = storage.customRules[i];
-                html = ruleTemp.format(i, rule.enable ? "checked" : "", rule.origin, rule.target)
+                html = ruleTemp.format(i, rule.enable ? "checked" : "", rule.origin, rule.target);
                 body.append(html);
             }
         }
@@ -57,7 +73,9 @@ browser.storage.onChanged.addListener(function (changes, area) {
         displayAll();
         sendMessage("isDownloading", {}, function (response) {
             if (!response) {
-                $("#downloadState").text("已下载在线规则");
+                $("#downloadState").text("");
+            } else {
+                $("#downloadState").text("正在下载在线规则...");
             }
         });
     }
@@ -83,6 +101,7 @@ $("#btnAddOnlineURL").click(function () {
     });
     if (!hasEmpty) {
         $("#tblOnlineURLs tbody").append(urlTemp.format("", "checked", ""));
+        bindDisplayURL();
     }
 });
 
@@ -103,10 +122,10 @@ $("#btnDeleteOnlineURL").click(function () {
 $("#btnDownload").click(function () {
     sendMessage("isDownloading", {}, function (response) {
         if (!response) {
+            $("#downloadState").text("正在下载在线规则...");
             sendMessage("download", {});
-            $("#downloadState").text("已通知后台下载在线规则...")
         } else {
-            $("#downloadState").text("后台正在下载在线规则...");
+            $("#downloadState").text("");
         }
     });
 });
@@ -197,6 +216,9 @@ $("#btnSave").click(function () {
         }
         storage.updateInterval = intervalMinutes * 60;
         /* online url */
+        if (!storage.onlineURLs) {
+            storage.onlineURLs = [];
+        }
         for (var i = 0; i < urls.length; i++) {
             var url = urls[i];
             if (url.index !== "") {
@@ -218,8 +240,11 @@ $("#btnSave").click(function () {
             storage.onlineURLs.remove(toRemoves[i]);
         }
         /* custom rule */
+        if (!storage.customRules) {
+            storage.customRules = [];
+        }
         for (var i = 0; i < rules.length; i++) {
-            var rule = rules[i]
+            var rule = rules[i];
             if (rule.index !== "") {
                 var index = parseInt(rule.index);
                 storage.customRules[index].origin = rule.origin;

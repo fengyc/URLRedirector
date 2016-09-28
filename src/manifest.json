@@ -1,17 +1,18 @@
 {
 
-  "description": "Adds a solid red border to all webpages matching mozilla.org. See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Examples#borderify",
+  "description": "帮助你重定向特定网页到新的地址",
   "manifest_version": 2,
   "name": "URLRedirector",
   "version": "1.0",
-  "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/borderify",
+  "homepage_url": "https://github.com/fengyc/URLRedirector",
   "icons": {
-    "48": "icons/border-48.png"
+    "48": "static/images/r.png",
+    "96": "static/images/r2.png"
   },
 
   "applications": {
     "gecko": {
-      "id": "borderify@mozilla.org",
+      "id": "URLRedirector@fengyc",
       "strict_min_version": "45.0"
     }
   },
@@ -22,14 +23,14 @@
 
   "browser_action": {
     "browser_style": true,
-    "default_icon": "icons/border-48.png",
-    "default_title": "URLRedirector popup",
+    "default_icon": "static/images/r.png",
+    "default_title": "URLRedirector",
     "default_popup": "popup/popup.html"
   },
 
   "background": {
     "scripts": [
-      "assert/jquery.min.js", "assert/moment.min.js", "common.js",
+      "static/js/jquery.min.js", "static/js/moment.min.js", "common.js",
       "storage.js", "background.js"]
   },
 

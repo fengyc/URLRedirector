@@ -84,7 +84,9 @@ function save(obj, callback) {
             if (browser.runtime.lastError) {
                 console.error(browser.runtime.lastError);
             } else {
-                callback(item);
+                if (callback) {
+                    callback();
+                }
             }
         }
     );
@@ -108,62 +110,22 @@ function sendMessage(method, args, callback) {
 
 /* Download */
 
-function download(url){
+function download(url, callback){
     var content = null;
+    var async = false;
+    if (callback) {
+        async = true;
+    }
     jQuery.ajax({
-        async: false,
+        async: async,
         url: url,
         type: "GET",
         success: function (result, status, xhr) {
             content = result;
+            if (callback) {
+                callback(result);
+            }
         }
     });
     return content;
 }
-
-/* Rules */
-
-var INTERNAL_RULES = [
-    {
-        origin: "ajax.googleapis.com",
-        target: "ajax.lug.ustc.edu.cn",
-        "kind": "wildcard",
-        "enable": true
-    },
-    {
-        origin: "fonts.googleapis.com",
-            "target": "fonts.lug.ustc.edu.cn",
-            "kind": "wildcard",
-            "enable": true
-    },
-    {
-        origin: "themes.googleusercontent.com",
-        target: "google-themes.lug.ustc.edu.cn",
-        "kind": "wildcard",
-        "enable": true
-    },
-    {
-        origin: "fonts.gstatic.com",
-        target: "fonts-gstatic.lug.ustc.edu.cn",
-        "kind": "wildcard",
-        "enable": true
-    },
-    {
-        origin: "platform.twitter.com/widgets.js",
-        target: "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/widgets.js",
-        "kind": "wildcard",
-        "enable": true
-    },
-    {
-        origin:"apis.google.com/js/api.js",
-        target: "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/api.js",
-        "kind": "wildcard",
-        "enable": true
-    },
-    {
-        origin: "apis.google.com/js/plusone.js",
-        target: "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/plusone.js",
-        "kind": "wildcard",
-        "enable": true
-    }
-];

@@ -2,7 +2,6 @@
  * The background script to handle url redirection.
  */
 
-/* Initialization: Load configuration from local storage */
 var storage = {};
 var reCache = {};
 var downloading = false;
@@ -46,7 +45,7 @@ function downloadOnlineURLs(){
                         json.url = onlineURL.url;
                         json.enable = onlineURL.enable;
                         json.downloadAt = new Date();
-                        /* version < 1.0, assume >= 1.0 doesn't need to change */
+                        /* version < 1.0, version >= 1.0 doesn't change */
                         if (!json.version || json.version < "1.0") {
                             var rules = [];
                             for (var key in json.rules) {
@@ -58,8 +57,8 @@ function downloadOnlineURLs(){
                                     kind: rule.kind
                                 });
                             }
+                            json.rules = rules;
                         }
-                        json.rules = rules;
                         /* replace the object */
                         storage.onlineURLs[i] = json;
                     } catch (err) {
@@ -70,14 +69,13 @@ function downloadOnlineURLs(){
             }
         }
         storage.updatedAt = new Date();
-        browser.storage.local.set(
-            {"storage": storage}
-        );
+        save({"storage": storage});
     } finally {
         downloading = false;
     }
 }
 
+/* An download timer to download online urls */
 var downloadTimer = null;
 
 function resetDownloadTimer() {
@@ -112,8 +110,11 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
 });
 
-
+/* Redirect url */
 function redirect(rule, url) {
+    if (!rule.enable){
+        return;
+    }
     var re = reCache[rule];
     if (!re) {
         re = new RegExp(rule.origin);
@@ -143,7 +144,7 @@ function handleRedirect(details) {
         if (storage.onlineURLs) {
             for (var i = 0; i < storage.onlineURLs.length; i++) {
                 var onlineURL = storage.onlineURLs[i];
-                if (onlineURL.rules) {
+                if (onlineURL.enable && onlineURL.rules) {
                     for (var j = 0; j < onlineURL.rules.length; j++) {
                         var rule = onlineURL.rules[i];
                         var result = redirect(rule, details.url);
@@ -153,14 +154,6 @@ function handleRedirect(details) {
                     }
                 }
             }
-        }
-        /* finally the internal */
-        for (var i = 0; i < INTERNAL_RULES.length; i++) {
-            var rule = INTERNAL_RULES[i];
-                var result = redirect(rule, details.url);
-                if (result) {
-                    return result;
-                }
         }
     }
     return {};
