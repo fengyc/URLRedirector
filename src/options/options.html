@@ -43,16 +43,16 @@
             <option value="15">15 分钟</option>
             <option value="30">30 分钟</option>
             <option value="45">45 分钟</option>
-            <option value="60" selected="selected">1 小时</option>
+            <option value="60">1 小时</option>
             <option value="180">3 小时</option>
             <option value="360">6 小时</option>
             <option value="720">12 小时</option>
             <option value="1440">1 天</option>
         </select>
-        <button type="button" class="btn btn-sm btn-default" title="开始下载在线规则">
+        <button type="button" id="btnDownload" class="btn btn-sm btn-default" title="开始下载在线规则">
             <i class="glyphicon glyphicon-download"></i>
         </button>
-
+        <label id="downloadState"></label>
 
         <table id="tblOnlineURLs" class="table table-bordered table-striped">
             <thead>
@@ -60,7 +60,7 @@
                 <th style="width: 20px">
                     <input type="checkbox" class="checkbox" style="margin: auto">
                 </th>
-                <th>URL</th>
+                <th>在线规则 URL</th>
                 <th style="width: 60px">启用</th>
             </tr>
             </thead>
@@ -86,7 +86,7 @@
                 <th style="width: 20px">
                     <input type="checkbox" class="checkbox"/>
                 </th>
-                <th>源地址</th>
+                <th>原始地址</th>
                 <th>目标地址</th>
                 <th style="width: 60px">启用</th>
             </tr>
@@ -95,6 +95,23 @@
         </table>
     </div>
 </div>
+
+<div id="dlgDisplay" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script src="../assert/jquery.min.js"></script>
 <script src="../assert/js/bootstrap.min.js"></script>

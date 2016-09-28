@@ -3,28 +3,72 @@
  */
 
 var storage = {};
+var urlToRemoves = [];
+var ruleToRemoves = [];
 
 var urlTemp =
-    "<tr><td><input type='checkbox' class='checkbox'/></td>" +
-    "<td><input type='text' class='form-control' data-index='{0}' value='{2}'/></td>" +
-    "<td><input type='checkbox' class='checkbox' {1} data-index='{0}'/></td></tr>";
+    "<tr data-index='{0}'><td><input type='checkbox' class='checkbox'/></td>" +
+    "<td><input type='text' class='form-control' value='{2}'/></td>" +
+    "<td><input type='checkbox' class='checkbox' {1} /></td></tr>";
 
 var ruleTemp =
-    "<tr><td><input type='checkbox' class='checkbox'/></td>" +
-    "<td><input type='text' class='form-control' data-index='{0}' data-name='origin' value='{2}'/></td>" +
-    "<td><input type='text' class='form-control' data-index='{0}' data-name='target' value='{3}'/></td>" +
-    "<td><input type='checkbox' class='checkbox' {1} data-index='{0}'></td></tr>";
+    "<tr data-index='{0}'><td><input type='checkbox' class='checkbox'/></td>" +
+    "<td><input type='text' class='form-control' data-name='origin' value='{2}'/></td>" +
+    "<td><input type='text' class='form-control' data-name='target' value='{3}'/></td>" +
+    "<td><input type='checkbox' class='checkbox' {1} ></td></tr>";
+
+function displayAll() {
+    load("storage", function (item) {
+        if (item && item.storage) {
+            storage = item.storage;
+        }
+
+        if (storage.updateInterval) {
+            var intervalMinutes = Math.round(storage.updateInterval / 60);
+            $("select").val(intervalMinutes);
+        }
+        /* online urls */
+        var body = $("#tblOnlineURLs tbody");
+        var html = "";
+        body.html("");
+        if (storage.onlineURLs) {
+            for (var i = 0; i < storage.onlineURLs.length; i++) {
+                var url = storage.onlineURLs[i];
+                html = urlTemp.format(i, url.enable ? "checked" : "", url.url);
+                body.append(html);
+            }
+        }
+        /* custom rules */
+        body = $("#tblCustomRules tbody");
+        body.html("");
+        if (storage.customRules) {
+            for (var i = 0; i < storage.customRules.length; i++) {
+                var rule = storage.customRules[i];
+                html = ruleTemp.format(i, rule.enable ? "checked" : "", rule.origin, rule.target)
+                body.append(html);
+            }
+        }
+    });
+}
+displayAll();
+
+browser.storage.onChanged.addListener(function (changes, area) {
+    if (area == "local") {
+        displayAll();
+        sendMessage("isDownloading", {}, function (response) {
+            if (!response) {
+                $("#downloadState").text("已下载在线规则");
+            }
+        });
+    }
+});
 
 /* Check all and uncheck all */
 $("table thead input[type=checkbox]").click(function () {
     var checked = $(this).is(":checked");
     var table = $(this).closest("table");
     table.find("tbody tr").each(function () {
-        if (checked) {
-            $(this).find("input[type=checkbox]").first().attr("checked",'true');
-        } else {
-            $(this).find("input[type=checkbox]").first().removeAttr("checked");
-        }
+        $(this).find("input[type=checkbox]:first").attr("checked", checked);
     });
 });
 
@@ -32,7 +76,7 @@ $("#btnAddOnlineURL").click(function () {
     // already has empty row
     var hasEmpty = false;
     $("#tblOnlineURLs").find("input[type=text]").each(function () {
-        if ($(this).text() == "") {
+        if ($(this).val() === "") {
             hasEmpty = true;
             return false;
         }
@@ -44,8 +88,25 @@ $("#btnAddOnlineURL").click(function () {
 
 $("#btnDeleteOnlineURL").click(function () {
     $("#tblOnlineURLs tbody tr").each(function () {
-        if ($(this).find("input[type=checkbox]").first().is(":checked")) {
+        var index = $(this).data("index");
+        if ($(this).find("input[type=checkbox]:first").is(":checked")) {
+            if (index !== "") {
+                urlToRemoves.push(parseInt(index));
+            }
             $(this).remove();
+        }
+    });
+    $("#tblOnlineURLs thead :checkbox").attr("checked", false);
+});
+
+/* Download in background */
+$("#btnDownload").click(function () {
+    sendMessage("isDownloading", {}, function (response) {
+        if (!response) {
+            sendMessage("download", {});
+            $("#downloadState").text("已通知后台下载在线规则...")
+        } else {
+            $("#downloadState").text("后台正在下载在线规则...");
         }
     });
 });
@@ -53,7 +114,7 @@ $("#btnDeleteOnlineURL").click(function () {
 $("#btnAddCustomRule").click(function () {
     var hasEmpty = false;
     $("#tblCustomRules").find("input[type=text]").each(function () {
-        if ($(this).text() == "") {
+        if ($(this).val() === "") {
             hasEmpty = true;
             return false;
         }
@@ -65,47 +126,131 @@ $("#btnAddCustomRule").click(function () {
 
 $("#btnDeleteCustomRule").click(function () {
     $("#tblCustomRules tbody tr").each(function () {
+        var index = $(this).data("index");
         if ($(this).find("input[type=checkbox]").first().is(":checked")) {
+            if (index !== ""){
+                ruleToRemoves.push(parseInt(index));
+            }
             $(this).remove();
         }
     });
+    $("#tblCustomRules thead :checkbox").attr("checked", false);
 });
 
 /* Save options */
 $("#btnSave").click(function () {
+    var intervalMinutes = $("#onlineInterval").val();
+    intervalMinutes = parseInt(intervalMinutes);
 
-});
+    var urls = [];
+    $("#tblOnlineURLs tbody tr").each(function () {
+        // skip empty row
+        var hasEmpty = false;
+        $(this).find(":text").each(function () {
+            if ($(this).val() === "") {
+                hasEmpty = true;
+                return false;
+            }
+        });
+        if (hasEmpty) {
+            return;
+        }
+        var url = $(this).find("input[type=text]").val();
+        var enable = $(this).find("input[type=checkbox]:last").is(":checked");
+        var index = $(this).data("index");
+        urls.push({
+            url: url,
+            enable: enable,
+            index: index
+        });
+    });
 
-function displayAll() {
-    browser.storage.local.get(
-        "storage",
-        function (item) {
-            if (item) {
-                storage = item.storage;
-                var body = $("#tblOnlineURLs tbody");
-                var html = "";
-                body.html("");
+    var rules = [];
+    $("#tblCustomRules tbody tr").each(function () {
+        // skip empty row
+        var hasEmpty = false;
+        $(this).find(":text").each(function () {
+            if ($(this).val() === "") {
+                hasEmpty = true;
+            }
+            return false;
+        });
+        if (hasEmpty) {
+            return;
+        }
+        var origin = $(this).find("input[type=text]:eq(0)").val();
+        var target = $(this).find("input[type=text]:eq(1)").val();
+        var enable = $(this).find("input[type=checkbox]:last").is(":checked");
+        var index = $(this).data("index");
+        rules.push({
+            origin: origin,
+            target: target,
+            enable: enable,
+            index: index
+        });
+    });
 
-                for (var i = 0; i < storage.onlineURLs.length; i++) {
-                    var url = storage.onlineURLs[i];
-                    html = urlTemp.format(i, url.enable?"checked":"", url.url);
-                    body.append(html);
-                }
-                html = urlTemp.format("", "", "");
-                body.append(html);
-
-
-                body = $("#tblCustomRules tbody");
-                body.html("");
-                for (var i = 0; i < storage.customRules.length; i++) {
-                    var rule = storage.customRules[i];
-                    html = ruleTemp.format(i, rule.enable?"checked":"", rule.origin, rule.target)
-                    body.append(html);
-                }
-                html = ruleTemp.format("", "", "", "");
-                body.append(html);
+    /* reload storage and save options */
+    load("storage", function (item) {
+        if (item && item.storage) {
+            storage = item.storage;
+        }
+        storage.updateInterval = intervalMinutes * 60;
+        /* online url */
+        for (var i = 0; i < urls.length; i++) {
+            var url = urls[i];
+            if (url.index !== "") {
+                var index = parseInt(url.index);
+                storage.onlineURLs[index].url = url.url;
+                storage.onlineURLs[index].enable = url.enable;
+            } else {
+                storage.onlineURLs.push({
+                    url: url.url,
+                    enable: url.enable
+                });
             }
         }
-    );
-}
-displayAll();
+        var toRemoves = [];
+        for (var i = 0; i < urlToRemoves.length; i++) {
+            toRemoves.push(storage.onlineURLs[urlToRemoves[i]]);
+        }
+        for (var i = 0; i < toRemoves.length; i++) {
+            storage.onlineURLs.remove(toRemoves[i]);
+        }
+        /* custom rule */
+        for (var i = 0; i < rules.length; i++) {
+            var rule = rules[i]
+            if (rule.index !== "") {
+                var index = parseInt(rule.index);
+                storage.customRules[index].origin = rule.origin;
+                storage.customRules[index].target = rule.target;
+                storage.customRules[index].enable = rule.enable;
+            } else {
+                storage.customRules.push({
+                    origin: rule.origin,
+                    target: rule.target,
+                    enable: rule.enable
+                });
+            }
+        }
+        toRemoves = [];
+        for (var i = 0; i < ruleToRemoves.length; i++) {
+            toRemoves.push(storage.customRules[ruleToRemoves[i]]);
+        }
+        for (var i = 0; i < toRemoves.length; i++) {
+            storage.customRules.remove(toRemoves[i]);
+        }
+
+        /* save */
+        $("#btnSave").attr("disabled", true);
+        save(
+            {"storage": storage},
+            function () {
+                $("#btnSave").removeAttr("disabled");
+                window.location.reload();
+            }
+        );
+    });
+});
+
+

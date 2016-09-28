@@ -29,7 +29,7 @@
 
   "background": {
     "scripts": [
-      "assert/jquery.min.js", "assert/moment.min.js", "common.js", "entity.js",
+      "assert/jquery.min.js", "assert/moment.min.js", "common.js",
       "storage.js", "background.js"]
   },
 

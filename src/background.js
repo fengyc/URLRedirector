@@ -4,172 +4,170 @@
 
 /* Initialization: Load configuration from local storage */
 var storage = {};
-
-function reloadDB() {
-    browser.storage.local.get(
-        "storage",
-        function (item) {
-            if (browser.runtime.lastError) {
-                console.error(browser.runtime.lastError);
-            }
-            storage = item.storage;
-            console.log(storage);
-        }
-    );
-}
-
-function saveDB() {
-    browser.storage.local.set(
-        {"storage": storage},
-        function () {
-            if (browser.runtime.lastError) {
-                console.error(browser.runtime.lastError);
-            }
-        }
-    );
-}
+var reCache = {};
+var downloading = false;
 
 browser.storage.onChanged.addListener(function (changes, area) {
     if (area == "local") {
-        reloadDB();
+        load("storage", function (result) {
+            if (result && result.storage) {
+                storage = result.storage;
+                reCache = {};
+                resetDownloadTimer();
+            }
+        });
     }
 });
 
-reloadDB();
-
+load("storage", function (result) {
+    if (result && result.storage) {
+        storage = result.storage;
+        reCache = {};
+        resetDownloadTimer();
+    }
+});
 
 
 /* Download online rules */
-function downloadRulesFrom(url){
-    jQuery.ajax({
-        async: false,
-        url: url,
-        type: "GET",
-        success: function (result, status, xhr) {
-            try {
-                return result;
-            } catch (e) {
-                console.log(e);
-            }
-        }
-    });
-    return null;
-}
-
 function downloadOnlineURLs(){
-    for (var i = 0; i < storage.onlineURLs.length; i++) {
-        var onlineURL = storage.onlineURLs[i];
-        if (onlineURL.enable) {
-            var result = downloadRulesFrom(onlineURL.url);
-            if (result) {
-                var resultJson = null;
-                try {
-                    resultJson = JSON.parse(result);
-                } catch (err) {
-                    console.error(err);
-                    continue;
-                }
-                var resultJson = JSON.parse(result);
-                if (!resultJson.hasOwnProperty("version") ||
-                    resultJson.version <= "1.0") {
-                    resultJson.url = onlineURL.url;
-                    resultJson.enable = onlineURL.enable;
-                    resultJson.lastUpdatedAt = new Date();
-                    storage.onlineURLs[i] = resultJson;
+    if (!storage.onlineURLs) {
+        return;
+    }
+    downloading = true;
+    try {
+        for (var i = 0; i < storage.onlineURLs.length; i++) {
+            var onlineURL = storage.onlineURLs[i];
+            if (onlineURL.enable) {
+                console.log("Download " + onlineURL.url);
+                var content = download(onlineURL.url);
+                if (content) {
+                    try {
+                        var json = JSON.parse(content);
+                        json.url = onlineURL.url;
+                        json.enable = onlineURL.enable;
+                        json.downloadAt = new Date();
+                        /* version < 1.0, assume >= 1.0 doesn't need to change */
+                        if (!json.version || json.version < "1.0") {
+                            var rules = [];
+                            for (var key in json.rules) {
+                                var rule = json.rules[key];
+                                rules.push({
+                                    origin: key,
+                                    target: rule.dstURL,
+                                    enable: rule.enable === undefined ? true : rule.enable,
+                                    kind: rule.kind
+                                });
+                            }
+                        }
+                        json.rules = rules;
+                        /* replace the object */
+                        storage.onlineURLs[i] = json;
+                    } catch (err) {
+                        console.error(err);
+                        continue;
+                    }
                 }
             }
         }
+        storage.updatedAt = new Date();
+        browser.storage.local.set(
+            {"storage": storage}
+        );
+    } finally {
+        downloading = false;
     }
-    storage.updatedAt = new Date();
-    saveDB();
 }
 
-var updateTimer = null;
+var downloadTimer = null;
 
-function resetUpdateTimer() {
-    if (updateTimer != null) {
-        clearInterval(updateTimer);
+function resetDownloadTimer() {
+    if (downloadTimer != null) {
+        clearInterval(downloadTimer);
     }
-    var interval = 60000;
-    if (storage.updateInterval && storage.updateInterval >= 0) {
-        interval = storage.updateInterval * 1000;
+    var interval = 3600;
+    if (storage.updateInterval) {
+        interval = parseInt(storage.updateInterval);
     }
-    updateTimer = setInterval(function () {
+    interval = interval * 1000;
+    downloadTimer = setInterval(function () {
         if (storage.enable) {
             downloadOnlineURLs();
         }
     }, interval);
 }
 
-resetUpdateTimer();
-
-
 /* Handle runtime messages */
-function handleMessage(message, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (message) {
         console.log("Calling " + message.method + " from " + sender);
+    }
+    if (message.method == "download") {
+        downloadOnlineURLs();
+    }
+    else if (message.method == "isDownloading") {
+        sendResponse(downloading);
     }
     else {
         console.error("Unknown method");
     }
-}
-browser.runtime.onMessage.addListener(handleMessage);
+});
 
-var db =  {
-    "ajax.googleapis.com": {
-        "dstURL": "ajax.lug.ustc.edu.cn",
-        "kind": "wildcard",
-        "enable": true
-    },
-    "fonts.googleapis.com": {
-        "dstURL": "fonts.lug.ustc.edu.cn",
-        "kind": "wildcard",
-        "enable": true
-    },
-    "themes.googleusercontent.com": {
-        "dstURL": "google-themes.lug.ustc.edu.cn",
-        "kind": "wildcard",
-        "enable": true
-    },
-    "fonts.gstatic.com": {
-        "dstURL": "fonts-gstatic.lug.ustc.edu.cn",
-        "kind": "wildcard",
-        "enable": true
-    },
-    "platform.twitter.com/widgets.js": {
-        "dstURL": "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/widgets.js",
-        "kind": "wildcard",
-        "enable": true
-    },
-    "apis.google.com/js/api.js": {
-        "dstURL": "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/api.js",
-        "kind": "wildcard",
-        "enable": true
-    },
-    "apis.google.com/js/plusone.js": {
-        "dstURL": "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/plusone.js",
-        "kind": "wildcard",
-        "enable": true
+
+function redirect(rule, url) {
+    var re = reCache[rule];
+    if (!re) {
+        re = new RegExp(rule.origin);
+        reCache[rule] = re;
     }
-};
+    if (re.test(url)) {
+        var url = url.replace(re, rule.target);
+        return {
+            redirectUrl: url
+        }
+    }
+}
 
-
-function redirect(details) {
+function handleRedirect(details) {
     if (storage.enable && details.url) {
-        for (var key in db) {
-            var re = RegExp(key);
-            var rule = db[key];
-            if (rule.enable && re.test(details.url)) {
-                var url = details.url.replace(key, rule.dstURL);
-                return {redirectUrl: url};
+        /* custom rules */
+        if (storage.customRules) {
+            for (var i = 0; i < storage.customRules.length; i++) {
+                var rule = storage.customRules[i];
+                var result = redirect(rule, details.url);
+                if (result) {
+                    return result;
+                }
             }
+        }
+        /* online rules */
+        if (storage.onlineURLs) {
+            for (var i = 0; i < storage.onlineURLs.length; i++) {
+                var onlineURL = storage.onlineURLs[i];
+                if (onlineURL.rules) {
+                    for (var j = 0; j < onlineURL.rules.length; j++) {
+                        var rule = onlineURL.rules[i];
+                        var result = redirect(rule, details.url);
+                        if (result) {
+                            return result;
+                        }
+                    }
+                }
+            }
+        }
+        /* finally the internal */
+        for (var i = 0; i < INTERNAL_RULES.length; i++) {
+            var rule = INTERNAL_RULES[i];
+                var result = redirect(rule, details.url);
+                if (result) {
+                    return result;
+                }
         }
     }
     return {};
 }
 
 browser.webRequest.onBeforeRequest.addListener(
-    redirect,
+    handleRedirect,
     {urls: ["<all_urls>"]},
     ["blocking"]
 );
