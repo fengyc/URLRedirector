@@ -41,6 +41,9 @@ function displayAll() {
             var updatedAt = new moment(storage.updatedAt);
             $("#lblUpdatedAt").text(updatedAt.format("YYYY-MM-DD HH:mm:ss"))
         }
+        if (storage.enable !== undefined) {
+            $("#chbEnable").attr("checked", storage.enable);
+        }
         /* online urls */
         var body = $("#tblOnlineURLs tbody");
         var html = "";
@@ -161,6 +164,8 @@ $("#btnSave").click(function () {
     var intervalMinutes = $("#onlineInterval").val();
     intervalMinutes = parseInt(intervalMinutes);
 
+    var enable = $("#chbEnable").is(":checked");
+
     var urls = [];
     $("#tblOnlineURLs tbody tr").each(function () {
         // skip empty row
@@ -215,6 +220,7 @@ $("#btnSave").click(function () {
             storage = item.storage;
         }
         storage.updateInterval = intervalMinutes * 60;
+        storage.enable = enable;
         /* online url */
         if (!storage.onlineURLs) {
             storage.onlineURLs = [];
@@ -267,14 +273,7 @@ $("#btnSave").click(function () {
         }
 
         /* save */
-        $("#btnSave").attr("disabled", true);
-        save(
-            {"storage": storage},
-            function () {
-                $("#btnSave").removeAttr("disabled");
-                window.location.reload();
-            }
-        );
+        save({"storage": storage});
     });
 });
 

@@ -3,7 +3,7 @@ URLRedirector
 
 使用 WebExtension 方式编写的 Firefox URL 重定向插件。
 
-插件的开发受 [gooreplacer](https://github.com/jiacai2050/gooreplacer) 启发，由于 gooreplacer 在 MAC 下运行时会遇到停止运行的问题，因此换成 WebExtension 方式实现。
+插件的开发受 [gooreplacer](https://github.com/jiacai2050/gooreplacer) 启发，由于 gooreplacer 在 MAC 下运行时会遇到停止运行的问题，因此尝试 WebExtension 方式实现。
 
 插件仅支持正则表达式替换方式，不支持通配符。
 
@@ -20,26 +20,48 @@ URLRedirector
 其它说明
 ----
 
-内部规则 Rule 为简单 javascript 对象：
+1. 规则示例
 
-    {
-        origin: <原始地址>,
-        target: <目标地址>,
-        enable: <是否启用>
-    }
+    简单规则，将 a.com 替换为 b.com ：
+    
+        原始地址 a.com  目标地址 b.com
+        原始请求 https://www.a.com
+        重定向到 https://www.b.com
+    
+    简单正则表达式：
+    
+        原始地址 a.*.com 目标地址 b.com
+        原始请求 https://www.abc.com
+        重定向到 https://www.b.com
+        
+    使用原始地址的部分信息：
+    
+        原始地址 (\d+).com  目标地址 com/$1
+        原始请求 https://www.a.1.com
+        重定向到 https://www.a.com/1
 
-在线规则使用一个包含了规则列表的 json 格式的文件表示：
+2. 内部实现
 
-    {
-        version: <版本号，可选>,
-        rules: <规则列表，必须>
-    }
-
-目前支持两种格式，通过 version 进行区分。
-（1）不包含 version 或 version < 1.0 时，使用 gooreplacer 定义的格式，见 `tools/gooreplacer.gson` 或 [在线规则](https://github.com/jiacai2050/gooreplacer4chrome/raw/master/gooreplacer.gson) ；
-（2）包含 version 且 version >= 1.0 时，使用新格式，见 `tools/rules.json` 。
-
-两种格式的主要区别在于 rules 字段，在 gooreplacer 中 rules 为对象，在新格式中，rules 为列表。
+    内部规则 Rule 为简单 javascript 对象：
+    
+        {
+            origin: <原始地址>,
+            target: <目标地址>,
+            enable: <是否启用>
+        }
+    
+    在线规则使用一个包含了规则列表的 json 格式的文件表示：
+    
+        {
+            version: <版本号，可选>,
+            rules: <规则列表，必须>
+        }
+    
+    目前支持两种格式，通过 version 进行区分。
+    （1）不包含 version 或 version < 1.0 时，使用 gooreplacer 定义的格式，见 `tools/gooreplacer.gson` 或 [https://github.com/jiacai2050/gooreplacer4chrome/raw/master/gooreplacer.gson](https://github.com/jiacai2050/gooreplacer4chrome/raw/master/gooreplacer.gson) ；
+    （2）包含 version 且 version >= 1.0 时，使用新格式，见 `tools/rules.json` 。
+    
+    两种格式的主要区别在于 rules 字段，在 gooreplacer 中 rules 为对象，在新格式中，rules 为列表。
 
 License
 -------

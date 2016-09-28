@@ -1,6 +1,5 @@
 {
-
-  "description": "帮助你重定向特定网页到新的地址",
+  "description": "帮助你重定向特定网页到新地址",
   "manifest_version": 2,
   "name": "URLRedirector",
   "version": "1.0",
