@@ -17,12 +17,14 @@ URLRedirector
 
 AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，下载地址为：
 
-[https://addons.mozilla.org/firefox/downloads/file/512061/urlredirector-1.2.0-fx.xpi](https://addons.mozilla.org/firefox/downloads/file/512061/urlredirector-1.2.0-fx.xpi)
+[https://addons.mozilla.org/firefox/downloads/file/512124/urlredirector-1.2.1-fx.xpi?src=devhub](https://addons.mozilla.org/firefox/downloads/file/512124/urlredirector-1.2.1-fx.xpi?src=devhub)
 
 安装插件前，请升级 firefox 到最新版本（48+）。
 
 版本和特性列表
 -------
+
+**v1.2.1** 微小界面调整，适应 windows 上的显示，准备 chrome 支持
 
 *2016-09-29* 参考 https://lug.ustc.edu.cn/wiki/mirrors/help/revproxy , 更新 rules.json 
 
