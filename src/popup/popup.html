@@ -4,10 +4,15 @@
     <meta charset="utf-8">
     <style>
         .main {
-            margin: 10px;
+            min-width: 120px;
+            padding: 0px;
+            border: 0px;
+            margin: 5px;
         }
         .item {
-            margin: 5px;
+            margin: 3px;
+            padding: 0px;
+            border: 0px;
         }
     </style>
 </head>
@@ -22,10 +27,10 @@
     </div>
     <hr>
     <div class="item">
-        更新间隔:<span id="updateInterval"></span>秒
+        间隔:<span id="updateInterval"></span>秒
     </div>
     <div class="item">
-        更新时间:<span id="updatedAt"></span>
+        <span id="updatedAt"></span>
     </div>
 </div>
 <script src="../static/js/jquery.min.js"></script>

@@ -3,7 +3,6 @@
  */
 
 /* Array */
-
 if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function (val) {
         for (var i = 0; i < this.length; i++) {
@@ -49,7 +48,6 @@ if (!Array.prototype.insert) {
 }
 
 /* String */
-
 if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
@@ -63,7 +61,6 @@ if (!String.prototype.format) {
 }
 
 /* Storage */
-
 function load(keys, callback) {
     browser.storage.local.get(
         keys,
@@ -109,7 +106,6 @@ function sendMessage(method, args, callback) {
 }
 
 /* Download */
-
 function download(url, callback){
     var content = null;
     var async = false;
@@ -128,4 +124,9 @@ function download(url, callback){
         }
     });
     return content;
+}
+
+/* Fix chrome */
+if (typeof browser == "undefined" && chrome) {
+    var browser = chrome;
 }
