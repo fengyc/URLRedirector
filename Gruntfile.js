@@ -1,6 +1,5 @@
 /*global module:false*/
 module.exports = function(grunt) {
-
   // Project configuration.
   grunt.initConfig({
     // Metadata.
@@ -14,25 +13,41 @@ module.exports = function(grunt) {
     clean: ['dist/'],
     copy: {
       main: {
+        files: [
+          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/main/'}
+        ]
+      },
+      main_manifest: {
         expand: true,
         cwd: 'src/',
-        src: '**',
-        dest: 'dist/main/'
+        src: 'manifest.json',
+        dest: 'dist/main/',
+        options: {
+          process: function (content, srcpath) {
+            var pkg = grunt.file.readJSON('package.json');
+            var json = JSON.parse(content);
+            json.version = pkg.version;
+            return JSON.stringify(json, null, 2);
+          }
+        }
       },
       offline: {
-        expand: true,
-        cwd: 'src/',
-        src: '**',
-        dest: 'dist/offline/'
+        files: [
+          {expand: true, cwd: 'src/', src: ['**'], dest: 'dist/offline/'}
+        ]
       },
       offline_manifest: {
         expand: true,
-        cwd: 'src/',
+        cwd: 'src',
         src: 'manifest.json',
         dest: 'dist/offline/',
         options: {
           process: function (content, srcpath) {
-            return content.replace(/URLRedirector@fengyc/g, "URLRedirector-offline@fengyc");
+            var pkg = grunt.file.readJSON('package.json');
+            var json = JSON.parse(content);
+            json.version = pkg.version;
+            json.applications.gecko.id = "URLRedirector-offline@fengyc";
+            return JSON.stringify(json, null, 2);
           }
         }
       }
@@ -43,7 +58,7 @@ module.exports = function(grunt) {
           archive: 'dist/<%= pkg.name %>-v<%= pkg.version %>.zip'
         },
         files: [
-          {expand: true, cwd: '<%= copy.main.dest %>', src: ['**'], dest: '/'}
+          {expand: true, cwd: 'dist/main/', src: ['**'], dest: '/'}
         ]
       },
       offline: {
@@ -51,7 +66,7 @@ module.exports = function(grunt) {
           archive: 'dist/<%= pkg.name %>-offline-v<%= pkg.version %>.zip'
         },
         files: [
-          {expand: true, cwd: '<%= copy.offline.dest %>', src: ['**'], dest: '/'}
+          {expand: true, cwd: 'dist/offline', src: ['**'], dest: '/'}
         ]
       }
     }

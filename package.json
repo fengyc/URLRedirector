@@ -3,7 +3,8 @@
   "version": "1.2.0",
   "homepage": "https://github.com/fengyc/URLRedirector",
   "author": {
-    "name": "fengyingcai"
+    "name": "fengyingcai",
+    "email": "fengyc.work@gmail.com"
   },
   "license": "MIT",
   "engines": {

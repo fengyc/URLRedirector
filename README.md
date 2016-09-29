@@ -17,8 +17,9 @@ URLRedirector
 
 AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，下载地址为：
 
-[https://addons.mozilla.org/firefox/downloads/file/511911/urlredirector-1.2-fx.xpi](https://addons.mozilla.org/firefox/downloads/file/511911/urlredirector-1.2-fx.xpi)
+[https://addons.mozilla.org/firefox/downloads/file/512061/urlredirector-1.2.0-fx.xpi](https://addons.mozilla.org/firefox/downloads/file/512061/urlredirector-1.2.0-fx.xpi)
 
+安装插件前，请升级 firefox 到最新版本（48+）。
 
 版本和特性列表
 -------
