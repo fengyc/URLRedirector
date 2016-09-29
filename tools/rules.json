@@ -4,22 +4,22 @@
   "rules": [
     {
       "origin": "ajax.googleapis.com",
-      "target": "ajax.lug.ustc.edu.cn",
+      "target": "ajax.proxy.ustclug.org",
       "enable": true
     },
     {
       "origin": "fonts.googleapis.com",
-      "target": "fonts.lug.ustc.edu.cn",
+      "target": "fonts.proxy.ustclug.org",
       "enable": true
     },
     {
       "origin": "themes.googleusercontent.com",
-      "target": "google-themes.lug.ustc.edu.cn",
+      "target": "google-themes.proxy.ustclug.org",
       "enable": true
     },
     {
       "origin": "fonts.gstatic.com",
-      "target": "fonts-gstatic.lug.ustc.edu.cn",
+      "target": "fonts-gstatic.proxy.ustclug.org",
       "enable": true
     },
     {
@@ -35,6 +35,16 @@
     {
       "origin": "apis.google.com/js/plusone.js",
       "target": "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/plusone.js",
+      "enable": true
+    },
+    {
+      "origin": "gerrit.googlesource.com",
+      "target": "gerrit-googlesource.proxy.ustclug.org",
+      "enable": true
+    },
+    {
+      "origin": "secure.gravatar.com",
+      "target": "gravatar.proxy.ustclug.org",
       "enable": true
     }
   ]
