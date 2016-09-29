@@ -23,13 +23,16 @@ module.exports = function(grunt) {
         expand: true,
         cwd: 'src/',
         src: '**',
+        dest: 'dist/offline/'
+      },
+      offline_manifest: {
+        expand: true,
+        cwd: 'src/',
+        src: 'manifest.json',
         dest: 'dist/offline/',
         options: {
           process: function (content, srcpath) {
-            if (/manifest.json/.test(srcpath)) {
-              return content.replace(/URLRedirector@fengyc/g, "URLRedirector-offline@fengyc");
-            }
-            return content;
+            return content.replace(/URLRedirector@fengyc/g, "URLRedirector-offline@fengyc");
           }
         }
       }
