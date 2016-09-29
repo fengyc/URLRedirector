@@ -28,6 +28,9 @@ function bindDisplayURL() {
 }
 
 function displayAll() {
+    var manifest = browser.runtime.getManifest();
+    $("h1 a").attr("href", manifest.homepage_url);
+
     load("storage", function (item) {
         if (item && item.storage) {
             storage = item.storage;

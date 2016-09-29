@@ -9,8 +9,17 @@ URLRedirector
 
 插件仅支持正则表达式替换方式，不支持通配符。
 
+供用户使用的在线规则有:
+
+[https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson)
+
+[https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json)
+
+
 版本和特性列表
---------------
+-------
+
+v1.1 微小界面调整
 
 目前支持的特性：
 
@@ -21,14 +30,6 @@ URLRedirector
 
 其它说明
 --------
-
-供用户使用的在线规则有:
-
-[https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson)
-
-[https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json)
-
-两个规则目前仅版本不同。
 
 1. 规则示例
 
