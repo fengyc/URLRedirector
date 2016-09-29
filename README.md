@@ -22,6 +22,7 @@ URLRedirector
 *2016-09-29* 参考 https://lug.ustc.edu.cn/wiki/mirrors/help/revproxy , 更新 rules.json 
 
 **v1.2** 更正设置页面的重置按钮事件
+
 **v1.1** 微小界面调整
 
 目前支持的特性：
