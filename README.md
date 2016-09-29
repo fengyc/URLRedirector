@@ -15,6 +15,10 @@ URLRedirector
 
 [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json)
 
+AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，下载地址为：
+
+[https://addons.mozilla.org/firefox/downloads/file/511911/urlredirector-1.2-fx.xpi](https://addons.mozilla.org/firefox/downloads/file/511911/urlredirector-1.2-fx.xpi)
+
 
 版本和特性列表
 -------
