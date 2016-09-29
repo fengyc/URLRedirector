@@ -162,6 +162,10 @@ $("#btnDeleteCustomRule").click(function () {
     $("#tblCustomRules thead :checkbox").attr("checked", false);
 });
 
+$("#btnReset").click(function () {
+    displayAll();
+});
+
 /* Save options */
 $("#btnSave").click(function () {
     var intervalMinutes = $("#onlineInterval").val();
