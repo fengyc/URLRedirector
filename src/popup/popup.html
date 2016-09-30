@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html>
-<head lang="zh-cn">
+<html lang="zh-cn">
+<head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <style>
-        body {
-            width: 160px;
-            height: 140px;
+        html, body {
+            width: 180px;
+            height: 100px;
         }
         .main {
-            padding: 3px;
+            width: 160px;
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .item {
-            padding: 2px;
+            padding: 3px;
         }
     </style>
 </head>
@@ -20,15 +24,12 @@
     <div class="item">
         <input type="checkbox" id="chbEnable">
         <label for="chbEnable">开启重定向</label>
+        <button type="button" id="btnOptions" class="btn btn-info btn-xs" title="配置">
+            <i class="glyphicon glyphicon-cog"></i>
+        </button>
     </div>
     <div class="item">
-        <button type="button" id="btnOptions">规则配置</button>
-    </div>
-    <hr>
-    <div class="item">
-        更新间隔:<span id="updateInterval"></span>秒
-    </div>
-    <div class="item">
+        更新间隔:<span id="updateInterval"></span>秒<br>
         <span id="updatedAt"></span>
     </div>
 </div>

@@ -7,6 +7,7 @@ var reCache = {};
 var downloading = false;
 
 browser.storage.onChanged.addListener(function (changes, area) {
+    console.log("Changed: " + changes);
     if (area == "local") {
         load("storage", function (result) {
             if (result && result.storage) {
@@ -71,6 +72,7 @@ function downloadOnlineURLs(){
         storage.updatedAt = new Date();
         save({"storage": storage});
     } finally {
+        console.log("Download completed");
         downloading = false;
     }
 }

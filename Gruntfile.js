@@ -12,9 +12,11 @@ module.exports = function(grunt) {
     // Task configuration.
     clean: ['dist/'],
     copy: {
-      main: {
+      prepare: {
         files: [
-          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/main/'}
+          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/main/'},
+          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/offline/'},
+          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/chrome/'}
         ]
       },
       main_manifest: {
@@ -31,11 +33,6 @@ module.exports = function(grunt) {
           }
         }
       },
-      offline: {
-        files: [
-          {expand: true, cwd: 'src/', src: ['**'], dest: 'dist/offline/'}
-        ]
-      },
       offline_manifest: {
         expand: true,
         cwd: 'src',
@@ -47,6 +44,21 @@ module.exports = function(grunt) {
             var json = JSON.parse(content);
             json.version = pkg.version;
             json.applications.gecko.id = "URLRedirector-offline@fengyc";
+            return JSON.stringify(json, null, 2);
+          }
+        }
+      },
+      chrome_manifest: {
+        expand: true,
+        cwd: 'src',
+        src: 'manifest.json',
+        dest: 'dist/chrome/',
+        options: {
+          process: function (content, srcpath) {
+            var pkg = grunt.file.readJSON('package.json');
+            var json = JSON.parse(content);
+            json.version = pkg.version;
+            delete json.applications;
             return JSON.stringify(json, null, 2);
           }
         }
@@ -67,6 +79,14 @@ module.exports = function(grunt) {
         },
         files: [
           {expand: true, cwd: 'dist/offline', src: ['**'], dest: '/'}
+        ]
+      },
+      chrome: {
+        options: {
+          archive: 'dist/<%= pkg.name %>-chrome-v<%= pkg.version %>.zip'
+        },
+        files: [
+          {expand: true, cwd: 'dist/chrome', src: ['**'], dest: '/'}
         ]
       }
     }
