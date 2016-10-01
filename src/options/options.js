@@ -2,32 +2,67 @@
  * Javascript for options page.
  */
 
+var DOWNLOADING = "正在下载在线规则...";
 var storage = {};
-var urlToRemoves = [];
-var ruleToRemoves = [];
 
 var urlTemp =
-    "<tr data-index='{0}'><td><input type='checkbox' class='checkbox'/></td>" +
-    "<td><input type='text' class='form-control' value='{2}'/></td>" +
-    "<td style='width: 60px'><a>查看</a></td>" +
-    "<td><input type='checkbox' class='checkbox' {1} /></td></tr>";
+    "<td><input type='checkbox' class='checkbox'/></td>" +
+    "<td><input type='text' class='form-control'/></td>" +
+    "<td style='width: 60px'><a class='btn btn-xs btn-info'>查看</a></td>" +
+    "<td><input type='checkbox' class='checkbox'/></td>";
 
 var ruleTemp =
-    "<tr data-index='{0}'><td><input type='checkbox' class='checkbox'/></td>" +
-    "<td><input type='text' class='form-control' data-name='origin' value='{2}'/></td>" +
-    "<td><input type='text' class='form-control' data-name='target' value='{3}'/></td>" +
-    "<td><input type='checkbox' class='checkbox' {1} ></td></tr>";
+    "<td><input type='checkbox' class='checkbox'/></td>" +
+    "<td><input type='text' class='form-control'/></td>" +
+    "<td><input type='text' class='form-control'/></td>" +
+    "<td><input type='checkbox' class='checkbox'></td>";
 
-function bindDisplayURL() {
-    $("#tblOnlineURLs tbody a").click(function () {
-        var url = $(this).closest("tr").find(":text").val();
-        if (url) {
+
+function createURLRow(enable, value) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = urlTemp.format(enable, value);
+    $(tr).find(":checkbox").last().attr("checked", enable);
+    $(tr).find(":text").val(value).data("old", value);
+    $(tr).find(":text").change(function () {
+        var ele = this;
+        var url = $.trim($(this).val());
+        var hasSame = false;
+        $(this).closest("tbody").find(":text").each(function () {
+            var another = $.trim($(this).val());
+            if (ele != this && url == another) {
+                // Same online urls
+                hasSame = true;
+                return false;
+            }
+        });
+        if (!hasSame) {
+            $(this).data("old", url);
+        } else {
+            $(this).val($(this).data("old"));
+        }
+    });
+    $(tr).find("a").click(function () {
+        var url = $(this).closest("tr").find(":input").val();
+        if ($.trim(url)) {
             browser.tabs.create({url: url});
         }
     });
+    return tr;
+}
+
+function createRuleRow(enable, origin, target) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = ruleTemp.format(enable, origin, target);
+    $(tr).find(":checkbox").last().attr("checked", enable);
+    $(tr).find(":text").first().val(origin);
+    $(tr).find(":text").last().val(target);
+    return tr;
 }
 
 function displayAll() {
+    var checkAll = $("table thead").find(":checkbox");
+    checkAll.prop("checked", false);
+
     var manifest = browser.runtime.getManifest();
     $("h1 a").attr("href", manifest.homepage_url);
 
@@ -35,12 +70,11 @@ function displayAll() {
         if (item && item.storage) {
             storage = item.storage;
         }
-
         if (storage.updateInterval) {
             var intervalMinutes = Math.round(storage.updateInterval / 60);
             $("select").val(intervalMinutes);
         }
-        if (storage.updatedAt) {
+        if (storage.updatedAt != "") {
             var updatedAt = new moment(storage.updatedAt);
             $("#lblUpdatedAt").text(updatedAt.format("YYYY-MM-DD HH:mm:ss"))
         }
@@ -53,82 +87,69 @@ function displayAll() {
         body.html("");
         if (storage.onlineURLs) {
             for (var i = 0; i < storage.onlineURLs.length; i++) {
-                var url = storage.onlineURLs[i];
-                html = urlTemp.format(i, url.enable ? "checked" : "", url.url);
-                body.append(html);
+                var onlineURL = storage.onlineURLs[i];
+                var tr = createURLRow(onlineURL.enable, onlineURL.url);
+                body.append(tr);
             }
         }
-        bindDisplayURL();
-
         /* custom rules */
         body = $("#tblCustomRules tbody");
         body.html("");
         if (storage.customRules) {
             for (var i = 0; i < storage.customRules.length; i++) {
                 var rule = storage.customRules[i];
-                html = ruleTemp.format(i, rule.enable ? "checked" : "", rule.origin, rule.target);
-                body.append(html);
+                var tr = createRuleRow(rule.enable, rule.origin, rule.target);
+                body.append(tr);
             }
         }
     });
 }
-displayAll();
 
 browser.storage.onChanged.addListener(function (changes, area) {
     if (area == "local") {
         displayAll();
-        sendMessage("isDownloading", {}, function (response) {
-            if (!response) {
-                $("#downloadState").text("");
-            } else {
-                $("#downloadState").text("正在下载在线规则...");
-            }
-        });
     }
 });
 
 /* Check all and uncheck all */
-$("table thead input[type=checkbox]").click(function () {
+$("table thead :checkbox").click(function () {
     var checked = $(this).is(":checked");
     var table = $(this).closest("table");
     table.find("tbody tr").each(function () {
-        $(this).find("input[type=checkbox]:first").attr("checked", checked);
+        $(this).find(":checkbox").first().prop("checked", checked);
     });
 });
 
 $("#btnAddOnlineURL").click(function () {
     // already has empty row
     var hasEmpty = false;
-    $("#tblOnlineURLs").find("input[type=text]").each(function () {
-        if ($(this).val() === "") {
+    $("#tblOnlineURLs").find(":text").each(function () {
+        if ($.trim($(this).val()) == "") {
             hasEmpty = true;
             return false;
         }
     });
     if (!hasEmpty) {
-        $("#tblOnlineURLs tbody").append(urlTemp.format("", "checked", ""));
-        bindDisplayURL();
+        var tr = createURLRow(true, "");
+        $("#tblOnlineURLs tbody").append(tr);
     }
 });
 
 $("#btnDeleteOnlineURL").click(function () {
     $("#tblOnlineURLs tbody tr").each(function () {
-        var index = $(this).data("index");
-        if ($(this).find("input[type=checkbox]:first").is(":checked")) {
-            if (index !== "") {
-                urlToRemoves.push(parseInt(index));
-            }
+        var rule = $(this).find(":text").val();
+        if ($(this).find(":checkbox").first().is(":checked")) {
             $(this).remove();
         }
     });
-    $("#tblOnlineURLs thead :checkbox").attr("checked", false);
+    $("#tblOnlineURLs thead :checkbox").prop("checked", false);
 });
 
 /* Download in background */
 $("#btnDownload").click(function () {
     sendMessage("isDownloading", {}, function (response) {
         if (!response) {
-            $("#downloadState").text("正在下载在线规则...");
+            $("#downloadState").text(DOWNLOADING);
             sendMessage("download", {});
         } else {
             $("#downloadState").text("");
@@ -136,30 +157,43 @@ $("#btnDownload").click(function () {
     });
 });
 
+/**
+ * Firefox would send a storage changed event after download completed, but
+ * chrome do not send this event, so need to check download state.
+ */
+setInterval(function () {
+    sendMessage("isDownloading", {}, function (response) {
+        if (!response) {
+            $("#downloadState").text("");
+        } else {
+            $("#downloadState").text(DOWNLOADING);
+        }
+    });
+}, 1500);
+
 $("#btnAddCustomRule").click(function () {
     var hasEmpty = false;
-    $("#tblCustomRules").find("input[type=text]").each(function () {
-        if ($(this).val() === "") {
+    $("#tblCustomRules tbody tr").each(function () {
+        var origin = $(this).find(":text").first().val();
+        var target = $(this).find(":text").last().val();
+        if (origin == "" && target == "") {
             hasEmpty = true;
             return false;
         }
     });
     if (!hasEmpty) {
-        $("#tblCustomRules tbody").append(ruleTemp.format("", "checked", "", ""));
+        var tr = createRuleRow(true, "", "");
+        $("#tblCustomRules tbody").append(tr);
     }
 });
 
 $("#btnDeleteCustomRule").click(function () {
     $("#tblCustomRules tbody tr").each(function () {
-        var index = $(this).data("index");
-        if ($(this).find("input[type=checkbox]").first().is(":checked")) {
-            if (index !== ""){
-                ruleToRemoves.push(parseInt(index));
-            }
+        if ($(this).find(":checkbox").first().is(":checked")) {
             $(this).remove();
         }
     });
-    $("#tblCustomRules thead :checkbox").attr("checked", false);
+    $("#tblCustomRules thead :checkbox").prop("checked", false);
 });
 
 $("#btnReset").click(function () {
@@ -168,120 +202,62 @@ $("#btnReset").click(function () {
 
 /* Save options */
 $("#btnSave").click(function () {
-    var intervalMinutes = $("#onlineInterval").val();
-    intervalMinutes = parseInt(intervalMinutes);
-
-    var enable = $("#chbEnable").is(":checked");
-
-    var urls = [];
-    $("#tblOnlineURLs tbody tr").each(function () {
-        // skip empty row
-        var hasEmpty = false;
-        $(this).find(":text").each(function () {
-            if ($(this).val() === "") {
-                hasEmpty = true;
-                return false;
-            }
-        });
-        if (hasEmpty) {
-            return;
-        }
-        var url = $(this).find("input[type=text]").val();
-        var enable = $(this).find("input[type=checkbox]:last").is(":checked");
-        var index = $(this).data("index");
-        urls.push({
-            url: url,
-            enable: enable,
-            index: index
-        });
-    });
-
-    var rules = [];
-    $("#tblCustomRules tbody tr").each(function () {
-        // skip empty row
-        var hasEmpty = false;
-        $(this).find(":text").each(function () {
-            if ($(this).val() === "") {
-                hasEmpty = true;
-            }
-            return false;
-        });
-        if (hasEmpty) {
-            return;
-        }
-        var origin = $(this).find("input[type=text]:eq(0)").val();
-        var target = $(this).find("input[type=text]:eq(1)").val();
-        var enable = $(this).find("input[type=checkbox]:last").is(":checked");
-        var index = $(this).data("index");
-        rules.push({
-            origin: origin,
-            target: target,
-            enable: enable,
-            index: index
-        });
-    });
-
     /* reload storage and save options */
     load("storage", function (item) {
         if (item && item.storage) {
             storage = item.storage;
         }
-        storage.updateInterval = intervalMinutes * 60;
-        storage.enable = enable;
-        /* online url */
-        if (!storage.onlineURLs) {
-            storage.onlineURLs = [];
+        storage.updateInterval = parseInt($("#onlineInterval").val() * 60);
+        if (storage.updateInterval < 1 ) {
+            storage.updateInterval = 1;
         }
-        for (var i = 0; i < urls.length; i++) {
-            var url = urls[i];
-            if (url.index !== "") {
-                var index = parseInt(url.index);
-                storage.onlineURLs[index].url = url.url;
-                storage.onlineURLs[index].enable = url.enable;
-            } else {
-                storage.onlineURLs.push({
-                    url: url.url,
-                    enable: url.enable
-                });
+        storage.enable = $("#chbEnable").is(":checked");
+        /* online urls */
+        var oldURLs = storage.onlineURLs;
+        if (!oldURLs) {
+            oldURLs = [];
+        }
+        storage.onlineURLs = [];
+        $("#tblOnlineURLs tbody tr").each(function () {
+            var enable = $(this).find(":checkbox").last().is(":checked");
+            var url = $.trim($(this).find(":text").val());
+            if (url != "") {
+                var isOld = false;
+                for (var i = 0; i < oldURLs.length; i++) {
+                    if (oldURLs[i].url == url) {
+                        isOld = true;
+                        storage.onlineURLs.push(oldURLs[i]);
+                        break;
+                    }
+                }
+                if (!isOld) {
+                    storage.onlineURLs.push({
+                        "enable":enable,
+                        "url": url
+                    });
+                }
             }
-        }
-        var toRemoves = [];
-        for (var i = 0; i < urlToRemoves.length; i++) {
-            toRemoves.push(storage.onlineURLs[urlToRemoves[i]]);
-        }
-        for (var i = 0; i < toRemoves.length; i++) {
-            storage.onlineURLs.remove(toRemoves[i]);
-        }
+        });
         /* custom rule */
-        if (!storage.customRules) {
-            storage.customRules = [];
-        }
-        for (var i = 0; i < rules.length; i++) {
-            var rule = rules[i];
-            if (rule.index !== "") {
-                var index = parseInt(rule.index);
-                storage.customRules[index].origin = rule.origin;
-                storage.customRules[index].target = rule.target;
-                storage.customRules[index].enable = rule.enable;
-            } else {
-                storage.customRules.push({
-                    origin: rule.origin,
-                    target: rule.target,
-                    enable: rule.enable
-                });
+        storage.customRules = [];
+        $("#tblCustomRules tbody tr").each(function () {
+            var enable = $(this).find(":checkbox").last().is(":checked");
+            var origin = $(this).find(":text").first().val();
+            var target = $(this).find(":text").last().val();
+            if (origin == "" && target == "") {
+                return;
             }
-        }
-        toRemoves = [];
-        for (var i = 0; i < ruleToRemoves.length; i++) {
-            toRemoves.push(storage.customRules[ruleToRemoves[i]]);
-        }
-        for (var i = 0; i < toRemoves.length; i++) {
-            storage.customRules.remove(toRemoves[i]);
-        }
-
+            storage.customRules.push({
+                "enable": enable,
+                "origin": origin,
+                "target": target
+            });
+        });
         /* save */
-        save({"storage": storage});
+        save({"storage": storage}, function () {
+            displayAll();
+        });
     });
 });
 
-
+displayAll();

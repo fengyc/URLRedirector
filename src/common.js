@@ -67,7 +67,8 @@ function load(keys, callback) {
         function (item) {
             if (browser.runtime.lastError) {
                 console.error(browser.runtime.lastError);
-            } else {
+            }
+            if (callback) {
                 callback(item);
             }
         }
@@ -80,10 +81,9 @@ function save(obj, callback) {
         function () {
             if (browser.runtime.lastError) {
                 console.error(browser.runtime.lastError);
-            } else {
-                if (callback) {
-                    callback();
-                }
+            }
+            if (callback) {
+                callback();
             }
         }
     );
@@ -119,12 +119,28 @@ function download(url, callback){
         success: function (result, status, xhr) {
             content = result;
             if (callback) {
-                callback(result);
+                callback(url, result);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Fail to download " + url);
+            console.error("Status: " + status);
+            console.error("Error: "+ error);
+            if (callback) {
+                callback(url);
             }
         }
     });
     return content;
 }
+
+/* Others */
+jQuery.fn.flash = function( color, duration )
+{
+  var current = this.css( 'color' );
+  this.animate( { color: 'rgb(' + color + ')' }, duration / 2 );
+  this.animate( { color: current }, duration / 2 );
+};
 
 /* Fix chrome */
 if (typeof browser == "undefined" && chrome) {

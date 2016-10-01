@@ -5,46 +5,46 @@
 var storage = {};
 var reCache = {};
 var downloading = false;
+var downloadTimer = null;
 
-browser.storage.onChanged.addListener(function (changes, area) {
-    console.log("Changed: " + changes);
-    if (area == "local") {
-        load("storage", function (result) {
-            if (result && result.storage) {
-                storage = result.storage;
-                reCache = {};
-                resetDownloadTimer();
-            }
-        });
-    }
-});
-
-load("storage", function (result) {
+/* Reload callback */
+function reload(result) {
+    console.log("Reload");
     if (result && result.storage) {
         storage = result.storage;
         reCache = {};
         resetDownloadTimer();
     }
+}
+
+browser.storage.onChanged.addListener(function (changes, area) {
+    if (area == "local") {
+        load("storage", reload);
+    }
 });
+
+load("storage", reload);
 
 
 /* Download online rules */
-function downloadOnlineURLs(){
+function downloadOnlineURLs() {
     if (!storage.onlineURLs) {
         return;
     }
     downloading = true;
-    try {
-        for (var i = 0; i < storage.onlineURLs.length; i++) {
-            var onlineURL = storage.onlineURLs[i];
-            if (onlineURL.enable) {
-                console.log("Download " + onlineURL.url);
-                var content = download(onlineURL.url);
+    var toDownload = [];
+    for (var i = 0; i < storage.onlineURLs.length; i++) {
+        var onlineURL = storage.onlineURLs[i];
+        if (onlineURL.enable) {
+            toDownload.push(onlineURL.url);
+            console.log("Download " + onlineURL.url);
+            download(onlineURL.url, function (url, content) {
+                toDownload.remove(url);
                 if (content) {
                     try {
                         var json = JSON.parse(content);
-                        json.url = onlineURL.url;
-                        json.enable = onlineURL.enable;
+                        json.url = url;
+                        json.enable = true;
                         json.downloadAt = new Date();
                         /* version < 1.0, version >= 1.0 doesn't change */
                         if (!json.version || json.version < "1.0") {
@@ -61,25 +61,30 @@ function downloadOnlineURLs(){
                             json.rules = rules;
                         }
                         /* replace the object */
-                        storage.onlineURLs[i] = json;
+                        for (var j = 0; j < storage.onlineURLs.length; j++){
+                            if (storage.onlineURLs[j].url == url){
+                                storage.onlineURLs[j] = json;
+                                break;
+                            }
+                        }
                     } catch (err) {
                         console.error(err);
-                        continue;
                     }
                 }
-            }
+                if (toDownload.length <= 0) {
+                    console.log("Download completed");
+                    downloading = false;
+                    storage.updatedAt = (new Date()).toISOString();
+                    save({"storage": storage}, function () {
+                        load("storage", reload);
+                    });
+                }
+            });
         }
-        storage.updatedAt = new Date();
-        save({"storage": storage});
-    } finally {
-        console.log("Download completed");
-        downloading = false;
     }
 }
 
-/* An download timer to download online urls */
-var downloadTimer = null;
-
+/* Reset download timer to download online urls */
 function resetDownloadTimer() {
     if (downloadTimer != null) {
         clearInterval(downloadTimer);
@@ -98,9 +103,6 @@ function resetDownloadTimer() {
 
 /* Handle runtime messages */
 browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message) {
-        console.log("Calling " + message.method + " from " + sender);
-    }
     if (message.method == "download") {
         downloadOnlineURLs();
     }

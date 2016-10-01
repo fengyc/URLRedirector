@@ -26,6 +26,8 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
 版本和特性列表
 -------
 
+*2016-10-01* 修改下载在线规则为异步处理，处理 Date 对象在 chrome 和 firefox 下的兼容性问题，微小的界面调整和性能优化，禁止添加多个相同的在线规则
+
 **v1.2.1** 微小界面调整，适应 windows 上的显示，准备 chrome 支持
 
 *2016-09-29* 参考 https://lug.ustc.edu.cn/wiki/mirrors/help/revproxy , 更新 rules.json 
