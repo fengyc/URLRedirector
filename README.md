@@ -19,12 +19,14 @@ AMO 的上架地址（全面审核中） [https://addons.mozilla.org/zh-CN/firef
 
 AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，下载地址为：
 
-[https://addons.mozilla.org/firefox/downloads/file/513059/urlredirector-1.2.2-fx+an.xpi?src=devhub](https://addons.mozilla.org/firefox/downloads/file/513059/urlredirector-1.2.2-fx+an.xpi?src=devhub)
+[https://addons.mozilla.org/firefox/downloads/file/513082/urlredirector-1.2.3-fx+an.xpi?src=devhub](https://addons.mozilla.org/firefox/downloads/file/513082/urlredirector-1.2.3-fx+an.xpi?src=devhub)
 
 安装插件前，请升级 firefox 到最新版本（48+）。
 
 版本和特性列表
 -------
+
+**v1.2.3** 界面调整，修正在线链接打开事件的 bug
 
 **v1.2.2** 界面调整、性能优化，修正 chrome 和 firefox 兼容性方面的 bug，禁止添加多个相同在线规则
 
