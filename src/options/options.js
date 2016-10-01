@@ -63,6 +63,14 @@ function displayAll() {
     var checkAll = $("table thead").find(":checkbox");
     checkAll.prop("checked", false);
 
+    sendMessage("isDownloading", {}, function (response) {
+        if (!response) {
+            $("#downloadState").text("");
+        } else {
+            $("#downloadState").text(DOWNLOADING);
+        }
+    });
+
     var manifest = browser.runtime.getManifest();
     $("h1 a").attr("href", manifest.homepage_url);
 
@@ -152,24 +160,10 @@ $("#btnDownload").click(function () {
             $("#downloadState").text(DOWNLOADING);
             sendMessage("download", {});
         } else {
-            $("#downloadState").text("");
-        }
-    });
-});
-
-/**
- * Firefox would send a storage changed event after download completed, but
- * chrome do not send this event, so need to check download state.
- */
-setInterval(function () {
-    sendMessage("isDownloading", {}, function (response) {
-        if (!response) {
-            $("#downloadState").text("");
-        } else {
             $("#downloadState").text(DOWNLOADING);
         }
     });
-}, 1500);
+});
 
 $("#btnAddCustomRule").click(function () {
     var hasEmpty = false;
