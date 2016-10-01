@@ -42,7 +42,7 @@ function createURLRow(enable, value) {
         }
     });
     $(tr).find("a").click(function () {
-        var url = $(this).closest("tr").find(":input").val();
+        var url = $(this).closest("tr").find(":text").val();
         if ($.trim(url)) {
             browser.tabs.create({url: url});
         }
