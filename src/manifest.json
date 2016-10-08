@@ -17,7 +17,7 @@
   },
 
   "permissions": [
-    "storage", "webRequest", "webRequestBlocking", "<all_urls>"
+    "alarms", "storage", "webRequest", "webRequestBlocking", "<all_urls>"
   ],
 
   "browser_action": {

@@ -28,7 +28,8 @@ load("storage", reload);
 
 /* Download online rules */
 function downloadOnlineURLs() {
-    if (!storage.onlineURLs) {
+    console.log("Download started");
+    if (!storage.onlineURLs || storage.onlineURLs.length <=0 || downloading) {
         return;
     }
     downloading = true;
@@ -85,20 +86,36 @@ function downloadOnlineURLs() {
 }
 
 /* Reset download timer to download online urls */
+if (browser.alarms) {
+    browser.alarms.onAlarm.addListener(function (alarm) {
+        if (alarm.name == "download") {
+            downloadOnlineURLs();
+        }
+    })
+}
+
 function resetDownloadTimer() {
-    if (downloadTimer != null) {
-        clearInterval(downloadTimer);
-    }
-    var interval = 3600;
+    var interval = 900;
     if (storage.updateInterval) {
         interval = parseInt(storage.updateInterval);
     }
-    interval = interval * 1000;
-    downloadTimer = setInterval(function () {
-        if (storage.enable) {
-            downloadOnlineURLs();
+    /* If the browser support alarms api */
+    if (browser.alarms) {
+        browser.alarms.create("download", {
+            periodInMinutes: Math.ceil(interval / 60)
+        });
+    }
+    else {
+        if (downloadTimer != null) {
+            clearInterval(downloadTimer);
         }
-    }, interval);
+        interval = interval * 1000;
+        downloadTimer = setInterval(function () {
+            if (storage.enable) {
+                downloadOnlineURLs();
+            }
+        }, interval);
+    }
 }
 
 /* Handle runtime messages */
