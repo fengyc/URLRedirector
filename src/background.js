@@ -3,7 +3,6 @@
  */
 
 var storage = {};
-var reCache = {};
 var downloading = false;
 var downloadTimer = null;
 
@@ -12,7 +11,6 @@ function reload(result) {
     console.log("Reload");
     if (result && result.storage) {
         storage = result.storage;
-        reCache = {};
         resetDownloadTimer();
     }
 }
@@ -136,11 +134,7 @@ function redirect(rule, url) {
     if (!rule.enable){
         return;
     }
-    var re = reCache[rule];
-    if (!re) {
-        re = new RegExp(rule.origin);
-        reCache[rule] = re;
-    }
+    var re = new RegExp(rule.origin);
     if (re.test(url)) {
         var url = url.replace(re, rule.target);
         return {
@@ -167,7 +161,7 @@ function handleRedirect(details) {
                 var onlineURL = storage.onlineURLs[i];
                 if (onlineURL.enable && onlineURL.rules) {
                     for (var j = 0; j < onlineURL.rules.length; j++) {
-                        var rule = onlineURL.rules[i];
+                        var rule = onlineURL.rules[j];
                         var result = redirect(rule, details.url);
                         if (result) {
                             return result;

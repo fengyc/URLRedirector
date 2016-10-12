@@ -17,12 +17,16 @@ URLRedirector
 
 AMO 的上架地址（全面审核中） [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)
 
-AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，在 tools 目录 [tools/urlredirector-1.2.4-fx+an.xpi](tools/urlredirector-1.2.4-fx+an.xpi) 。
+AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，在 tools 目录 [tools/urlredirector-1.2.6-fx+an.xpi](tools/urlredirector-1.2.6-fx+an.xpi) 。
 
 安装插件前，请升级 firefox 到最新版本（48+）。
 
 版本和特性列表
 -------
+
+**v1.2.6** 修复 BUG
+
+**v1.2.5** 修复 background 中的 BUG
 
 **v1.2.4** 在 background 中用 [alarms](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/alarms) 代替 setInterval
 
