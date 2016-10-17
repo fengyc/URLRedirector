@@ -19,44 +19,54 @@ var ruleTemp =
 
 
 function createURLRow(enable, value) {
-    var tr = document.createElement("tr");
-    tr.innerHTML = urlTemp.format(enable, value);
-    $(tr).find(":checkbox").last().attr("checked", enable);
-    $(tr).find(":text").val(value).data("old", value);
-    $(tr).find(":text").change(function () {
-        var ele = this;
-        var url = $.trim($(this).val());
-        var hasSame = false;
-        $(this).closest("tbody").find(":text").each(function () {
-            var another = $.trim($(this).val());
-            if (ele != this && url == another) {
-                // Same online urls
-                hasSame = true;
-                return false;
-            }
-        });
-        if (!hasSame) {
-            $(this).data("old", url);
-        } else {
-            $(this).val($(this).data("old"));
-        }
-    });
-    $(tr).find("a").click(function () {
-        var url = $(this).closest("tr").find(":text").val();
-        if ($.trim(url)) {
-            browser.tabs.create({url: url});
-        }
-    });
-    return tr;
+    // https://developer.mozilla.org/en-US/Add-ons/Overlay_Extensions/XUL_School/DOM_Building_and_HTML_Insertion
+    $("#tblOnlineURLs tbody").append(
+        $("<tr>").append(
+            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox"))
+        ).append(
+            $("<td>").append($("<input>", {type: "text"}).addClass("form-control").change(function () {
+                var ele = this;
+                var url = $.trim($(this).val());
+                var hasSame = false;
+                $(this).closest("tbody").find(":text").each(function () {
+                    var another = $.trim($(this).val());
+                    if (ele != this && url == another) {
+                        // Same online urls
+                        hasSame = true;
+                        return false;
+                    }
+                });
+                if (!hasSame) {
+                    $(this).data("old", url);
+                } else {
+                    $(this).val($(this).data("old"));
+                }
+            }).val(value).data("old", value))
+        ).append(
+            $("<td>").width("60px").append($("<a>").addClass("btn btn-xs btn-info").click(function () {
+                var url = $(this).closest("tr").find(":text").val();
+                if ($.trim(url)) {
+                    browser.tabs.create({url: url});
+                }
+            }).text("查看"))
+        ).append(
+            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox").prop("checked", enable))
+        )
+    );
 }
 
 function createRuleRow(enable, origin, target) {
-    var tr = document.createElement("tr");
-    tr.innerHTML = ruleTemp.format(enable, origin, target);
-    $(tr).find(":checkbox").last().attr("checked", enable);
-    $(tr).find(":text").first().val(origin);
-    $(tr).find(":text").last().val(target);
-    return tr;
+    $("#tblCustomRules tbody").append(
+        $("<tr>").append(
+            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox"))
+        ).append(
+            $("<td>").append($("<input>", {type: "text"}).addClass("form-control").val(origin))
+        ).append(
+            $("<td>").append($("<input>", {type: "text"}).addClass("form-control").val(target))
+        ).append(
+            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox").prop("checked", enable))
+        )
+    );
 }
 
 function displayAll() {
@@ -82,32 +92,29 @@ function displayAll() {
             var intervalMinutes = Math.round(storage.updateInterval / 60);
             $("select").val(intervalMinutes);
         }
-        if (storage.updatedAt != "") {
-            var updatedAt = new moment(storage.updatedAt);
-            $("#lblUpdatedAt").text(updatedAt.format("YYYY-MM-DD HH:mm:ss"))
+        if (storage.updatedAt) {
+            var updatedAt = new Date(storage.updatedAt);
+            $("#lblUpdatedAt").text(updatedAt.toLocaleString())
         }
         if (storage.enable !== undefined) {
             $("#chbEnable").attr("checked", storage.enable);
         }
         /* online urls */
         var body = $("#tblOnlineURLs tbody");
-        var html = "";
-        body.html("");
+        body.empty();
         if (storage.onlineURLs) {
             for (var i = 0; i < storage.onlineURLs.length; i++) {
                 var onlineURL = storage.onlineURLs[i];
-                var tr = createURLRow(onlineURL.enable, onlineURL.url);
-                body.append(tr);
+                createURLRow(onlineURL.enable, onlineURL.url);
             }
         }
         /* custom rules */
         body = $("#tblCustomRules tbody");
-        body.html("");
+        body.empty();
         if (storage.customRules) {
             for (var i = 0; i < storage.customRules.length; i++) {
                 var rule = storage.customRules[i];
-                var tr = createRuleRow(rule.enable, rule.origin, rule.target);
-                body.append(tr);
+                createRuleRow(rule.enable, rule.origin, rule.target);
             }
         }
     });
@@ -138,8 +145,7 @@ $("#btnAddOnlineURL").click(function () {
         }
     });
     if (!hasEmpty) {
-        var tr = createURLRow(true, "");
-        $("#tblOnlineURLs tbody").append(tr);
+        createURLRow(true, "");
     }
 });
 
@@ -176,8 +182,7 @@ $("#btnAddCustomRule").click(function () {
         }
     });
     if (!hasEmpty) {
-        var tr = createRuleRow(true, "", "");
-        $("#tblCustomRules tbody").append(tr);
+        createRuleRow(true, "", "");
     }
 });
 
