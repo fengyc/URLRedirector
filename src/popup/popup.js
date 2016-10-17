@@ -12,8 +12,10 @@ function displayAll() {
         }
         $("#chbEnable").attr('checked', storage.enable);
         $("#updateInterval").html(storage.updateInterval);
-        var updatedAt = new moment(storage.updatedAt);
-        $("#updatedAt").html(updatedAt.format("YYYY-MM-DD HH:mm:ss"));
+        if (storage.updatedAt) {
+            var updatedAt = new Date(storage.updatedAt);
+            $("#updatedAt").text(updatedAt.toLocaleTimeString());
+        }
     });
 }
 
