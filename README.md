@@ -15,7 +15,7 @@ URLRedirector
 
 [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json)
 
-AMO 的上架地址（全面审核中） [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)
+AMO 的上架地址（已上线） [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)
 
 AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，在 tools 目录 [tools/urlredirector-1.2.8-an+fx.xpi](tools/urlredirector-1.2.8-an+fx.xpi) 。
 
@@ -23,6 +23,8 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
 
 版本和特性列表
 -------
+
+*2016-11-03* 通过审核，已经上线 :-)
 
 **v1.2.8** 把 options/options.js 中的 jquery.html("") 方法替换为 jquery.empty() 方法
 
