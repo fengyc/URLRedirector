@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "createdAt": "2016-11-30T10:14:22.212Z",
+  "rules": [
+    {
+      "origin": "ajax.googleapis.com",
+      "target": "sdn.geekzu.org/ajax",
+      "enable": true
+    },
+    {
+      "origin": "fonts.googleapis.com",
+      "target": "fonts.geekzu.org",
+      "enable": true
+    },
+    {
+      "origin": "themes.googleusercontent.com",
+      "target": "sdn.geekzu.org/g-themes",
+      "enable": true
+    },
+    {
+      "origin": "fonts.gstatic.com",
+      "target": "sdn.geekzu.org/g-fonts",
+      "enable": true
+    },
+    {
+      "origin": "www.gravatar.com/avatar",
+      "target": "fdn.geekzu.org/avatar",
+      "enable": true
+    },
+    {
+      "origin": "[0-2].gravatar.com/avatar",
+      "target": "fdn.geekzu.org/avatar",
+      "enable": true
+    },
+    {
+      "origin": "secure.gravatar.com/avatar",
+      "target": "sdn.geekzu.org/avatar",
+      "enable": true
+    }
+  ]
+}
