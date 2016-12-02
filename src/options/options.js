@@ -225,6 +225,7 @@ $("#btnSave").click(function () {
                 for (var i = 0; i < oldURLs.length; i++) {
                     if (oldURLs[i].url == url) {
                         isOld = true;
+                        oldURLs[i]["enable"] = enable;
                         storage.onlineURLs.push(oldURLs[i]);
                         break;
                     }
