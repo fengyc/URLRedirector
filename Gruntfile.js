@@ -43,6 +43,7 @@ module.exports = function(grunt) {
             var pkg = grunt.file.readJSON('package.json');
             var json = JSON.parse(content);
             json.version = pkg.version;
+            json.name = "URLRedirector-offline";
             json.applications.gecko.id = "URLRedirector-offline@fengyc";
             return JSON.stringify(json, null, 2);
           }
