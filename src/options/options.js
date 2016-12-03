@@ -5,25 +5,12 @@
 var DOWNLOADING = "正在下载在线规则...";
 var storage = {};
 
-var urlTemp =
-    "<td><input type='checkbox' class='checkbox'/></td>" +
-    "<td><input type='text' class='form-control'/></td>" +
-    "<td style='width: 60px'><a class='btn btn-xs btn-info'>查看</a></td>" +
-    "<td><input type='checkbox' class='checkbox'/></td>";
-
-var ruleTemp =
-    "<td><input type='checkbox' class='checkbox'/></td>" +
-    "<td><input type='text' class='form-control'/></td>" +
-    "<td><input type='text' class='form-control'/></td>" +
-    "<td><input type='checkbox' class='checkbox'></td>";
-
 
 function createURLRow(enable, value) {
     // https://developer.mozilla.org/en-US/Add-ons/Overlay_Extensions/XUL_School/DOM_Building_and_HTML_Insertion
     $("#tblOnlineURLs tbody").append(
         $("<tr>").append(
-            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox"))
-        ).append(
+            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox")),
             $("<td>").append($("<input>", {type: "text"}).addClass("form-control").change(function () {
                 var ele = this;
                 var url = $.trim($(this).val());
@@ -41,16 +28,36 @@ function createURLRow(enable, value) {
                 } else {
                     $(this).val($(this).data("old"));
                 }
-            }).val(value).data("old", value))
-        ).append(
+            }).val(value).data("old", value)),
             $("<td>").width("60px").append($("<a>").addClass("btn btn-xs btn-info").click(function () {
                 var url = $(this).closest("tr").find(":text").val();
                 if ($.trim(url)) {
                     browser.tabs.create({url: url});
                 }
-            }).text("查看"))
-        ).append(
-            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox").prop("checked", enable))
+            }).text("查看")),
+            $("<td>").append(
+                $("<input>", {type: "checkbox"}).addClass("checkbox middle").prop("checked", enable)
+            ),
+            $("<td>").append(
+                $("<button>").addClass("btn btn-xs btn-info").append(
+                    $("<span>").addClass("glyphicon glyphicon-chevron-up")
+                ).click(function () {
+                    var tr = $(this).closest("tr");
+                    var prev_tr = tr.prev();
+                    if (prev_tr) {
+                        prev_tr.before(tr);
+                    }
+                }),
+                $("<button>").addClass("btn btn-xs btn-info").css("margin-left", "2px").append(
+                    $("<span>").addClass("glyphicon glyphicon-chevron-down")
+                ).click(function () {
+                    var tr = $(this).closest("tr");
+                    var next = tr.next();
+                    if (next) {
+                        next.after(tr);
+                    }
+                })
+            )
         )
     );
 }
@@ -58,13 +65,30 @@ function createURLRow(enable, value) {
 function createRuleRow(enable, origin, target) {
     $("#tblCustomRules tbody").append(
         $("<tr>").append(
-            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox"))
-        ).append(
-            $("<td>").append($("<input>", {type: "text"}).addClass("form-control").val(origin))
-        ).append(
-            $("<td>").append($("<input>", {type: "text"}).addClass("form-control").val(target))
-        ).append(
-            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox").prop("checked", enable))
+            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox")),
+            $("<td>").append($("<input>", {type: "text"}).addClass("form-control").val(origin)),
+            $("<td>").append($("<input>", {type: "text"}).addClass("form-control").val(target)),
+            $("<td>").append($("<input>", {type: "checkbox"}).addClass("checkbox").prop("checked", enable)),
+            $("<td>").append(
+                $("<button>").addClass("btn btn-xs btn-info").append(
+                    $("<span>").addClass("glyphicon glyphicon-chevron-up")
+                ).click(function () {
+                    var tr = $(this).closest("tr");
+                    var prev_tr = tr.prev();
+                    if (prev_tr) {
+                        prev_tr.before(tr);
+                    }
+                }),
+                $("<button>").addClass("btn btn-xs btn-info").css("margin-left", "2px").append(
+                    $("<span>").addClass("glyphicon glyphicon-chevron-down")
+                ).click(function () {
+                    var tr = $(this).closest("tr");
+                    var next = tr.next();
+                    if (next) {
+                        next.after(tr);
+                    }
+                })
+            )
         )
     );
 }
