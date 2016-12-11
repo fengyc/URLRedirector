@@ -8,7 +8,6 @@ var downloadTimer = null;
 
 /* Reload callback */
 function reload(result) {
-    console.log("Reload");
     if (result && result.storage) {
         storage = result.storage;
         resetDownloadTimer();
@@ -26,7 +25,6 @@ load("storage", reload);
 
 /* Download online rules */
 function downloadOnlineURLs() {
-    console.log("Download started");
     if (!storage.onlineURLs || storage.onlineURLs.length <=0 || downloading) {
         return;
     }
@@ -36,7 +34,6 @@ function downloadOnlineURLs() {
         var onlineURL = storage.onlineURLs[i];
         if (onlineURL.enable) {
             toDownload.push(onlineURL.url);
-            console.log("Download " + onlineURL.url);
             download(onlineURL.url, function (url, content) {
                 toDownload.remove(url);
                 if (content) {
@@ -71,7 +68,6 @@ function downloadOnlineURLs() {
                     }
                 }
                 if (toDownload.length <= 0) {
-                    console.log("Download completed");
                     downloading = false;
                     storage.updatedAt = (new Date()).toISOString();
                     save({"storage": storage}, function () {
