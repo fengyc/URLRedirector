@@ -1,0 +1,131 @@
+{
+  "extensionName": {
+    "message": "URLRedirector",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "Automatically redirects specific urls.",
+    "description": "Description of the extension."
+  },
+
+  "options": {
+    "message": "Options",
+    "description": "Options."
+  },
+
+  "interval": {
+    "message": "Interval",
+    "description": "Interval."
+  },
+
+  "optionsTitle": {
+    "message": "URLRedirector Options",
+    "description": "Title of options page."
+  },
+
+  "projectHomepage": {
+    "message": "Project Homepage",
+    "description": "Project homepage."
+  },
+
+  "updatedAt": {
+    "message": "Updated At",
+    "description": "Updated at."
+  },
+
+  "save": {
+    "message": "Save",
+    "description": "Save."
+  },
+
+  "reset": {
+    "message": "Reset",
+    "description": "Reset."
+  },
+
+  "enable": {
+    "message": "Enable",
+    "description": "Enable."
+  },
+
+  "enableRedirection": {
+    "message": "Enable redirection",
+    "description": "Enable redirection."
+  },
+
+  "onlineRules": {
+    "message": "Online Rules",
+    "description": "Online rules."
+  },
+
+  "add": {
+    "message": "Add",
+    "description": "Add."
+  },
+
+  "del": {
+    "message": "Del",
+    "description": "Delete."
+  },
+
+  "updateInterval": {
+    "message": "Update interval",
+    "description": "Update interval."
+  },
+
+  "seconds": {
+    "message": "seconds",
+    "description": "Seconds"
+  },
+
+  "minutes": {
+    "message": "Minutes",
+    "description": "Minutes."
+  },
+
+  "hours": {
+    "message": "Hours",
+    "description": "Hours."
+  },
+
+  "days": {
+    "message": "Days",
+    "description": "Days."
+  },
+
+  "downloadOnlineRules": {
+    "message": "Download online rules",
+    "description": "Download online rules."
+  },
+
+  "ruleURL": {
+    "message": "URL of rule",
+    "description": "URL of online rule."
+  },
+
+  "priority": {
+    "message": "Priority",
+    "description": "Priority of rules."
+  },
+
+  "userRule":{
+    "message": "User Rules",
+    "description": "User defined rules."
+  },
+
+  "origin": {
+    "message": "Origin",
+    "description": "Origin address pattern."
+  },
+
+  "target": {
+    "message": "Target",
+    "description": "Target address pattern."
+  },
+
+  "view": {
+    "message": "View",
+    "description": "View."
+  }
+}
