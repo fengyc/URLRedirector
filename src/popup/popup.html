@@ -23,19 +23,20 @@
 <div class="main">
     <div class="item">
         <input type="checkbox" id="chbEnable">
-        <label for="chbEnable">开启重定向</label>
-        <button type="button" id="btnOptions" class="btn btn-info btn-xs" title="配置">
+        <label for="chbEnable"><span class="i18n">__MSG_enable__</span></label>
+        <button type="button" id="btnOptions" class="btn btn-info btn-xs i18n" title="__MSG_options__">
             <i class="glyphicon glyphicon-cog"></i>
         </button>
     </div>
     <div style="height: 1px; width: 100%; background-color: black"></div>
     <div class="item">
-        更新间隔:<span id="updateInterval"></span>秒<br>
+        <span class="i18n">__MSG_interval__</span>&nbsp;<span id="updateInterval"></span>&nbsp;<span class="i18n">__MSG_seconds__</span><br>
         <span id="updatedAt"></span>
     </div>
 </div>
 <script src="../static/js/jquery.min.js"></script>
 <script src="../common.js"></script>
+<script src="../static/js/i18n.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>
