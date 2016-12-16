@@ -21,43 +21,46 @@
 </head>
 <body>
 <div class="main">
-    <h1>URLRedirector 配置 <a class="small" target="_blank">(帮助主页)</a></h1>
+    <h1>
+        <span class="i18n">__MSG_optionsTitle__</span>
+        <a class="small" target="_blank"><span class="i18n">__MSG_projectHomepage__</span></a>
+    </h1>
     <hr>
-    更新时间：<span id="lblUpdatedAt"></span>
+    <span class="i18n">__MSG_updatedAt__</span>&nbsp;<span id="lblUpdatedAt"></span>
     <div class="pull-right" style="display: inline-block">
-        <button type="button" id="btnSave" class="btn btn-info" title="保存">
-            <i class="glyphicon glyphicon-floppy-disk"></i> 保存
+        <button type="button" id="btnSave" class="btn btn-info i18n" title="__MSG_save__">
+            <i class="glyphicon glyphicon-floppy-disk"></i> <span class="i18n">__MSG_save__</span>
         </button>
-        <button type="button" id="btnReset" class="btn btn-warning" title="重置">
-            <i class="glyphicon glyphicon-refresh"></i> 重置
+        <button type="button" id="btnReset" class="btn btn-warning i18n" title="__MSG_reset__">
+            <i class="glyphicon glyphicon-refresh"></i> <span class="i18n">__MSG_reset__</span>
         </button>
     </div>
     <div class="text-danger" style="margin: 10px">
-        <input type="checkbox" id="chbEnable"> 开启重定向
+        <input type="checkbox" id="chbEnable"> <span class="i18n">__MSG_enableRedirection__</span>
     </div>
     <div>
-        <h2 style="display: inline-block">在线规则</h2>
+        <h2 style="display: inline-block"><span class="i18n">__MSG_onlineRules__</span></h2>
         <div class="btn-group btn-group-sm" style="display: inline-block">
-            <button type="button" id="btnAddOnlineURL" class="btn btn-default" title="添加">
+            <button type="button" id="btnAddOnlineURL" class="btn btn-default i18n" title="__MSG_add__">
                 <i class="glyphicon glyphicon-plus-sign"></i>
             </button>
-            <button type="button" id="btnDeleteOnlineURL" class="btn btn-default" title="删除">
+            <button type="button" id="btnDeleteOnlineURL" class="btn btn-default i18n" title="__MSG_del__">
                 <i class="glyphicon glyphicon-minus-sign"></i>
             </button>
         </div>
 
-        <label for="onlineInterval">更新间隔:</label>
+        <label for="onlineInterval"><span class="i18n">__MSG_updateInterval__</span></label>
         <select id="onlineInterval">
-            <option value="15">15 分钟</option>
-            <option value="30">30 分钟</option>
-            <option value="45">45 分钟</option>
-            <option value="60">1 小时</option>
-            <option value="180">3 小时</option>
-            <option value="360">6 小时</option>
-            <option value="720">12 小时</option>
-            <option value="1440">1 天</option>
+            <option class="i18n" value="15">15 __MSG_minutes__</option>
+            <option class="i18n" value="30">30 __MSG_minutes__</option>
+            <option class="i18n" value="45">45 __MSG_minutes__</option>
+            <option class="i18n" value="60">1 __MSG_hours__</option>
+            <option class="i18n" value="180">3 __MSG_minutes__</option>
+            <option class="i18n" value="360">6 __MSG_minutes__</option>
+            <option class="i18n" value="720">12 __MSG_minutes__</option>
+            <option class="i18n" value="1440">1 __MSG_days__</option>
         </select>
-        <button type="button" id="btnDownload" class="btn btn-sm btn-default" title="下载在线规则">
+        <button type="button" id="btnDownload" class="btn btn-sm btn-default i18n" title="__MSG_downloadOnlineRules__">
             <i class="glyphicon glyphicon-save"></i>
         </button>
         <label id="downloadState"></label>
@@ -68,9 +71,9 @@
                 <th style="width: 20px">
                     <input type="checkbox" class="checkbox" style="margin: auto">
                 </th>
-                <th colspan="2">在线规则 URL</th>
-                <th style="width: 50px">启用</th>
-                <th style="width: 80px">优先顺序</th>
+                <th colspan="2"><span class="i18n">__MSG_ruleURL__</span></th>
+                <th style="width: 50px"><span class="i18n">__MSG_enable__</span></th>
+                <th style="width: 80px"><span class="i18n">__MSG_priority__</span></th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -79,12 +82,12 @@
     </div>
 
     <div>
-        <h2 style="display: inline-block">用户规则</h2>
+        <h2 style="display: inline-block"><span class="i18n">__MSG_userRules__</span></h2>
         <div class="btn-group btn-group-sm" style="display: inline-block">
-            <button type="button" id="btnAddCustomRule" class="btn btn-default" title="添加">
+            <button type="button" id="btnAddCustomRule" class="btn btn-default i18n" title="__MSG_add__">
                 <i class="glyphicon glyphicon-plus-sign"></i>
             </button>
-            <button type="button" id="btnDeleteCustomRule" class="btn btn-default" title="删除">
+            <button type="button" id="btnDeleteCustomRule" class="btn btn-default i18n" title="__MSG_del__">
                 <i class="glyphicon glyphicon-minus-sign"></i>
             </button>
 
@@ -95,10 +98,10 @@
                 <th style="width: 20px">
                     <input type="checkbox" class="checkbox"/>
                 </th>
-                <th>原始地址</th>
-                <th>目标地址</th>
-                <th style="width: 50px">启用</th>
-                <th style="width: 80px">优先顺序</th>
+                <th><span class="i18n">__MSG_origin__</span></th>
+                <th><span class="i18n">__MSG_target__</span></th>
+                <th style="width: 50px"><span class="i18n">__MSG_enable__</span></th>
+                <th style="width: 80px"><span class="i18n">__MSG_priority__</span></th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -110,5 +113,6 @@
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../common.js"></script>
 <script src="options.js"></script>
+<script src="../static/js/i18n.js"></script>
 </body>
 </html>

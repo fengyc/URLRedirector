@@ -2,7 +2,8 @@
  * Javascript for options page.
  */
 
-var DOWNLOADING = "正在下载在线规则...";
+var DOWNLOADING = browser.i18n.getMessage("downloading");
+var VIEW = browser.i18n.getMessage("view");
 var storage = {};
 
 
@@ -34,7 +35,7 @@ function createURLRow(enable, value) {
                 if ($.trim(url)) {
                     browser.tabs.create({url: url});
                 }
-            }).text("查看")),
+            }).text(VIEW)),
             $("<td>").append(
                 $("<input>", {type: "checkbox"}).addClass("checkbox middle").prop("checked", enable)
             ),
@@ -285,3 +286,6 @@ $("#btnSave").click(function () {
 });
 
 displayAll();
+
+/* i18n */
+document.title = browser.i18n.getMessage('optionsTitle');
