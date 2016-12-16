@@ -30,7 +30,7 @@
   },
 
   "updatedAt": {
-    "message": "Updated At",
+    "message": "更新时间",
     "description": "Updated at."
   },
 
@@ -99,6 +99,11 @@
     "description": "Download online rules."
   },
 
+  "downloading": {
+    "message": "正在下载在线规则...",
+    "description": "Downloading online rules."
+  },
+
   "ruleURL": {
     "message": "在线规则 URL",
     "description": "URL of online rule."
@@ -109,7 +114,7 @@
     "description": "Priority of rules."
   },
 
-  "userRule":{
+  "userRules":{
     "message": "用户规则",
     "description": "User defined rules."
   },
