@@ -60,19 +60,6 @@ if (!String.prototype.format) {
     };
 }
 
-if (!String.prototype.startsWith) {
-    String.prototype.startsWith = function (prefix) {
-        return this.slice(0, prefix.length) === prefix;
-    }
-}
-
-if (!String.prototype.endsWith) {
-    String.prototype.endsWith = function (suffix) {
-        return this.slice(this.length - suffix.length, suffix.length) === suffix;
-    }
-}
-
-
 /* Storage */
 function load(keys, callback) {
     browser.storage.local.get(
