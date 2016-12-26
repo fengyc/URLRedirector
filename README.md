@@ -15,7 +15,7 @@ URLRedirector
 
 [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json)
 
-极客族的在线规则 [http://cdn.geekzu.org/cached.html](http://cdn.geekzu.org/cached.html) :
+[极客族的在线规则](http://cdn.geekzu.org/cached.html) :
 
 [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_geekzu.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_geekzu.json)
 
@@ -93,10 +93,19 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
     内部规则 Rule 为简单 javascript 对象：
     
         {
-            origin: <原始地址>,
-            target: <目标地址>,
-            enable: <是否启用>
+            description: <规则描述，可选>
+            origin: <原始地址正则表达式，必需>
+            exclude: <排除地址正则表达式，可选>,
+            method: <原始请求方法列表，可选>
+            types: <URL 资源类型列表，可选>
+            target: <目标地址正则表达式，必需>
+            enable: <是否启用，可选>
         }
+    
+    不在 Rule 对象描述中的字段可随意添加，不影响结果；
+    method 可为 GET / POST / DELETE 等等，如 `["GET", "POST"]`；
+    URL 资源类型见 [ResourceType](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/ResourceType) 。
+    
     
     在线规则使用一个包含了规则列表的 json 格式的文件表示：
     
@@ -110,6 +119,10 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
     （2）包含 version 且 version >= 1.0 时，使用新格式，见 `tools/rules.json` 。
     
     两种格式的主要区别在于 rules 字段，在 gooreplacer 中 rules 为对象，在新格式中，rules 为列表（为了在后期能更加方便地支持规则排序）。
+
+由于在线规则使用 json 格式，因此需要注意 json 中的转义符问题， [json 在线校验工具](http://json.cn/) 可检查文件内容是否符合 json 格式。
+
+用户定制的本地规则优先于在线规则，可覆盖在线规则。
 
 （ grunt 是个好工具，打包真方便）
 

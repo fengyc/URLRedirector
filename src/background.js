@@ -126,10 +126,47 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 });
 
 /* Redirect url */
-function redirect(rule, url) {
+function redirect(rule, details) {
     if (!rule.enable){
         return;
     }
+
+    var url = details.url;
+
+    /* Check method */
+    if (rule.methods) {
+        var methodMatched = false;
+        for (var i = 0; i < rule.methods.length; i++) {
+            if (rule.methods[i] == details.method) {
+                methodMatched = true;
+                break;
+            }
+        }
+        if (!methodMatched) {
+            return;
+        }
+    }
+    /* Check resource type */
+    if (rule.types) {
+        var typeMatched = false;
+        for(var i=0; i < rule.types.length; i++) {
+            if (rule.types[i] == details.type) {
+                typeMatched = true;
+                break;
+            }
+        }
+        if (!typeMatched) {
+            return;
+        }
+    }
+    /* Exclude some rule */
+    if (rule.exclude) {
+        var re = new RegExp(rule.exclude);
+        if (re.test(url)) {
+            return;
+        }
+    }
+
     var re = new RegExp(rule.origin);
     if (re.test(url)) {
         var url = url.replace(re, rule.target);
@@ -145,7 +182,7 @@ function handleRedirect(details) {
         if (storage.customRules) {
             for (var i = 0; i < storage.customRules.length; i++) {
                 var rule = storage.customRules[i];
-                var result = redirect(rule, details.url);
+                var result = redirect(rule, details);
                 if (result) {
                     return result;
                 }
@@ -158,7 +195,7 @@ function handleRedirect(details) {
                 if (onlineURL.enable && onlineURL.rules) {
                     for (var j = 0; j < onlineURL.rules.length; j++) {
                         var rule = onlineURL.rules[j];
-                        var result = redirect(rule, details.url);
+                        var result = redirect(rule, details);
                         if (result) {
                             return result;
                         }
