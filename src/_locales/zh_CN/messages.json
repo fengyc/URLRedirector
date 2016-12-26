@@ -1,0 +1,136 @@
+{
+  "extensionName": {
+    "message": "URLRedirector",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "帮助你重定向特定网页到新地址",
+    "description": "Description of the extension."
+  },
+
+  "options": {
+    "message": "选项",
+    "description": "Options."
+  },
+
+  "interval": {
+    "message": "间隔",
+    "description": "Interval."
+  },
+
+  "optionsTitle": {
+    "message": "URLRedirector 选项",
+    "description": "Title of options page."
+  },
+
+  "projectHomepage": {
+    "message": "项目主页",
+    "description": "Project homepage."
+  },
+
+  "updatedAt": {
+    "message": "更新时间",
+    "description": "Updated at."
+  },
+
+  "save": {
+    "message": "保存",
+    "description": "Save."
+  },
+
+  "reset": {
+    "message": "重置",
+    "description": "Reset."
+  },
+
+  "enable": {
+    "message": "启用",
+    "description": "Enable."
+  },
+
+  "enableRedirection": {
+    "message": "开启重定向",
+    "description": "Enable redirection."
+  },
+
+  "onlineRules": {
+    "message": "在线规则",
+    "description": "Online rules."
+  },
+
+  "add": {
+    "message": "添加",
+    "description": "Add."
+  },
+
+  "del": {
+    "message": "删除",
+    "description": "Delete."
+  },
+
+  "updateInterval": {
+    "message": "更新间隔",
+    "description": "Update interval."
+  },
+
+  "seconds": {
+    "message": "秒",
+    "description": "Seconds"
+  },
+
+  "minutes": {
+    "message": "分钟",
+    "description": "Minutes."
+  },
+
+  "hours": {
+    "message": "小时",
+    "description": "Hours."
+  },
+
+  "days": {
+    "message": "天",
+    "description": "Days."
+  },
+
+  "downloadOnlineRules": {
+    "message": "下载在线规则",
+    "description": "Download online rules."
+  },
+
+  "downloading": {
+    "message": "正在下载在线规则...",
+    "description": "Downloading online rules."
+  },
+
+  "ruleURL": {
+    "message": "在线规则 URL",
+    "description": "URL of online rule."
+  },
+
+  "priority": {
+    "message": "优先顺序",
+    "description": "Priority of rules."
+  },
+
+  "userRules":{
+    "message": "用户规则",
+    "description": "User defined rules."
+  },
+
+  "origin": {
+    "message": "原始地址",
+    "description": "Origin address pattern."
+  },
+
+  "target": {
+    "message": "目标地址",
+    "description": "Target address pattern."
+  },
+
+  "view": {
+    "message": "查看",
+    "description": "View."
+  }
+}
