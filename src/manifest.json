@@ -1,7 +1,7 @@
 {
-  "description": "帮助你重定向特定网页到新地址",
+  "description": "__MSG_extensionDescription__",
   "manifest_version": 2,
-  "name": "URLRedirector",
+  "name": "__MSG_extensionName__",
   "version": "1.2.9",
   "homepage_url": "https://github.com/fengyc/URLRedirector",
   "icons": {
@@ -35,5 +35,7 @@
   "options_ui": {
     "page": "options/options.html",
     "open_in_tab": true
-  }
+  },
+
+  "default_locale": "en"
 }
