@@ -18,31 +18,19 @@ var _I18N_CONTANT = {
 };
 
 
-function getI18NMessage(msg) {
-    var remains = msg;
-    msg = "";
-    while (remains) {
-        var posStart = remains.indexOf(_MSG_PREFIX);
-        if (posStart < 0) {
-            msg += remains;
-            break
-        }
-        var posEnd = remains.indexOf(_MSG_SURFIX, posStart + _MSG_PREFIX.length + 1);
-        if (posEnd < 0) {
-            msg += remains;
-            break
-        }
-        var msgId = remains.slice(posStart + _MSG_PREFIX.length, posEnd);
-        msg += remains.slice(0, posStart);
+function getI18NMessage(msgId) {
+    var msg = msgId;
+    if (msg.startsWith(_MSG_PREFIX) && msg.endsWith(_MSG_SURFIX)) {
+        msgId = msg.slice(_MSG_PREFIX.length);
+        msgId = msgId.slice(0, msgId.length - _MSG_SURFIX.length);
         if (msgId.startsWith(_MSG_CONTANT_PREFIX) && _I18N_CONTANT[value]) {
             if (_I18N_CONTANT[value]) {
-                msg += _I18N_CONTANT[msgId];
+                msg = _I18N_CONTANT[msgId];
             }
         }
         else {
-            msg += browser.i18n.getMessage(msgId);
+            msg = browser.i18n.getMessage(msgId);
         }
-        remains = remains.slice(posEnd + _MSG_SURFIX.length);
     }
     return msg;
 }
@@ -60,7 +48,7 @@ $(document).ready(function () {
             }
         }
         /* text */
-        if (this.tagName === "SPAN" || this.tagName === "OPTION") {
+        if (this.tagName === "SPAN") {
             var text = $(this).text();
             if (text) {
                 text = getI18NMessage(text);
