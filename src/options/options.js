@@ -153,6 +153,25 @@ $("#btnReset").click(function () {
 
 /* Save options */
 $("#btnSave").click(function () {
+    /* remove empty online url */
+    var tmp = storage.onlineURLs;
+    storage.onlineURLs = [];
+    for (var i=0; i<tmp.length; i++) {
+        var onlineURL = tmp[i];
+        if (onlineURL.url && onlineURL.url != "") {
+            storage.onlineURLs.push(onlineURL);
+        }
+    }
+    /* remove empty custom rule */
+    tmp = storage.customRules;
+    storage.customRules = [];
+    for (var i=0; i<tmp.length; i++) {
+        var rule = tmp[i];
+        if (rule.origin != "" && rule.target != "") {
+            storage.customRules.push(rule)
+        }
+    }
+    /* save */
     save({"storage": storage});
 });
 
