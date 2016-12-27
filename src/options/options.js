@@ -327,11 +327,14 @@ $("#btnDeleteCustomRule").click(function () {
 
 /* Show Edit custom rule modal */
 function showEditCustomRuleModal(rule) {
+    $("#divMethods input[type='checkbox']").prop('checked', false);
+    $("#divTypes input[type='checkbox']").prop('checked', false);
     if (rule) {
         $("#txtDescription").val(rule.description);
         $("#txtOrigin").val(rule.origin);
         $("#txtTarget").val(rule.target);
         $("#txtExclude").val(rule.exclude);
+
         if (rule.methods && rule.methods.length > 0) {
             $("#cbMethodAll").prop("checked", false);
             for (var i=0; i<rule.methods.length; i++) {
@@ -342,10 +345,11 @@ function showEditCustomRuleModal(rule) {
             $("#cbMethodAll").prop("checked", true);
             $("#divMethods").collapse("hide");
         }
+
         if (rule.types && rule.types.length > 0) {
             $("#cbTypeAll").prop("checked", false);
             for (var i=0; i<rule.types.length; i++) {
-                $("#cbType_"+rule.methods[i]).prop("checked", true);
+                $("#cbType_"+rule.types[i]).prop("checked", true);
             }
             $("#divTypes").collapse("show");
         } else {
@@ -387,6 +391,14 @@ $("#cbMethodAll").change(function () {
 
 /* confirm */
 $("#btnConfirmCustomRule").click(function () {
+    if ($("#txtOrigin").val() == "") {
+        $("#txtOrigin").get(0).focus();
+        return;
+    }
+    if ($("#txtTarget").val() == "") {
+        $("#txtTarget").get(0).focus();
+        return;
+    }
     if (!editingRule) {
         editingRule = {
             enable: true

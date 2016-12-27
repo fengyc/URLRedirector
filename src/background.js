@@ -133,42 +133,41 @@ function redirect(rule, details) {
 
     var url = details.url;
 
-    /* Check method */
-    if (rule.methods && rule.methods.length > 0) {
-        var methodMatched = false;
-        for (var i = 0; i < rule.methods.length; i++) {
-            if (rule.methods[i] == details.method) {
-                methodMatched = true;
-                break;
-            }
-        }
-        if (!methodMatched) {
-            return;
-        }
-    }
-    /* Check resource type */
-    if (rule.types && rule.types.length > 0) {
-        var typeMatched = false;
-        for(var i=0; i < rule.types.length; i++) {
-            if (rule.types[i] == details.type) {
-                typeMatched = true;
-                break;
-            }
-        }
-        if (!typeMatched) {
-            return;
-        }
-    }
-    /* Exclude some rule */
-    if (rule.exclude && rule.exclude!="") {
-        var re = new RegExp(rule.exclude);
-        if (re.test(url)) {
-            return;
-        }
-    }
-
     var re = new RegExp(rule.origin);
     if (re.test(url)) {
+        /* Check method */
+        if (rule.methods && rule.methods.length > 0) {
+            var methodMatched = false;
+            for (var i = 0; i < rule.methods.length; i++) {
+                if (rule.methods[i] == details.method) {
+                    methodMatched = true;
+                    break;
+                }
+            }
+            if (!methodMatched) {
+                return;
+            }
+        }
+        /* Check resource type */
+        if (rule.types && rule.types.length > 0) {
+            var typeMatched = false;
+            for(var i=0; i < rule.types.length; i++) {
+                if (rule.types[i] == details.type) {
+                    typeMatched = true;
+                    break;
+                }
+            }
+            if (!typeMatched) {
+                return;
+            }
+        }
+        /* Exclude some rule */
+        if (rule.exclude && rule.exclude!="") {
+            var re = new RegExp(rule.exclude);
+            if (re.test(url)) {
+                return;
+            }
+        }
         var url = url.replace(re, rule.target);
         return {
             redirectUrl: url
