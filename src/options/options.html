@@ -86,13 +86,13 @@
                 <i class="glyphicon glyphicon-minus-sign"></i>
             </button>
         </div>
-        <!--TODO(fengyingcai): 调整表格以支持增加的匹配选项-->
         <table id="tblCustomRules" class="table table-bordered table-striped">
             <thead>
             <tr>
                 <th style="width: 20px">
                     <input type="checkbox" class="checkbox"/>
                 </th>
+                <th>描述</th>
                 <th>原始地址</th>
                 <th>目标地址</th>
                 <th style="width: 50px">启用</th>
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputMethod" class="col-sm-2 control-label">请求方法</label>
+                        <label class="col-sm-2 control-label">请求方法</label>
                         <div class="col-sm-10">
                             <div class="checkbox-inline"><label><input type="checkbox" id="cbMethodAll" checked>全部方法</label></div>
                             <div class="collapse" id="divMethods">
@@ -154,7 +154,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputType" class="col-sm-2 control-label">资源类型</label>
+                        <label class="col-sm-2 control-label">资源类型</label>
                         <div class="col-sm-10">
                             <div class="checkbox-inline"><label><input type="checkbox" id="cbTypeAll" checked>全部类型</label></div>
                             <div class="collapse" id="divTypes">
