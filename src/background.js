@@ -160,7 +160,7 @@ function redirect(rule, details) {
         }
     }
     /* Exclude some rule */
-    if (rule.exclude) {
+    if (rule.exclude && rule.exclude!="") {
         var re = new RegExp(rule.exclude);
         if (re.test(url)) {
             return;
