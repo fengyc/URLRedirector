@@ -118,25 +118,25 @@
                     <div class="form-group">
                         <label for="txtDescription" class="col-sm-2 control-label">规则描述</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="txtDescription" placeholder="规则描述">
+                            <input type="text" class="form-control" id="txtDescription" placeholder="规则描述，可选">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="txtOrigin" class="col-sm-2 control-label">原始地址</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="txtOrigin" placeholder="原始地址正则表达式">
+                            <input type="text" class="form-control" id="txtOrigin" placeholder="原始地址正则表达式，必需">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="txtTarget" class="col-sm-2 control-label">目标地址</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="txtTarget" placeholder="目标地址正则表达试">
+                            <input type="text" class="form-control" id="txtTarget" placeholder="目标地址正则表达式，必需">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="txtExclude" class="col-sm-2 control-label">排除地址</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="txtExclude" placeholder="排除地址正则表达式">
+                            <input type="text" class="form-control" id="txtExclude" placeholder="排除地址正则表达式，可选">
                         </div>
                     </div>
                     <div class="form-group">
@@ -144,12 +144,12 @@
                         <div class="col-sm-10">
                             <div class="checkbox-inline"><label><input type="checkbox" id="cbMethodAll" checked>全部方法</label></div>
                             <div class="collapse" id="divMethods">
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>GET</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>POST</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>PUT</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>PATCH</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>HEAD</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>DELETE</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_GET">GET</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_POST">POST</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_PUT">PUT</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_PATCH">PATCH</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_HEAD">HEAD</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_DELETE">DELETE</label></div>
                             </div>
                         </div>
                     </div>
@@ -158,25 +158,25 @@
                         <div class="col-sm-10">
                             <div class="checkbox-inline"><label><input type="checkbox" id="cbTypeAll" checked>全部类型</label></div>
                             <div class="collapse" id="divTypes">
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>main_frame</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>sub_frame</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>stylesheet</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>script</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>image</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>object</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>xmlhttprequest</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>xbl</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>xslt</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>ping</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>beacon</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>xml_dtd</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>font</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>media</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>websocket</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>csp_report</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>imageset</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>web_manifest</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" checked>other</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_main_frame">main_frame</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_sub_frame">sub_frame</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_stylesheet">stylesheet</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_script">script</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_image">image</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_object">object</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_xmlhttprequest">xmlhttprequest</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_xbl">xbl</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_xslt">xslt</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_ping">ping</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_beacon">beacon</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_xml_dtd">xml_dtd</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_font">font</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_media">media</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_websocket">websocket</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_csp_report">csp_report</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_imageset">imageset</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_web_manifest">web_manifest</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_other">other</label></div>
                             </div>
                         </div>
                     </div>
