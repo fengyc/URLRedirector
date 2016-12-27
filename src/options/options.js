@@ -109,6 +109,7 @@ function createRuleRow(rule) {
     $("#tblCustomRules tbody").append(
         $("<tr>").append(
             $("<td>").append($("<input>", {type: "checkbox"})),
+            $("<td>").append($("<span>").text(rule.description)),
             $("<td>").append($("<span>").text(rule.origin)),
             $("<td>").append($("<span>").text(rule.target)),
             $("<td>").append(
@@ -280,8 +281,8 @@ var editingRule = null;
 $("#btnAddCustomRule").click(function () {
     var hasEmpty = false;
     $("#tblCustomRules tbody tr").each(function () {
-        var origin = $(this).find("input[type='text']").first().val();
-        var target = $(this).find("input[type='text']").last().val();
+        var origin = $(this).find("span").get(1).innerText;
+        var target = $(this).find("span").get(2).innerText;
         if (origin == "" && target == "") {
             hasEmpty = true;
             return false;
