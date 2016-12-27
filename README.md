@@ -21,12 +21,14 @@ URLRedirector
 
 AMO 的上架地址（已上线） [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)
 
-AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，在 tools 目录 [tools/urlredirector-1.2.8-an+fx.xpi](tools/urlredirector-1.2.8-an+fx.xpi) 。
+AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，在 tools 目录 [tools/urlredirector_offline-1.2.10-an+fx.xpi](tools/urlredirector_offline-1.2.10-an+fx.xpi) 。
 
 安装插件前，请升级 firefox 到最新版本（48+）。
 
 版本和特性列表
 -------
+
+**v1.2.10** （AMO 审核中）增加更多的重定向配置选项，支持根据请求方法、资源类型、排除地址进行过滤
 
 **v1.2.9** 更正 options 中启用选项的 bug ，增加规则优先顺序调整功能
 
