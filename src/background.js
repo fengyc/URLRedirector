@@ -134,7 +134,7 @@ function redirect(rule, details) {
     var url = details.url;
 
     /* Check method */
-    if (rule.methods) {
+    if (rule.methods && rule.methods.length > 0) {
         var methodMatched = false;
         for (var i = 0; i < rule.methods.length; i++) {
             if (rule.methods[i] == details.method) {
@@ -147,7 +147,7 @@ function redirect(rule, details) {
         }
     }
     /* Check resource type */
-    if (rule.types) {
+    if (rule.types && rule.types.length > 0) {
         var typeMatched = false;
         for(var i=0; i < rule.types.length; i++) {
             if (rule.types[i] == details.type) {

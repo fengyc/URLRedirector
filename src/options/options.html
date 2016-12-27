@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
     <h1>URLRedirector 配置 <a class="small" target="_blank">(帮助主页)</a></h1>
     <hr>
     更新时间：<span id="lblUpdatedAt"></span>
@@ -79,13 +79,12 @@
             <button type="button" id="btnAddCustomRule" class="btn btn-default" title="添加">
                 <i class="glyphicon glyphicon-plus-sign"></i>
             </button>
-            <button type="button" id="btnAddCustomRule2" class="btn btn-default" data-toggle="modal" data-target="#modalEditUserRule" title="添加">
-                <i class="glyphicon glyphicon-plus-sign"></i>
+            <button type="button" id="btnEditCustomRule" class="btn btn-default" title="编辑">
+                <i class="glyphicon glyphicon-edit"></i>
             </button>
             <button type="button" id="btnDeleteCustomRule" class="btn btn-default" title="删除">
                 <i class="glyphicon glyphicon-minus-sign"></i>
             </button>
-
         </div>
         <!--TODO(fengyingcai): 调整表格以支持增加的匹配选项-->
         <table id="tblCustomRules" class="table table-bordered table-striped">
@@ -107,58 +106,88 @@
 
 <!-- 用户自定义规则编辑框 -->
 <div id="modalEditUserRule" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
-        <h4 class="modal-title">编辑用户规则</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-horizontal" role="form">
-          <div class="form-group">
-            <label for="inputDescription" class="col-sm-2 control-label">规则描述</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputDescription" placeholder="规则描述">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                    class="sr-only">关闭</span></button>
+                <h4 class="modal-title">编辑用户规则</h4>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="inputOrigin" class="col-sm-2 control-label">原始地址</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputOrigin" placeholder="原始地址正则表达式">
+            <div class="modal-body">
+                <div class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="txtDescription" class="col-sm-2 control-label">规则描述</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtDescription" placeholder="规则描述">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtOrigin" class="col-sm-2 control-label">原始地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtOrigin" placeholder="原始地址正则表达式">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtTarget" class="col-sm-2 control-label">目标地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtTarget" placeholder="目标地址正则表达试">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtExclude" class="col-sm-2 control-label">排除地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtExclude" placeholder="排除地址正则表达式">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMethod" class="col-sm-2 control-label">请求方法</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox-inline"><label><input type="checkbox" id="cbMethodAll" checked>全部方法</label></div>
+                            <div class="collapse" id="divMethods">
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>GET</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>POST</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>PUT</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>PATCH</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>HEAD</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>DELETE</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputType" class="col-sm-2 control-label">资源类型</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox-inline"><label><input type="checkbox" id="cbTypeAll" checked>全部类型</label></div>
+                            <div class="collapse" id="divTypes">
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>main_frame</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>sub_frame</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>stylesheet</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>script</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>image</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>object</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>xmlhttprequest</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>xbl</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>xslt</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>ping</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>beacon</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>xml_dtd</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>font</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>media</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>websocket</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>csp_report</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>imageset</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>web_manifest</label></div>
+                                <div class="checkbox-inline"><label><input type="checkbox" checked>other</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-            <div class="form-group">
-            <label for="inputTarget" class="col-sm-2 control-label">目标地址</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputTarget" placeholder="目标地址正则表达试">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="btnConfirmCustomRule">确定</button>
             </div>
-          </div>
-          <div class="form-group">
-              <label for="inputExclude" class="col-sm-2 control-label">排除地址</label>
-              <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputExclude" placeholder="排除地址正则表达式">
-            </div>
-          </div>
-          <div class="form-group">
-              <label for="inputMethod" class="col-sm-2 control-label">请求方法</label>
-             <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputMethod" placeholder="请求方法列表">
-            </div>
-          </div>
-          <div class="form-group">
-              <label for="inputType" class="col-sm-2 control-label">资源类型</label>
-              <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputType" placeholder="资源类型列表">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary">保存</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 <script src="../static/js/jquery.min.js"></script>
