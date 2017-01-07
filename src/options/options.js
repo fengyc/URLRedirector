@@ -408,7 +408,7 @@ $("#btnConfirmCustomRule").click(function () {
     editingRule.description = $("#txtDescription").val();
     editingRule.origin = $("#txtOrigin").val();
     editingRule.target = $("#txtTarget").val();
-    editingRule.exclude = $("#txtexclude").val();
+    editingRule.exclude = $("#txtExclude").val();
     editingRule.methods = [];
     if (!$("#cbMethodAll").is(":checked")) {
         $("#divMethods input[type='checkbox']").each(function () {

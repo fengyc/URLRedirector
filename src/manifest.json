@@ -2,7 +2,7 @@
   "description": "帮助你重定向特定网页到新地址",
   "manifest_version": 2,
   "name": "URLRedirector",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "homepage_url": "https://github.com/fengyc/URLRedirector",
   "icons": {
     "48": "static/images/r.png",
@@ -29,7 +29,7 @@
 
   "background": {
     "scripts": [
-      "static/js/jquery.min.js", "static/js/moment.min.js", "common.js", "background.js"]
+      "static/js/jquery.js", "common.js", "background.js"]
   },
 
   "options_ui": {
