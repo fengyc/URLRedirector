@@ -15,8 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "1.9.1",
-    "bootstrap": "^3.3.7",
-    "moment": "^2.15.1"
+    "jquery": "1.12.4",
+    "bootstrap": "3.3.7"
   }
 }

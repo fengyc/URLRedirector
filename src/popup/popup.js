@@ -11,7 +11,7 @@ function displayAll() {
             storage = {};
         }
         $("#chbEnable").attr('checked', storage.enable);
-        $("#updateInterval").html(storage.updateInterval);
+        $("#updateInterval").text(storage.updateInterval);
         if (storage.updatedAt) {
             var updatedAt = new Date(storage.updatedAt);
             $("#updatedAt").text(updatedAt.toLocaleTimeString());
