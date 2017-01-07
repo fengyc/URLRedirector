@@ -21,7 +21,7 @@ URLRedirector
 
 AMO 的上架地址（已上线） [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)
 
-AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，在 tools 目录 [tools/urlredirector_offline-1.2.10-an+fx.xpi](tools/urlredirector_offline-1.2.10-an+fx.xpi) 。
+AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，在 tools 目录下。
 
 安装插件前，请升级 firefox 到最新版本（48+）。
 
