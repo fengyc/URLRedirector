@@ -7,16 +7,10 @@
     <title>URLRedirector 配置</title>
     <link rel="icon" href="../static/images/r.png"/>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
-    <style>
-        .middle {
-            margin: auto;
-            vertical-align: middle;
-        }
-    </style>
 </head>
 <body>
 <div class="container">
-    <h1>URLRedirector 配置 <a class="small" target="_blank">(帮助主页)</a></h1>
+    <h1>URLRedirector 配置 <span class="small" id="version"></span> <a id="homepage" class="small" target="_blank">(帮助主页)</a></h1>
     <hr>
     更新时间：<span id="lblUpdatedAt"></span>
     <div class="pull-right" style="display: inline-block">
@@ -144,39 +138,63 @@
                         <div class="col-sm-10">
                             <div class="checkbox-inline"><label><input type="checkbox" id="cbMethodAll" checked>全部方法</label></div>
                             <div class="collapse" id="divMethods">
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_GET">GET</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_POST">POST</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_PUT">PUT</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_PATCH">PATCH</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_HEAD">HEAD</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbMethod_DELETE">DELETE</label></div>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbMethod_GET" data-method="GET">GET</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbMethod_POST" data-method="POST">POST</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbMethod_PUT" date-method="PUT">PUT</label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbMethod_PATCH" data-method="PATCH">PATCH</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbMethod_HEAD" data-method="HEAD">HEAD</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbMethod_DELETE" data-method="DELETE">DELETE</label></div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">资源类型</label>
                         <div class="col-sm-10">
-                            <div class="checkbox-inline"><label><input type="checkbox" id="cbTypeAll" checked>全部类型</label></div>
+                            <div class="checkbox-inline"><label><input type="checkbox" id="cbTypeAll" checked>全部类型</label> <a id="resourceType" class="small" target="_blank">类型说明</a></div>
+
                             <div class="collapse" id="divTypes">
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_main_frame">main_frame</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_sub_frame">sub_frame</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_stylesheet">stylesheet</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_script">script</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_image">image</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_object">object</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_xmlhttprequest">xmlhttprequest</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_xbl">xbl</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_xslt">xslt</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_ping">ping</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_beacon">beacon</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_xml_dtd">xml_dtd</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_font">font</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_media">media</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_websocket">websocket</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_csp_report">csp_report</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_imageset">imageset</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_web_manifest">web_manifest</label></div>
-                                <div class="checkbox-inline"><label><input type="checkbox" id="cbType_other">other</label></div>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_main_frame" data-type="main_frame">main_frame</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_sub_frame" data-type="sub_frame">sub_frame</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_stylesheet" data-type="stylesheet">stylesheet</label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_script" data-type="script">script</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_image" data-type="image">image</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_object" data-type="object">object</label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_xmlhttprequest" data-type="xmlhttprequest">xmlhttprequest</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_xbl" data-type="xbl">xbl</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_xslt" data-type="xslt">xslt</label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_ping" data-type="ping">ping</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_beacon" data-type="beacon">beacon</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_xml_dtd" data-type="xml_dtd">xml_dtd</label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_font" data-type="font">font</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_media" data-type="media">media</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_websocket" data-type="websocket">websocket</label></div>
+                                    </div>
+                                    <div class="row">
+                                         <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_csp_report" data-type="csp_report">csp_report</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_imageset" data-type="imageset">imageset</label></div>
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_web_manifest" data-type="web_manifest">web_manifest</label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 checkbox-inline"><label><input type="checkbox" id="cbType_other" data-type="other">other</label></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

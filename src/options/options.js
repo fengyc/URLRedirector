@@ -4,6 +4,7 @@
 
 var DOWNLOADING = "正在下载在线规则...";
 var storage = {};
+var RESOURCE_TYPE_URL = "https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/ResourceType";
 
 
 /* Move a row up or down */
@@ -190,7 +191,9 @@ function displayAll() {
     });
 
     var manifest = browser.runtime.getManifest();
-    $("h1 a").attr("href", manifest.homepage_url);
+    $("#version").text(manifest.version);
+    $("#homepage").attr("href", manifest.homepage_url);
+    $("#resourceType").attr("href", RESOURCE_TYPE_URL);
 
     if (storage.updateInterval) {
         var intervalMinutes = Math.round(storage.updateInterval / 60);
@@ -413,7 +416,8 @@ $("#btnConfirmCustomRule").click(function () {
     if (!$("#cbMethodAll").is(":checked")) {
         $("#divMethods input[type='checkbox']").each(function () {
             if ($(this).is(":checked")) {
-                var method = $(this).parent().text();
+                var method = $(this).data("method");
+                // var method = $(this).parent().text();
                 editingRule.methods.push(method)
             }
         })
@@ -422,7 +426,8 @@ $("#btnConfirmCustomRule").click(function () {
     if (!$("#cbTypeAll").is(":checked")) {
         $("#divTypes input[type='checkbox']").each(function () {
             if ($(this).is(":checked")) {
-                var type = $(this).parent().text();
+                var type = $(this).data("type");
+                // var type = $(this).parent().text();
                 editingRule.types.push(type)
             }
         })
