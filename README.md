@@ -112,13 +112,14 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
     请求方法可为 GET / POST / DELETE 等等，如 `["GET", "POST"]`；
     URL 资源类型见 [ResourceType](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/ResourceType) 。
     
-    
     在线规则使用一个包含了规则列表的 json 格式的文件表示：
     
         {
             version: <版本号，可选>,
             rules: <规则列表，必须>
         }
+    
+    整合了在线规则和规则对象的示例文件见 `tools` 目录下的 `rules_demo.json`。
     
     目前支持两种格式，通过 version 进行区分。
     （1）不包含 version 或 version < 1.0 时，使用 gooreplacer 定义的格式，见 `tools/gooreplacer.gson` 或 [https://github.com/jiacai2050/gooreplacer4chrome/raw/master/gooreplacer.gson](https://github.com/jiacai2050/gooreplacer4chrome/raw/master/gooreplacer.gson) ；

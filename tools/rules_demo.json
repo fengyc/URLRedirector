@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "createdAt": "2016-11-30T10:14:22.212Z",
+  "rules": [
+    {
+      "description": "demo-rule",
+      "origin": "ajax.googleapis.com",
+      "exclude": null,
+      "methods": ["GET"],
+      "types": ["script"],
+      "target": "sdn.geekzu.org/ajax",
+      "enable": true
+    }
+  ]
+}
