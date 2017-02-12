@@ -437,6 +437,17 @@ $("#btnConfirmCustomRule").click(function () {
     $("#modalEditUserRule").modal("hide");
 });
 
+/* View user rule of JSON format */
+$("#btnViewCustomeRule").click(function () {
+    var userRules = {
+        "version": "1.0",
+        "rules": storage.customRules
+    };
+    var json_content = JSON.stringify(userRules, null, 2);
+    $("#modalViewUserRule textarea").text(json_content);
+    $("#modalViewUserRule").modal("show");
+});
+
 /* Initialize */
 function reload() {
     load("storage", function (item) {
