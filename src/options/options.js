@@ -3,7 +3,7 @@
  */
 
 var DOWNLOADING = "正在下载在线规则...";
-var storage = {};
+var storage = null;
 var RESOURCE_TYPE_URL = "https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/ResourceType";
 
 
@@ -204,7 +204,7 @@ function displayAll() {
         $("#lblUpdatedAt").text(updatedAt.toLocaleString())
     }
     if (storage.enable !== undefined) {
-        $("#chbEnable").attr("checked", storage.enable);
+        $("#chbEnable").prop("checked", storage.enable);
     }
     /* online urls */
     var body = $("#tblOnlineURLs tbody");
@@ -246,9 +246,8 @@ $("#btnAddOnlineURL").click(function () {
         }
     });
     if (!hasEmpty) {
-        var onlineURL = {
-            enable: true
-        };
+        var onlineURL = new OnlineURL();
+        onlineURL.enable = true;
         storage.onlineURLs.push(onlineURL);
         createURLRow(onlineURL);
     }
@@ -337,7 +336,8 @@ function showEditCustomRuleModal(rule) {
         $("#txtOrigin").val(rule.origin);
         $("#txtTarget").val(rule.target);
         $("#txtExclude").val(rule.exclude);
-
+        $("#txtTestOrigin").val(rule.example);
+        $("#txttestresult").val("");
         if (rule.methods && rule.methods.length > 0) {
             $("#cbMethodAll").prop("checked", false);
             for (var i=0; i<rule.methods.length; i++) {
@@ -364,11 +364,25 @@ function showEditCustomRuleModal(rule) {
         $("#txtOrigin").val("");
         $("#txtTarget").val("");
         $("#txtExclude").val("");
+        $("#txtTestOrigin").val("");
+        $("#txtTestResult").val("");
         $("#cbTypeAll").prop("checked", true);
         $("#cbMethodAll").prop("checked", true);
     }
     $("#modalEditUserRule").modal("show");
 }
+
+/* Test rule */
+$("#btnTest").click(function () {
+    var testRule = new Rule();
+    testRule.origin = $("#txtOrigin").val();
+    testRule.exclude = $("#txtExclude").val();
+    testRule.target = $("#txtTarget").val();
+    testRule.enable = true;
+    var testOrigin = $("#txtTestOrigin").val();
+    var newURL = testRule.redirect(testOrigin);
+    $("#txtTestResult").val(newURL);
+});
 
 /* types */
 $("#cbTypeAll").change(function () {
@@ -403,9 +417,8 @@ $("#btnConfirmCustomRule").click(function () {
         return;
     }
     if (!editingRule) {
-        editingRule = {
-            enable: true
-        };
+        editingRule = new Rule();
+        editingRule.enable = true;
         storage.customRules.push(editingRule);
     }
     editingRule.description = $("#txtDescription").val();
@@ -417,7 +430,6 @@ $("#btnConfirmCustomRule").click(function () {
         $("#divMethods input[type='checkbox']").each(function () {
             if ($(this).is(":checked")) {
                 var method = $(this).data("method");
-                // var method = $(this).parent().text();
                 editingRule.methods.push(method)
             }
         })
@@ -427,7 +439,6 @@ $("#btnConfirmCustomRule").click(function () {
         $("#divTypes input[type='checkbox']").each(function () {
             if ($(this).is(":checked")) {
                 var type = $(this).data("type");
-                // var type = $(this).parent().text();
                 editingRule.types.push(type)
             }
         })
@@ -451,19 +462,19 @@ $("#btnViewCustomeRule").click(function () {
 /* Initialize */
 function reload() {
     load("storage", function (item) {
+        storage = new Storage();
         if (item && item.storage) {
-            storage = item.storage;
+            storage.fromObject(item.storage);
             displayAll();
         }
     });
 }
 
-reload();
-
 /* Listen for storage changed event */
 browser.storage.onChanged.addListener(function (changes, area) {
     if (area == "local") {
-        window.reload();
+        reload();
     }
 });
 
+reload();

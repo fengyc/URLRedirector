@@ -62,7 +62,7 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
 
 2. 内部实现
 
-    内部规则 Rule 为简单 javascript 对象：
+    内部规则 Rule 为简单 javascript 对象，具体可见 src/model.js
     
         {
             description: <规则描述，可选>
@@ -71,6 +71,7 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
             methods: <原始请求方法列表，可选>
             types: <URL 资源类型列表，可选>
             target: <目标地址正则表达式，必需>
+            example: <用于测试的示例地址，可选>
             enable: <是否启用，可选>
         }
     

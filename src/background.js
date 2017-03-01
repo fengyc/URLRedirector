@@ -2,37 +2,41 @@
  * The background script to handle url redirection.
  */
 
-var storage = {};
+var storage = null;
 var downloading = false;
 var downloadTimer = null;
 
 /* Reload callback */
 function reload(result) {
+    storage = new Storage();
     if (result && result.storage) {
-        storage = result.storage;
+        storage.fromObject(result.storage);
         resetDownloadTimer();
     }
 }
 
+/* Auto reload */
 browser.storage.onChanged.addListener(function (changes, area) {
     if (area == "local") {
         load("storage", reload);
     }
 });
 
+/* The first time of loading storage */
 load("storage", reload);
 
 
 /* Download online rules */
 function downloadOnlineURLs() {
+    /* Still downloading */
     if (!storage.onlineURLs || storage.onlineURLs.length <=0 || downloading) {
         return;
     }
     downloading = true;
-    var toDownload = [];
+    var toDownload = [];    // URLs that need to be downloaded
     for (var i = 0; i < storage.onlineURLs.length; i++) {
         var onlineURL = storage.onlineURLs[i];
-        if (onlineURL.enable) {
+        if (onlineURL.auto && onlineURL.enable && onlineURL.url != "") {
             toDownload.push(onlineURL.url);
             download(onlineURL.url, function (url, content) {
                 toDownload.remove(url);
@@ -42,6 +46,7 @@ function downloadOnlineURLs() {
                         json.url = url;
                         json.enable = true;
                         json.downloadAt = new Date();
+                        /* To compact with gooreplacer */
                         /* version < 1.0, version >= 1.0 doesn't change */
                         if (!json.version || json.version < "1.0") {
                             var rules = [];
@@ -56,10 +61,11 @@ function downloadOnlineURLs() {
                             }
                             json.rules = rules;
                         }
-                        /* replace the object */
+                        /* replace the onlineURL */
                         for (var j = 0; j < storage.onlineURLs.length; j++){
                             if (storage.onlineURLs[j].url == url){
-                                storage.onlineURLs[j] = json;
+                                storage.onlineURLs[j] = new OnlineURL();
+                                storage.onlineURLs[j].fromObject(json);
                                 break;
                             }
                         }
@@ -70,9 +76,7 @@ function downloadOnlineURLs() {
                 if (toDownload.length <= 0) {
                     downloading = false;
                     storage.updatedAt = (new Date()).toISOString();
-                    save({"storage": storage}, function () {
-                        load("storage", reload);
-                    });
+                    save({"storage": storage});
                 }
             });
         }
@@ -80,6 +84,7 @@ function downloadOnlineURLs() {
 }
 
 /* Reset download timer to download online urls */
+/* Setup a listener if alarm api supported */
 if (browser.alarms) {
     browser.alarms.onAlarm.addListener(function (alarm) {
         if (alarm.name == "download") {
@@ -88,8 +93,9 @@ if (browser.alarms) {
     })
 }
 
+/* Reset the download timer */
 function resetDownloadTimer() {
-    var interval = 900;
+    var interval = 900;     // Default 15min
     if (storage.updateInterval) {
         interval = parseInt(storage.updateInterval);
     }
@@ -100,10 +106,11 @@ function resetDownloadTimer() {
         });
     }
     else {
+        /* With setInterval */
         if (downloadTimer != null) {
             clearInterval(downloadTimer);
         }
-        interval = interval * 1000;
+        interval = interval * 1000;     // In milli-seconds
         downloadTimer = setInterval(function () {
             if (storage.enable) {
                 downloadOnlineURLs();
@@ -125,85 +132,19 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
 });
 
-/* Redirect url */
-function redirect(rule, details) {
-    if (!rule.enable){
-        return;
-    }
 
-    var url = details.url;
-
-    var re = new RegExp(rule.origin);
-    if (re.test(url)) {
-        /* Check method */
-        if (rule.methods && rule.methods.length > 0) {
-            var methodMatched = false;
-            for (var i = 0; i < rule.methods.length; i++) {
-                if (rule.methods[i] == details.method) {
-                    methodMatched = true;
-                    break;
-                }
-            }
-            if (!methodMatched) {
-                return;
-            }
-        }
-        /* Check resource type */
-        if (rule.types && rule.types.length > 0) {
-            var typeMatched = false;
-            for(var i=0; i < rule.types.length; i++) {
-                if (rule.types[i] == details.type) {
-                    typeMatched = true;
-                    break;
-                }
-            }
-            if (!typeMatched) {
-                return;
-            }
-        }
-        /* Exclude some rule */
-        if (rule.exclude && rule.exclude!="") {
-            var excludeRe = new RegExp(rule.exclude);
-            if (excludeRe.test(url)) {
-                return;
-            }
-        }
-        var url = url.replace(re, rule.target);
-        return {
-            redirectUrl: url
-        }
-    }
-}
-
+/* Handle redirect */
 function handleRedirect(details) {
+    /* TODO(fengyingcai): Since firefox 52, async event listeners are supported */
     if (storage.enable && details.url) {
-        /* custom rules */
-        if (storage.customRules) {
-            for (var i = 0; i < storage.customRules.length; i++) {
-                var rule = storage.customRules[i];
-                var result = redirect(rule, details);
-                if (result) {
-                    return result;
-                }
-            }
-        }
-        /* online rules */
-        if (storage.onlineURLs) {
-            for (var i = 0; i < storage.onlineURLs.length; i++) {
-                var onlineURL = storage.onlineURLs[i];
-                if (onlineURL.enable && onlineURL.rules) {
-                    for (var j = 0; j < onlineURL.rules.length; j++) {
-                        var rule = onlineURL.rules[j];
-                        var result = redirect(rule, details);
-                        if (result) {
-                            return result;
-                        }
-                    }
-                }
+        var newURL = storage.redirect(details.url, details.method, details.type);
+        if (newURL){
+            return {
+                redirectUrl: newURL
             }
         }
     }
-    return {};
+    return null;
 }
 
 browser.webRequest.onBeforeRequest.addListener(
