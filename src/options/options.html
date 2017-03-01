@@ -58,6 +58,7 @@
                     <input type="checkbox" class="checkbox" style="margin: auto">
                 </th>
                 <th colspan="2">在线规则 URL</th>
+                <th style="width: 50px">更新</th>
                 <th style="width: 50px">启用</th>
                 <th style="width: 80px">优先顺序</th>
             </tr>
@@ -103,7 +104,34 @@
     </div>
 </div>
 
-<!-- 用户自定义规则编辑框 -->
+<!-- View online url -->
+<div id="modalViewOnlineURL" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                    class="sr-only">关闭</span></button>
+                <h4 class="modal-title">在线规则<small> <a target="_blank" id="linkOnlineURL"><i class="glyphicon glyphicon-cloud"></i> 查看文件</a></small></h4>
+            </div>
+            <div class="modal-body" style="overflow-y: scroll">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th style="width: 50px">启用</th>
+                    <th>源地址和目标地址</th>
+                  </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modal of editing user rule -->
 <div id="modalEditUserRule" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -141,7 +169,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">地址示例</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="txtTestOrigin" placeholder="地址示例，可选">
+                            <input type="text" class="form-control" id="txtExample" placeholder="地址示例，可选">
                         </div>
                     </div>
                     <div class="form-group">
@@ -228,6 +256,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- View json format data -->
 <div id="modalViewUserRule" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">

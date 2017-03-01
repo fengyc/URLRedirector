@@ -51,7 +51,7 @@ function moveDown(tr) {
 
 
 /* Create a url row */
-function createURLRow(rule) {
+function createURLRow(onlineURL) {
     // https://developer.mozilla.org/en-US/Add-ons/Overlay_Extensions/XUL_School/DOM_Building_and_HTML_Insertion
     $("#tblOnlineURLs tbody").append(
         $("<tr>").append(
@@ -76,15 +76,19 @@ function createURLRow(rule) {
                     // Don't change url if already has a same url.
                     $(this).val($(this).data("old"));
                 }
-            }).val(rule.url).data("old", rule.url)),
+            }).val(onlineURL.url).data("old", onlineURL.url)),
             $("<td>").width("60px").append($("<a>").addClass("btn btn-xs btn-info").click(function () {
-                var url = $(this).closest("tr").find(":text").val();
-                if ($.trim(url)) {
-                    browser.tabs.create({url: url});
-                }
+                var idx = $(this).closest("tr").index();
+                showOnlineURLModal(storage.onlineURLs[idx]);
             }).text("查看")),
             $("<td>").append(
-                $("<input>", {type: "checkbox"}).addClass("checkbox middle").prop("checked", rule.enable).change(function () {
+                $("<input>", {type: "checkbox"}).addClass("checkbox middle").prop("checked", onlineURL.auto).change(function () {
+                    var idx = $(this).closest("tr").index();
+                    storage.onlineURLs[idx].auto = $(this).is(":checked");
+                })
+            ),
+            $("<td>").append(
+                $("<input>", {type: "checkbox"}).addClass("checkbox middle").prop("checked", onlineURL.enable).change(function () {
                     var idx = $(this).closest("tr").index();
                     storage.onlineURLs[idx].enable = $(this).is(":checked");
                 })
@@ -248,6 +252,7 @@ $("#btnAddOnlineURL").click(function () {
     if (!hasEmpty) {
         var onlineURL = new OnlineURL();
         onlineURL.enable = true;
+        onlineURL.auto = true;
         storage.onlineURLs.push(onlineURL);
         createURLRow(onlineURL);
     }
@@ -276,6 +281,48 @@ $("#btnDownload").click(function () {
         }
     });
 });
+
+var editingOnlineURL = null;
+var editingOnlineURLIdx = 0;
+
+/* Show online url modal */
+function showOnlineURLModal(onlineURL) {
+    editingOnlineURL = onlineURL;
+    for (var i=0; i<storage.onlineURLs.length; i++){
+        if (editingOnlineURL == storage.onlineURLs[i]){
+            editingOnlineURLIdx = i;
+            break;
+        }
+    }
+    $("#linkOnlineURL").attr("href", onlineURL.url);
+    var $tbody = $("#modalViewOnlineURL tbody");
+    $tbody.empty();
+    if (onlineURL.rules && onlineURL.rules.length > 0) {
+        for (var i=0; i<onlineURL.rules.length; i++) {
+            var rule = onlineURL.rules[i];
+            $tbody.append(
+                $("<tr>").append(
+                    $("<td>").append(
+                        $("<input>", {type: "checkbox"}).addClass("checkbox").prop("checked", rule.enable).change(function () {
+                            var idx = $(this).closest("tr").index();
+                            editingOnlineURL.rules[idx].enable = $(this).prop("checked");
+                            /* Disable auto update */
+                            var $tr = $("#tblOnlineURLs tbody tr").eq(editingOnlineURLIdx);
+                            $tr.find(":checkbox").eq(1).prop("checked", false);
+                            editingOnlineURL.auto = false;
+                        })
+                    ),
+                    $("<td>").append(
+                        $("<span>").text(rule.origin),
+                        $("<br>"),
+                        $("<span>").text(rule.target)
+                    )
+                )
+            );
+        }
+    }
+    $("#modalViewOnlineURL").modal("show");
+}
 
 var editingRule = null;
 
@@ -336,8 +383,8 @@ function showEditCustomRuleModal(rule) {
         $("#txtOrigin").val(rule.origin);
         $("#txtTarget").val(rule.target);
         $("#txtExclude").val(rule.exclude);
-        $("#txtTestOrigin").val(rule.example);
-        $("#txttestresult").val("");
+        $("#txtExample").val(rule.example);
+        $("#txtTestResult").val("");
         if (rule.methods && rule.methods.length > 0) {
             $("#cbMethodAll").prop("checked", false);
             for (var i=0; i<rule.methods.length; i++) {
@@ -379,7 +426,7 @@ $("#btnTest").click(function () {
     testRule.exclude = $("#txtExclude").val();
     testRule.target = $("#txtTarget").val();
     testRule.enable = true;
-    var testOrigin = $("#txtTestOrigin").val();
+    var testOrigin = $("#txtExample").val();
     var newURL = testRule.redirect(testOrigin);
     $("#txtTestResult").val(newURL);
 });
@@ -425,6 +472,7 @@ $("#btnConfirmCustomRule").click(function () {
     editingRule.origin = $("#txtOrigin").val();
     editingRule.target = $("#txtTarget").val();
     editingRule.exclude = $("#txtExclude").val();
+    editingRule.example = $("#txtExample").val();
     editingRule.methods = [];
     if (!$("#cbMethodAll").is(":checked")) {
         $("#divMethods input[type='checkbox']").each(function () {
