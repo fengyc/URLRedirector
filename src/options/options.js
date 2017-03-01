@@ -135,7 +135,12 @@ function createRuleRow(rule) {
                     moveDown($(this).closest("tr"));
                 })
             )
-        )
+        ).dblclick(function () {
+            var $tr = $(this);
+            var trIdx = $tr.index();
+            editingRule = storage.customRules[trIdx];
+            showEditCustomRuleModal(editingRule);
+        })
     );
 }
 
@@ -418,6 +423,12 @@ function showEditCustomRuleModal(rule) {
     }
     $("#modalEditUserRule").modal("show");
 }
+
+/* Remove input text */
+$("button.remove").click(function () {
+    var $input = $(this).closest("div").find(":text").first();
+    $input.val("");
+});
 
 /* Test rule */
 $("#btnTest").click(function () {
