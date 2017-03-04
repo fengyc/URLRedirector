@@ -22,11 +22,9 @@
         </button>
     </div>
     <div>
-        <label><input type="checkbox" id="chbEnable">开启重定向</label>
-        <label id="lblSync"><input type="checkbox" id="chbSync">浏览器同步 </label>
-          <div class="btn-group btn-group-sm">
-            <button class="btn btn-default" title="云同步"><i class="glyphicon glyphicon-cloud"></i> </button>
-          </div>
+        <label><input type="checkbox" id="chbEnable"> 开启重定向</label>
+        <span>&nbsp;</span>
+        <label id="lblSync"><input type="checkbox" id="chbSync"> 浏览器同步</label>
     </div>
     <div>
 
@@ -110,41 +108,6 @@
         </table>
     </div>
 </div>
-
-<!-- Modal of upload or download -->
-<div id="modalCloud" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                    class="sr-only">关闭</span></button>
-                <h4 class="modal-title">云同步</h4>
-            </div>
-            <div class="modal-body">
-                <p>从云存储上传或下载</p>
-                <form role="form" class="form-horizontal">
-                    <div class="form-group">
-                      <label for="sltCloudProvider">云存储</label>
-                      <select class="form-control" id="sltCloudProvider"></select>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtCloudUser">用户名</label>
-                      <input type="text" class="form-control" id="txtCloudUser">
-                    </div>
-                    <div class="form-group">
-                      <label for="txtCloudPassword">密码</label>
-                      <input type="text" class="form-control" id="txtCloudPassword">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary">上传</button>
-                <button class="btn btn-warning">下载</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <!-- View online url -->
 <div id="modalViewOnlineURL" class="modal fade">
