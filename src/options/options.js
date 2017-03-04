@@ -5,6 +5,7 @@
 var DOWNLOADING = "正在下载在线规则...";
 var storage = null;
 var RESOURCE_TYPE_URL = "https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/ResourceType";
+var SYNC_NOT_SUPPORTED = "当前浏览器版本不支持同步存储";
 
 
 /* Move a row up or down */
@@ -149,6 +150,11 @@ $("#chbEnable").change(function () {
     storage.enable = $("#chbEnable").is(":checked");
 });
 
+/* Enable or diable sync */
+$("#chbSync").change(function () {
+    storage.sync = $("#chbSync").prop("checked");
+});
+
 /* Download online url interval */
 $("#onlineInterval").change(function () {
     storage.updateInterval = parseInt($("#onlineInterval").val() * 60);
@@ -188,9 +194,11 @@ $("#btnSave").click(function () {
 
 /* Display All */
 function displayAll() {
+    /* Reset the check-all checkbox */
     var checkAll = $("table thead").find(":checkbox");
     checkAll.prop("checked", false);
 
+    /* Check downloading */
     sendMessage("isDownloading", {}, function (response) {
         if (!response) {
             $("#downloadState").text("");
@@ -214,6 +222,17 @@ function displayAll() {
     }
     if (storage.enable !== undefined) {
         $("#chbEnable").prop("checked", storage.enable);
+    }
+    /* Check support of browser.storage.sync */
+    if (!browser.storage.sync) {
+        $("#lblSync").prop("disabled", true);
+        $("#lblSync").addClass("text-muted");
+        $("#lblSync").attr("title", SYNC_NOT_SUPPORTED);
+        $("#chbSync").prop("disabled", true);
+        $("#chbSync").prop("checked", false);
+    }
+    else if (storage.sync !== undefined ) {
+        $("#chbSync").prop("checked", storage.sync);
     }
     /* online urls */
     var body = $("#tblOnlineURLs tbody");

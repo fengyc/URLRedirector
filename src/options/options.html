@@ -12,7 +12,7 @@
 <div class="container">
     <h1>URLRedirector 配置 <span class="small" id="version"></span> <a id="homepage" class="small" target="_blank">(帮助主页)</a></h1>
     <hr>
-    更新时间：<span id="lblUpdatedAt"></span>
+    <p>更新时间：<span id="lblUpdatedAt"></span></p>
     <div class="pull-right" style="display: inline-block">
         <button type="button" id="btnSave" class="btn btn-info" title="保存">
             <i class="glyphicon glyphicon-floppy-disk"></i> 保存
@@ -21,8 +21,15 @@
             <i class="glyphicon glyphicon-refresh"></i> 重置
         </button>
     </div>
-    <div class="text-danger" style="margin: 10px">
-        <input type="checkbox" id="chbEnable"> 开启重定向
+    <div>
+        <label><input type="checkbox" id="chbEnable">开启重定向</label>
+        <label id="lblSync"><input type="checkbox" id="chbSync">浏览器同步 </label>
+          <div class="btn-group btn-group-sm">
+            <button class="btn btn-default" title="云同步"><i class="glyphicon glyphicon-cloud"></i> </button>
+          </div>
+    </div>
+    <div>
+
     </div>
     <div>
         <h2 style="display: inline-block">在线规则</h2>
@@ -104,6 +111,41 @@
     </div>
 </div>
 
+<!-- Modal of upload or download -->
+<div id="modalCloud" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                    class="sr-only">关闭</span></button>
+                <h4 class="modal-title">云同步</h4>
+            </div>
+            <div class="modal-body">
+                <p>从云存储上传或下载</p>
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                      <label for="sltCloudProvider">云存储</label>
+                      <select class="form-control" id="sltCloudProvider"></select>
+                    </div>
+                    <div class="form-group">
+                      <label for="txtCloudUser">用户名</label>
+                      <input type="text" class="form-control" id="txtCloudUser">
+                    </div>
+                    <div class="form-group">
+                      <label for="txtCloudPassword">密码</label>
+                      <input type="text" class="form-control" id="txtCloudPassword">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">上传</button>
+                <button class="btn btn-warning">下载</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!-- View online url -->
 <div id="modalViewOnlineURL" class="modal fade">
     <div class="modal-dialog">
@@ -111,7 +153,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                     class="sr-only">关闭</span></button>
-                <h4 class="modal-title">在线规则<small> <a target="_blank" id="linkOnlineURL"><i class="glyphicon glyphicon-cloud"></i> 查看文件</a></small></h4>
+                <h4 class="modal-title">在线规则 <a target="_blank" id="linkOnlineURL" class="small"><i class="glyphicon glyphicon-file"></i>查看文件</a></h4>
             </div>
             <div class="modal-body" style="overflow-y: scroll">
                 <table class="table table-bordered table-striped">
@@ -309,6 +351,7 @@
 <script src="../static/js/bootstrap.js"></script>
 <script src="../common.js"></script>
 <script src="../model.js"></script>
+<script src="../storage.js"></script>
 <script src="options.js"></script>
 </body>
 </html>
