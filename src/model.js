@@ -120,6 +120,7 @@ OnlineURL.prototype.redirect = function (url, method, type) {
 /* Options storage */
 function Storage() {
     this.enable = false;            // Enable or not
+    this.sync = false;              // Enable sync between browser
     this.updateInterval = 900;      // Default update interval is 15min
     this.updatedAt = null;          // Last update time
     this.onlineURLs = [];           // Online urls

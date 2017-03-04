@@ -60,35 +60,6 @@ if (!String.prototype.format) {
     };
 }
 
-/* Storage */
-function load(keys, callback) {
-    browser.storage.local.get(
-        keys,
-        function (item) {
-            if (browser.runtime.lastError) {
-                console.error(browser.runtime.lastError);
-            }
-            if (callback) {
-                callback(item);
-            }
-        }
-    );
-}
-
-function save(obj, callback) {
-    browser.storage.local.set(
-        obj,
-        function () {
-            if (browser.runtime.lastError) {
-                console.error(browser.runtime.lastError);
-            }
-            if (callback) {
-                callback();
-            }
-        }
-    );
-}
-
 /* Message */
 /* Send message to background */
 function sendMessage(method, args, callback) {
