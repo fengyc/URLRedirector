@@ -3,10 +3,11 @@
  */
 
 var DOWNLOADING = "正在下载在线规则...";
+DOWNLOADING = getI18nMessage("downloading");
 var storage = null;
 var RESOURCE_TYPE_URL = "https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/ResourceType";
-var SYNC_NOT_SUPPORTED = "当前浏览器版本不支持同步存储";
-
+var SYNC_NOT_SUPPORTED = "当前版本浏览器不支持同步存储";
+SYNC_NOT_SUPPORTED = getI18nMessage("syncNotSupported");
 
 /* Move a row up or down */
 function moveUpOrDown(tr, isUp) {
@@ -78,18 +79,20 @@ function createURLRow(onlineURL) {
                     $(this).val($(this).data("old"));
                 }
             }).val(onlineURL.url).data("old", onlineURL.url)),
-            $("<td>").width("60px").append($("<a>").addClass("btn btn-xs btn-info").click(function () {
+            $("<td>").width("60px").append($("<a>").addClass("btn btn-xs btn-default").click(function () {
                 var idx = $(this).closest("tr").index();
                 showOnlineURLModal(storage.onlineURLs[idx]);
-            }).text("查看")),
+            }).append(
+                $("<i>").addClass("glyphicon glyphicon-eye-open")
+            )),
             $("<td>").append(
-                $("<input>", {type: "checkbox"}).addClass("checkbox middle").prop("checked", onlineURL.auto).change(function () {
+                $("<input>", {type: "checkbox", title: getI18nMessage("autoUpdate")}).addClass("checkbox middle").prop("checked", onlineURL.auto).change(function () {
                     var idx = $(this).closest("tr").index();
                     storage.onlineURLs[idx].auto = $(this).is(":checked");
                 })
             ),
             $("<td>").append(
-                $("<input>", {type: "checkbox"}).addClass("checkbox middle").prop("checked", onlineURL.enable).change(function () {
+                $("<input>", {type: "checkbox", title: getI18nMessage("enable")}).addClass("checkbox middle").prop("checked", onlineURL.enable).change(function () {
                     var idx = $(this).closest("tr").index();
                     storage.onlineURLs[idx].enable = $(this).is(":checked");
                 })
@@ -119,7 +122,7 @@ function createRuleRow(rule) {
             $("<td>").append($("<span>").text(rule.origin)),
             $("<td>").append($("<span>").text(rule.target)),
             $("<td>").append(
-                $("<input>", {type: "checkbox"}).prop("checked", rule.enable).change(function () {
+                $("<input>", {type: "checkbox", title: getI18nMessage("enable")}).prop("checked", rule.enable).change(function () {
                     var idx = $(this).closest("tr").index();
                     storage.customRules[idx].enable = $(this).is(":checked");
                 }

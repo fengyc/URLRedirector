@@ -7,7 +7,6 @@ var storage = null;
 /* Display all */
 function displayAll() {
     $("#chbEnable").prop('checked', storage.enable);
-    $("#updateInterval").text(storage.updateInterval);
     if (storage.updatedAt) {
         var updatedAt = new Date(storage.updatedAt);
         $("#updatedAt").text(updatedAt.toLocaleTimeString());
