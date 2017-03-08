@@ -46,6 +46,15 @@ function load(keys, callback) {
             } else {
                 callback(item);
             }
+        } else {
+            /* The first time to load storage, try to load storage.sync */
+            if (browser.storage.sync) {
+                _load(keys, function (item) {
+                    callback(item);
+                }, browser.storage.sync)
+            } else {
+                callback(item);
+            }
         }
     }, browser.storage.local);
 }

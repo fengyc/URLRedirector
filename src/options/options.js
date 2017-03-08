@@ -543,8 +543,8 @@ function reload() {
         storage = new Storage();
         if (item && item.storage) {
             storage.fromObject(item.storage);
-            displayAll();
         }
+        displayAll();
     });
 }
 
