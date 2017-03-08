@@ -1,29 +1,25 @@
 URLRedirector
 =============
 
-使用 WebExtension 方式编写的 Firefox URL 重定向插件。
+使用 WebExtension 方式编写的 Firefox URL 重定向插件，并逐步发展到处理整个 webRequest 过程。
 
-插件的开发受 [gooreplacer](https://github.com/jiacai2050/gooreplacer) 启发，由于 gooreplacer 在 MAC 下运行时会遇到停止运行的问题，因此采用 WebExtension 方式实现，目前测试结果良好。
+插件的开发受 [gooreplacer](https://github.com/jiacai2050/gooreplacer) 启发，由于 gooreplacer 在 MAC 下运行时会遇到停止运行的问题，因此采用 WebExtension 方式实现，目前测试结果良好。插件仅支持正则表达式替换方式，不支持通配符。
 
 插件可以处理 URL 的自动重定向，可用于帮助网页开发和调试，以及解决国内无法访问 google CDN 之类的问题（ stackoverflow 等国外网站再也不用等了^_^）。
 
-插件仅支持正则表达式替换方式，不支持通配符。
+目前已在 firefox 上线，上架地址 [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)，安装插件前，请升级 firefox 到 48.0 以上的最新版本（ AMO 的审核加快了，暂时不提供离线安装包）。
+
+chrome 版本的支持正在整理中，目前测试未有发现功能问题，准备上架。
 
 供用户使用的在线规则有:
 
-[https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson)
+* [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson)
+* [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json)
+* [极客族的在线规则](http://cdn.geekzu.org/cached.html) [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_geekzu.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_geekzu.json)
 
-[https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json)
+其它用户提供的规则：
 
-[极客族的在线规则](http://cdn.geekzu.org/cached.html) :
-
-[https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_geekzu.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_geekzu.json)
-
-AMO 的上架地址（已上线） [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)
-
-AMO 的上架审核时间很长，因此做了一个只签名不上架的版本，在 tools 目录下。
-
-安装插件前，请升级 firefox 到最新版本（48+）。
+* ivysrono 做的规则 [https://github.com/ivysrono/URLRedirectorRules](https://github.com/ivysrono/URLRedirectorRules)
 
 版本和特性列表
 -------
@@ -32,10 +28,13 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
 
 目前支持的特性：
 
-1. 支持在线规则、在线规则自动更新
-2. 支持自定义规则
+1. 支持在线规则订阅、在线规则自动更新
+2. 可禁用在线规则的某条特定规则（更新后被覆盖）
+3. 支持自定义规则
+4. 支持规则测试示例
+5. 支持浏览器同步（chrome 或 firefox 53.0）
 
-限于 WebExtension 的能力，目前不支持导入、导出配置。
+限于 WebExtension 的能力，目前不支持以本地文件方式导入、导出配置。
 
 其它说明
 --------
@@ -110,8 +109,51 @@ AMO 的上架审核时间很长，因此做了一个只签名不上架的版本�
 2. fork 本仓库，贡献你的代码或文档，并提交 pull request
 3. 参与功能和 bug 的讨论
 
-……
+下载代码和构建
 
+1. 下载代码
+
+    fork 之后从 github 上下载代码
+    
+        git clone <xxx>
+
+2. 安装工具
+
+    安装 node.js 和 grunt （用于打包）
+    
+    MAC 上安装 node.js ::
+    
+        brew install node
+    
+    ubuntu 上安装 node.js ::
+        
+        sudo apt-get install nodejs
+        
+    检查是否安装成功 ::
+    
+        which npm
+        npm --version
+        
+    安装 grunt ::
+    
+        npm install -g grunt-cli
+    
+    在源代码根目录上 ::
+    
+        npm install
+        
+    检查是否安装成功 ::
+    
+        which grunt
+        grunt --version
+
+3. 构建
+
+    在源代码根目录上 ::
+    
+        grunt
+    
+    将在 dist 目录下生成 2 个 zip 文件，文件名格式为 `URLRedirector-<浏览器>-<版本号>.zip`，为可上传到 firefox 和 chrome 商店进行审核和发布。
 
 License
 -------

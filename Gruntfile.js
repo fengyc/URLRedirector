@@ -14,37 +14,20 @@ module.exports = function(grunt) {
     copy: {
       prepare: {
         files: [
-          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/main/'},
-          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/offline/'},
+          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/firefox/'},
           {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/chrome/'}
         ]
       },
-      main_manifest: {
+      firefox_manifest: {
         expand: true,
         cwd: 'src/',
         src: 'manifest.json',
-        dest: 'dist/main/',
+        dest: 'dist/firefox/',
         options: {
           process: function (content, srcpath) {
             var pkg = grunt.file.readJSON('package.json');
             var json = JSON.parse(content);
             json.version = pkg.version;
-            return JSON.stringify(json, null, 2);
-          }
-        }
-      },
-      offline_manifest: {
-        expand: true,
-        cwd: 'src',
-        src: 'manifest.json',
-        dest: 'dist/offline/',
-        options: {
-          process: function (content, srcpath) {
-            var pkg = grunt.file.readJSON('package.json');
-            var json = JSON.parse(content);
-            json.version = pkg.version;
-            json.name = "URLRedirector-offline";
-            json.applications.gecko.id = "URLRedirector-offline@fengyc";
             return JSON.stringify(json, null, 2);
           }
         }
@@ -66,20 +49,12 @@ module.exports = function(grunt) {
       }
     },
     compress: {
-      main: {
+      firefox: {
         options: {
-          archive: 'dist/<%= pkg.name %>-v<%= pkg.version %>.zip'
+          archive: 'dist/<%= pkg.name %>-firefox-v<%= pkg.version %>.zip'
         },
         files: [
-          {expand: true, cwd: 'dist/main/', src: ['**'], dest: '/'}
-        ]
-      },
-      offline: {
-        options: {
-          archive: 'dist/<%= pkg.name %>-offline-v<%= pkg.version %>.zip'
-        },
-        files: [
-          {expand: true, cwd: 'dist/offline', src: ['**'], dest: '/'}
+          {expand: true, cwd: 'dist/firefox/', src: ['**'], dest: '/'}
         ]
       },
       chrome: {
