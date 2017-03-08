@@ -1,0 +1,240 @@
+{
+  "extensionName": {
+    "message": "URLRedirector",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Automatically redirect specific urls.",
+    "description": "Description of the extension."
+  },
+
+  "redirect": {
+    "message": "Redirect",
+    "description": "Redirect."
+  },
+  "enable": {
+    "message": "Enable",
+    "description": "Enable."
+  },
+  "updatedAt": {
+    "message": "Updated At",
+    "description": "Updated At."
+  },
+  "options": {
+    "message": "Options",
+    "description": "Options."
+  },
+  "interval": {
+    "message": "Interval",
+    "description": "Interval."
+  },
+
+  "optionsTitle": {
+    "message": "URLRedirector Options",
+    "description": "Title of options page."
+  },
+  "projectHomepage": {
+    "message": "Project Homepage",
+    "description": "Project homepage."
+  },
+  "downloading": {
+    "message": "Downloading...",
+    "description": "Downloading."
+  },
+  "syncNotSupported": {
+    "message": "Current browser does not support sync storage",
+    "description": "Sync not supported."
+  },
+  "browserSync": {
+    "message": "Browser sync",
+    "description": "Browser sync."
+  },
+  "save": {
+    "message": "Save",
+    "description": "Save."
+  },
+  "reset": {
+    "message": "Reset",
+    "description": "Reset."
+  },
+  "onlineURLs": {
+    "message": "Online Rules",
+    "description": "Online URLs."
+  },
+  "add": {
+    "message": "Add",
+    "description": "Add."
+  },
+  "delete": {
+    "message": "Delete",
+    "description": "Delete."
+  },
+  "download": {
+    "message": "Download",
+    "description": "Download."
+  },
+  "interval_15minutes": {
+    "message": "15 minutes",
+    "description": "Interval."
+  },
+  "interval_30minutes": {
+    "message": "30 minutes",
+    "description": "Interval."
+  },
+  "interval_45minutes": {
+    "message": "45 minutes",
+    "description": "Interval."
+  },
+  "interval_1hours": {
+    "message": "1 hours",
+    "description": "Interval."
+  },
+  "interval_3hours": {
+    "message": "3 hours",
+    "description": "Interval."
+  },
+  "interval_6hours": {
+    "message": "6 hours",
+    "description": "Interval."
+  },
+  "interval_12hours": {
+    "message": "12 hours",
+    "description": "Interval."
+  },
+  "interval_1days": {
+    "message": "1 days",
+    "description": "Interval."
+  },
+  "onlineURL": {
+    "message": "Online Rules URL",
+    "description": "Online URL."
+  },
+  "auto": {
+    "message": "Auto",
+    "description": "Auto update."
+  },
+  "autoUpdate": {
+    "message": "Auto update",
+    "description": "Auto update."
+  },
+  "priority": {
+    "message": "Priority",
+    "description": "Rule priority."
+  },
+
+  "userRules": {
+    "message": "User Rules",
+    "description": "User rules."
+  },
+  "edit": {
+    "message": "Edit",
+    "description": "Edit."
+  },
+  "asJSON": {
+    "message": "View as JSON format",
+    "description": "Display as JSON format."
+  },
+  "description": {
+    "message": "Description",
+    "description": "Description of rule."
+  },
+  "origin": {
+    "message": "Origin",
+    "description": "Origin URL pattern."
+  },
+  "target": {
+    "message": "Target",
+    "description": "Target URL pattern."
+  },
+
+  "details": {
+    "message": "Details",
+    "description": "Details"
+  },
+  "close": {
+    "message": "Close",
+    "description": "Close."
+  },
+  "originAndTarget": {
+    "message": "Origin and Target",
+    "description": "Origin and target address pattern."
+  },
+  "ok": {
+    "message": "OK",
+    "description": "OK."
+  },
+  "cancel": {
+    "message": "Cancel",
+    "description": "Cancel."
+  },
+  "file": {
+    "message": "File",
+    "description": "File."
+  },
+
+  "descriptionPlaceholder": {
+    "message": "Rule description, optional",
+    "description": "Description."
+  },
+  "originPlaceholder": {
+    "message": "Origin address pattern, mandatory",
+    "description": "Origin."
+  },
+  "targetPlaceholder": {
+    "message": "Target address pattern, mandatory",
+    "description": "Target."
+  },
+  "exclude": {
+    "message": "Exclude",
+    "description": "Exclude address pattern."
+  },
+  "excludePlaceholder": {
+    "message": "Exclude address pattern, optional",
+    "description": "Exclude."
+  },
+  "example": {
+    "message": "Example",
+    "description": "Example address."
+  },
+  "examplePlaceholder": {
+    "message": "Example address, optional",
+    "description": "Example address."
+  },
+  "result": {
+    "message": "Result",
+    "description": "Test result."
+  },
+  "resultPlaceholder": {
+    "message": "Test result",
+    "description": "Test result."
+  },
+  "methods": {
+    "message": "Methods",
+    "description": "Http request methods."
+  },
+  "allMethods": {
+    "message": "All methods",
+    "description": "All methods."
+  },
+  "types": {
+    "message": "Types",
+    "description": "Http resource types."
+  },
+  "allTypes": {
+    "message": "All types",
+    "description": "All types."
+  },
+  "typesDescription": {
+    "message": "Description",
+    "description": "Types description."
+  },
+
+  "jsonFormat": {
+    "message": "JSON Format",
+    "description": "JSON format."
+  },
+  "cloudHint": {
+    "message": "The content below could be saved online (e.g. github/onedrive) and shared with others.",
+    "description": "Cloud hint."
+  }
+}

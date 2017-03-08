@@ -60,6 +60,12 @@ if (!String.prototype.format) {
     };
 }
 
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function (s) {
+        return this.indexOf(s) === 0;
+    }
+}
+
 /* Message */
 /* Send message to background */
 function sendMessage(method, args, callback) {
