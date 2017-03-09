@@ -168,7 +168,6 @@ if (browser.runtime.getBrowserInfo) {
             }
         }
     }
-
     var gettingInfo = browser.runtime.getBrowserInfo();
     gettingInfo.then(checkRedirectPromise)
 }
