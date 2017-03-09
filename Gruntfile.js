@@ -15,6 +15,7 @@ module.exports = function(grunt) {
       prepare: {
         files: [
           {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/firefox/'},
+          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/firefox-offline/'},
           {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/chrome/'}
         ]
       },
@@ -28,6 +29,22 @@ module.exports = function(grunt) {
             var pkg = grunt.file.readJSON('package.json');
             var json = JSON.parse(content);
             json.version = pkg.version;
+            return JSON.stringify(json, null, 2);
+          }
+        }
+      },
+      firefox_offline_manifest: {
+        expand: true,
+        cwd: 'src/',
+        src: 'manifest.json',
+        dest: 'dist/firefox-offline/',
+        options: {
+          process: function (content, srcpath) {
+            var pkg = grunt.file.readJSON('package.json');
+            var json = JSON.parse(content);
+            json.version = pkg.version;
+            json.name = "URLRedirector-offline";
+            json.applications.gecko.id = "URLRedirector-offline@fengyc";
             return JSON.stringify(json, null, 2);
           }
         }
@@ -55,6 +72,14 @@ module.exports = function(grunt) {
         },
         files: [
           {expand: true, cwd: 'dist/firefox/', src: ['**'], dest: '/'}
+        ]
+      },
+      firefox_offline: {
+        options: {
+          archive: 'dist/<%= pkg.name %>-firefox-offline-v<%= pkg.version %>.zip'
+        },
+        files: [
+          {expand: true, cwd: 'dist/firefox-offline/', src: ['**'], dest: '/'}
         ]
       },
       chrome: {
