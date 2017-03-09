@@ -132,10 +132,7 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
 });
 
-
-/* Handle redirect */
-function handleRedirect(details) {
-    /* TODO(fengyingcai): Since firefox 52, async event listeners are supported */
+function redirect(details) {
     if (storage.enable && details.url) {
         var newURL = storage.redirect(details.url, details.method, details.type);
         if (newURL){
@@ -144,9 +141,39 @@ function handleRedirect(details) {
             }
         }
     }
-    return null;
+    return {};
 }
 
+var _redirect_promise_supported = false;
+
+/* Handle redirect */
+function handleRedirect(details) {
+    if (_redirect_promise_supported) {
+        var promise = new Promise(function (resolve, reject) {
+            var blockingResponse = redirect(details);
+            return resolve(blockingResponse);
+        });
+        return promise;
+    } else {
+        return redirect(details);
+    }
+}
+
+/* Since firefox 52, could return a promise to handles asynchronously */
+if (browser.runtime.getBrowserInfo) {
+    function checkRedirectPromise(info) {
+        if (info.name == "Firefox") {
+            if (parseInt(info.version.split('.')[0]) >= 52) {
+                _redirect_promise_supported = true;
+            }
+        }
+    }
+
+    var gettingInfo = browser.runtime.getBrowserInfo();
+    gettingInfo.then(checkRedirectPromise)
+}
+
+/* Add listener */
 browser.webRequest.onBeforeRequest.addListener(
     handleRedirect,
     {urls: ["<all_urls>"]},
