@@ -39,10 +39,19 @@ function _save(obj, callback, area) {
 }
 
 function load(keys, callback) {
+    // Load storage.local and check if sync is enable, then try to load
+    // storage.sync, if failed fail back to storage.local
     _load(keys, function (item) {
         if (item && item.storage) {
             if (item.storage.sync && browser.storage.sync) {
-                _load(keys, callback, browser.storage.sync)
+                _load(keys, function (itemSync) {
+                    if (itemSync == undefined || itemSync == null ||
+                        itemSync.storage == undefined || itemSync.storage == null) {
+                        callback(item);
+                    } else {
+                        callback(itemSync);
+                    }
+                }, browser.storage.sync)
             } else {
                 callback(item);
             }
