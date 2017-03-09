@@ -37,6 +37,10 @@
     "message": "帮助主页",
     "description": "Project homepage."
   },
+  "reviews": {
+    "message": "评论",
+    "description": "Project reviews."
+  },
   "downloading": {
     "message": "正在下载在线规则...",
     "description": "Downloading."

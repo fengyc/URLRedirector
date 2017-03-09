@@ -37,6 +37,10 @@
     "message": "Project Homepage",
     "description": "Project homepage."
   },
+  "reviews": {
+    "message": "Reivews",
+    "description": "Project reviews."
+  },
   "downloading": {
     "message": "Downloading...",
     "description": "Downloading."
