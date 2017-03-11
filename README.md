@@ -7,9 +7,10 @@ URLRedirector
 
 插件可以处理 URL 的自动重定向，可用于帮助网页开发和调试，以及解决国内无法访问 google CDN 之类的问题（ stackoverflow 等国外网站再也不用等了^_^）。
 
-目前已在 firefox 上线，上架地址 [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)，安装插件前，请升级 firefox 到 48.0 以上的最新版本（ AMO 的审核加快了，暂时不提供离线安装包）。
+firefox 版本已上线，上架地址 [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)，安装插件前，请升级 firefox 到 48.0 以上的最新版本（ AMO 的审核加快了，暂时不提供离线安装包）。
 
-chrome 版本的支持正在整理中，目前测试未有发现功能问题，准备上架。
+chrome 版本已上线，商店地址 [https://chrome.google.com/webstore/detail/maolmdhneopinciaokgohljhpdedekee](https://chrome.google.com/webstore/detail/maolmdhneopinciaokgohljhpdedekee)。
+（无法科学上网时可通过开发者模式加载插件：在 `tools/` 目录下找到 chrome 版本的 zip 压缩包，解压后，在 chrome 中打开开发者模式，加载已解压的扩展程序）
 
 供用户使用的在线规则有:
 
