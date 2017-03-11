@@ -63,6 +63,20 @@ module.exports = function(grunt) {
             return JSON.stringify(json, null, 2);
           }
         }
+      },
+      chrome_webstore: {
+        expand: true,
+        cwd: 'src/options',
+        src: 'options.js',
+        dest: 'dist/chrome/options/',
+        options: {
+          process: function (content, srcpath) {
+            /* Fix chrome webstore url */
+            var pkg = grunt.file.readJSON('package.json');
+            var chromeWebStoreURL = pkg.publishConfig["chrome-webstore"];
+            return content.replace(/var.*ADDON_URL.*=.*/, 'var ADDON_URL = "' + chromeWebStoreURL + '";' );
+          }
+        }
       }
     },
     compress: {

@@ -1,0 +1,244 @@
+{
+  "extensionName": {
+    "message": "URLRedirector",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "帮助你重定向特定网页到新地址",
+    "description": "Description of the extension."
+  },
+
+  "redirect": {
+    "message": "重定向",
+    "description": "Redirect."
+  },
+  "enable": {
+    "message": "启用",
+    "description": "Enable."
+  },
+  "updatedAt": {
+    "message": "更新时间",
+    "description": "Updated At."
+  },
+  "options": {
+    "message": "配置",
+    "description": "Options."
+  },
+  "interval": {
+    "message": "更新间隔",
+    "description": "Interval."
+  },
+
+  "optionsTitle": {
+    "message": "URLRedirector 配置",
+    "description": "Title of options page."
+  },
+  "projectHomepage": {
+    "message": "帮助主页",
+    "description": "Project homepage."
+  },
+  "reviews": {
+    "message": "评论",
+    "description": "Project reviews."
+  },
+  "downloading": {
+    "message": "正在下载在线规则...",
+    "description": "Downloading."
+  },
+  "syncNotSupported": {
+    "message": "当前版本浏览器不支持同步存储",
+    "description": "Sync not supported."
+  },
+  "browserSync": {
+    "message": "浏览器同步",
+    "description": "Browser sync."
+  },
+  "save": {
+    "message": "保存",
+    "description": "Save."
+  },
+  "reset": {
+    "message": "重置",
+    "description": "Reset."
+  },
+  "onlineURLs": {
+    "message": "在线规则",
+    "description": "Online URLs."
+  },
+  "add": {
+    "message": "添加",
+    "description": "Add."
+  },
+  "delete": {
+    "message": "删除",
+    "description": "Delete."
+  },
+  "download": {
+    "message": "下载",
+    "description": "Download."
+  },
+  "interval_15minutes": {
+    "message": "15 分钟",
+    "description": "Interval."
+  },
+  "interval_30minutes": {
+    "message": "30 分钟",
+    "description": "Interval."
+  },
+  "interval_45minutes": {
+    "message": "45 分钟",
+    "description": "Interval."
+  },
+  "interval_1hours": {
+    "message": "1 小时",
+    "description": "Interval."
+  },
+  "interval_3hours": {
+    "message": "3 小时",
+    "description": "Interval."
+  },
+  "interval_6hours": {
+    "message": "6 小时",
+    "description": "Interval."
+  },
+  "interval_12hours": {
+    "message": "12 小时",
+    "description": "Interval."
+  },
+  "interval_1days": {
+    "message": "1 天",
+    "description": "Interval."
+  },
+  "onlineURL": {
+    "message": "在线规则 URL",
+    "description": "Online URL."
+  },
+  "auto": {
+    "message": "自动",
+    "description": "Auto update."
+  },
+  "autoUpdate": {
+    "message": "自动更新",
+    "description": "Auto update."
+  },
+  "priority": {
+    "message": "优先顺序",
+    "description": "Rule priority."
+  },
+
+  "userRules": {
+    "message": "用户规则",
+    "description": "User rules."
+  },
+  "edit": {
+    "message": "编辑",
+    "description": "Edit."
+  },
+  "asJSON": {
+    "message": "显示为 JSON 格式",
+    "description": "Display as JSON format."
+  },
+  "description": {
+    "message": "规则描述",
+    "description": "Description of rule."
+  },
+  "origin": {
+    "message": "原始地址",
+    "description": "Origin URL pattern."
+  },
+  "target": {
+    "message": "目标地址",
+    "description": "Target URL pattern."
+  },
+
+  "details": {
+    "message": "详情",
+    "description": "Details"
+  },
+  "close": {
+    "message": "关闭",
+    "description": "Close."
+  },
+  "originAndTarget": {
+    "message": "原始地址和目标地址",
+    "description": "Origin and target address pattern."
+  },
+  "ok": {
+    "message": "确认",
+    "description": "OK."
+  },
+  "cancel": {
+    "message": "取消",
+    "description": "Cancel."
+  },
+  "file": {
+    "message": "文件",
+    "description": "File."
+  },
+
+  "descriptionPlaceholder": {
+    "message": "规则描述，可选",
+    "description": "Description."
+  },
+  "originPlaceholder": {
+    "message": "原始地址，必需",
+    "description": "Origin."
+  },
+  "targetPlaceholder": {
+    "message": "目标地址，必需",
+    "description": "Target."
+  },
+  "exclude": {
+    "message": "排除地址",
+    "description": "Exclude address pattern."
+  },
+  "excludePlaceholder": {
+    "message": "排除地址，可选",
+    "description": "Exclude."
+  },
+  "example": {
+    "message": "地址示例",
+    "description": "Example address."
+  },
+  "examplePlaceholder": {
+    "message": "地址示例，可选",
+    "description": "Example address."
+  },
+  "result": {
+    "message": "测试结果",
+    "description": "Test result."
+  },
+  "resultPlaceholder": {
+    "message": "测试结果",
+    "description": "Test result."
+  },
+  "methods": {
+    "message": "请求方法",
+    "description": "Http request methods."
+  },
+  "allMethods": {
+    "message": "所有方法",
+    "description": "All methods."
+  },
+  "types": {
+    "message": "资源类型",
+    "description": "Http resource types."
+  },
+  "allTypes": {
+    "message": "所有类型",
+    "description": "All types."
+  },
+  "typesDescription": {
+    "message": "类型说明",
+    "description": "Types description."
+  },
+
+  "jsonFormat": {
+    "message": "JSON 格式用户规则",
+    "description": "JSON format."
+  },
+  "cloudHint": {
+    "message": "以下内容可保存到在线存储（github、云盘等），作为在线用户规则文件使用",
+    "description": "Cloud hint."
+  }
+}
