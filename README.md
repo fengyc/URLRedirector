@@ -10,7 +10,9 @@ URLRedirector
 firefox 版本已上线，上架地址 [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)，安装插件前，请升级 firefox 到 48.0 以上的最新版本（ AMO 的审核加快了，暂时不提供离线安装包）。
 
 chrome 版本已上线，商店地址 [https://chrome.google.com/webstore/detail/maolmdhneopinciaokgohljhpdedekee](https://chrome.google.com/webstore/detail/maolmdhneopinciaokgohljhpdedekee)。
-（无法科学上网时可通过开发者模式加载插件：在 `tools/` 目录下找到 chrome 版本的 zip 压缩包，解压后，在 chrome 中打开开发者模式，加载已解压的扩展程序）
+（无法科学上网时可通过开发者模式加载插件：在 release 中找到 chrome 版本的 zip 压缩包，解压后，在 chrome 中打开开发者模式，加载已解压的扩展程序）
+
+Release 中包含了各个版本的压缩包 [https://github.com/fengyc/URLRedirector/releases](https://github.com/fengyc/URLRedirector/releases)
 
 供用户使用的在线规则有:
 
