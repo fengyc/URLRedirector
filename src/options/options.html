@@ -29,8 +29,18 @@
     <p><span class="i18n" data-i18n_text="updatedAt">更新时间</span>: <span id="lblUpdatedAt"></span></p>
     <div>
         <label><input type="checkbox" id="chbEnable"> <span class="i18n" data-i18n_text="redirect">开启重定向</span></label>
-        <span>&nbsp;</span>
-        <label id="lblSync"><input type="checkbox" id="chbSync"> <span class="i18n" data-i18n_text="browserSync">浏览器同步</span></label>
+        <label id="lblSync" style="margin-left: 10px"><input type="checkbox" id="chbSync"> <span class="i18n" data-i18n_text="browserSync">浏览器同步</span></label>
+        <div style="margin-left: 10px;display: inline-block">
+            <label>云同步</label>
+            <select id="sltCloud">
+                <option value="onedrive">OneDrive</option>
+            </select>
+            <label><input type="checkbox">自动</label>
+            <div class="btn-group btn-group-sm" style="display: inline-block">
+                <a title="上传"><i class="glyphicon glyphicon-upload"></i></a>
+                <a title="下载"><i class="glyphicon glyphicon-download"></i></a>
+            </div>
+        </div>
     </div>
     </div>
     <div>
