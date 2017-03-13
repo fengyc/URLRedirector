@@ -5,33 +5,60 @@
  */
 
 function OneDrive() {
-    this._AUTH_URL = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
-    this._REDIRECT_URL = "https://urlredirector.github.io/auth_onedrive.html";
-    this._CLIENT_ID = "380231ba-6b4d-44ae-a1bf-8daa67c0e15a";
+    this.CLIENT_ID = "380231ba-6b4d-44ae-a1bf-8daa67c0e15a";
+    this.AUTH_URL = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
+    this.REDIRECT_URL = "https://urlredirector.github.io/auth_onedrive.html";
+    this.SCOPE = "files.readwrite";
+    this.RESPONSE_TYPE = "token";
+
 }
 
-function dumpQueryString(obj) {
+function _dumpQueryString(obj) {
     var queryString = "";
     for (var k in obj) {
-        queryString += encodeURIComponent(k + "=" + obj[k]) + "&";
+        queryString += encodeURIComponent(k) + "=" + encodeURIComponent(obj[k]) + "&";
     }
     if (queryString != "") {
-        return queryString.slice(0, queryString.length - 1)
+        queryString = queryString.slice(0, queryString.length - 1)
     }
+    return queryString;
 }
 
-function loadQueryString(s) {
-
+function _loadQueryString(queryString) {
+    var params = queryString.split("&");
+    var obj = {};
+    for (var p in params) {
+        var kv = p.split("=");
+        var k = decodeURIComponent(kv[0]);
+        var v = undefined;
+        if (kv.length>1) {
+            v = decodeURIComponent(kv[1]);
+        }
+        obj[k] = v;
+    }
+    return obj;
 }
 
 OneDrive.prototype.authorize = function () {
-};
-
-var onedrive_options = {
-    client_id: "380231ba-6b4d-44ae-a1bf-8daa67c0e15a",
-    scope: "files.readwrite offline_access",
-    response_type: "token",
-    redirect_url: ONEDRIVE_REDIRECT_URL
+    var queryString = _dumpQueryString({
+        client_id: this.CLIENT_ID,
+        response_type: this.RESPONSE_TYPE,
+        scope: this.SCOPE,
+        redirect_url: this.REDIRECT_URL
+    });
+    var authURL = this.AUTH_URL + "?" + queryString;
+    var creating = browser.tabs.create({
+        active: true,
+        url: authURL
+    });
+    creating.then(
+        function (tab) {
+            browser.tabs.onUpdate
+        },
+        function (error) {
+            console.error(error);
+        }
+    );
 };
 
 function authorize() {
@@ -63,8 +90,14 @@ function checkAuthorized(url) {
     }
 }
 
+function handleOAuth2Callback(tabId, changeInfo, tab) {
+    if (changeInfo && changeInfo.url) {
 
+    }
+}
 
+/* Listen on tab */
+browser.tabs.onUpdated.addListener(handleOAuth2Callback());
 
 
 
