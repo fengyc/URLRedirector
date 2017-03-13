@@ -152,24 +152,6 @@ OneDrive.prototype.authorizeFromURL = function (url) {
     }
 };
 
-
-OneDrive.prototype.uploadTo = function (path, data, promise) {
-    $.ajax({
-        url: "/drive/special/approot:/" + encodeURIComponent(path) + ":/content",
-        headers: {
-            Authorization: "bearer " + this.access_token
-        },
-        type: "PUT",
-        body: data,
-        success: function (data) {
-            promise.resolve(data);
-        },
-        error: function (xhr, error, e) {
-            promise.reject(error);
-        }
-    })
-};
-
 OneDrive.prototype.upload = function (path, data) {
     return new Promise(function (resolve, reject) {
         function _upload() {
