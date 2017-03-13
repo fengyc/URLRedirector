@@ -6,7 +6,7 @@ var DOWNLOADING = "正在下载在线规则...";
 DOWNLOADING = getI18nMessage("downloading");
 var storage = null;
 var RESOURCE_TYPE_URL = "https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest/ResourceType";
-var ADDON_URL = "https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/";
+var ADDON_URL = "https://addons.mozilla.org/firefox/addon/urlredirector/";
 var SYNC_NOT_SUPPORTED = "当前版本浏览器不支持同步存储";
 SYNC_NOT_SUPPORTED = getI18nMessage("syncNotSupported");
 
