@@ -240,5 +240,29 @@
   "cloudHint": {
     "message": "以下内容可保存到在线存储（github、云盘等），作为在线用户规则文件使用",
     "description": "Cloud hint."
+  },
+  "cloud": {
+    "message": "云",
+    "description": "Cloud"
+  },
+  "success": {
+    "message": "成功",
+    "description": "Success"
+  },
+  "fail": {
+    "message": "失败",
+    "description": "Fail"
+  },
+  "uploading_cloud": {
+    "message": "正在上传...",
+    "description": "Uploading to cloud"
+  },
+  "downloading_cloud": {
+    "message": "正在下载...",
+    "description": "Downloading from cloud"
+  },
+  "upload": {
+    "message": "上传",
+    "description": "Upload"
   }
 }

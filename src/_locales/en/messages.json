@@ -240,5 +240,29 @@
   "cloudHint": {
     "message": "The content below could be saved online (e.g. github/onedrive) and shared with others.",
     "description": "Cloud hint."
+  },
+  "cloud": {
+    "message": "Cloud",
+    "description": "Cloud"
+  },
+  "success": {
+    "message": "Success",
+    "description": "Success"
+  },
+  "fail": {
+    "message": "Fail",
+    "description": "Fail"
+  },
+  "uploading_cloud": {
+    "message": "Uploading...",
+    "description": "Uploading to cloud"
+  },
+  "downloading_cloud": {
+    "message": "Downloading...",
+    "description": "Downloading from cloud"
+  },
+  "upload": {
+    "message": "Upload",
+    "description": "Upload"
   }
 }

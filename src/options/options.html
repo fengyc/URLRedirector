@@ -31,15 +31,13 @@
         <label><input type="checkbox" id="chbEnable"> <span class="i18n" data-i18n_text="redirect">开启重定向</span></label>
         <label id="lblSync" style="margin-left: 10px"><input type="checkbox" id="chbSync"> <span class="i18n" data-i18n_text="browserSync">浏览器同步</span></label>
         <div style="margin-left: 10px;display: inline-block">
-            <label>云同步</label>
+            <label for="sltCloud" class="i18n" data-i18n_text="cloud">云</label>
             <select id="sltCloud">
                 <option value="onedrive">OneDrive</option>
             </select>
-            <label><input type="checkbox">自动</label>
-            <div class="btn-group btn-group-sm" style="display: inline-block">
-                <a title="上传"><i class="glyphicon glyphicon-upload"></i></a>
-                <a title="下载"><i class="glyphicon glyphicon-download"></i></a>
-            </div>
+            <a id="lnkCloudUpload" class="i18n" data-i18n_attr_title="upload" title="上传" href="#"><i class="glyphicon glyphicon-upload"></i></a>
+            <a id="lnkCloudDownload" class="i18n" data-i18n_attr_title="download" title="下载" href="#"><i class="glyphicon glyphicon-download"></i></a>
+            <span id="spanCloudMessage"></span>
         </div>
     </div>
     </div>
@@ -328,11 +326,13 @@
 </div><!-- /.modal -->
 
 <script src="../static/js/jquery.js"></script>
+<script src="../static/js/jquery.blockUI.js"></script>
 <script src="../static/js/bootstrap.js"></script>
 <script src="../common.js"></script>
 <script src="../model.js"></script>
 <script src="../storage.js"></script>
 <script src="../i18n.js"></script>
+<script src="../cloud/onedrive.js"></script>
 <script src="options.js"></script>
 </body>
 </html>

@@ -9,6 +9,94 @@ var RESOURCE_TYPE_URL = "https://developer.mozilla.org/en-US/Add-ons/WebExtensio
 var ADDON_URL = "https://addons.mozilla.org/firefox/addon/urlredirector/";
 var SYNC_NOT_SUPPORTED = "当前版本浏览器不支持同步存储";
 SYNC_NOT_SUPPORTED = getI18nMessage("syncNotSupported");
+var DOWNLOADING_CLOUD = "正在下载...";
+DOWNLOADING_CLOUD = getI18nMessage("downloading_cloud");
+var UPLOADING_CLOUD = "正在上传...";
+UPLOADING_CLOUD = getI18nMessage("uploading_cloud");
+var SUCCESS = "完成";
+SUCCESS = getI18nMessage("success");
+var FAIL = "失败";
+FAIL = getI18nMessage("fail");
+
+
+function blockUI(message) {
+    $.blockUI({
+        css: {
+            "font-size": "large"
+        },
+        message: message
+    })
+}
+
+function unblockUI() {
+    $.unblockUI();
+}
+
+function showCloudMessage(message) {
+    $("#spanCloudMessage").show();
+    $("#spanCloudMessage").text(message);
+    $("#spanCloudMessage").fadeOut(8000);
+}
+
+/* Cloud upload */
+$("#lnkCloudUpload").click(function () {
+    var type = $("#sltCloud").val();
+    var cloudDriver = null;
+    if (type=="onedrive") {
+        cloudDriver = onedrive;
+
+    }
+    if (cloudDriver) {
+        blockUI(UPLOADING_CLOUD);
+        var content = JSON.stringify(storage, null, 2);
+        var uploading = cloudDriver.upload("storage", content);
+        uploading.then(
+            function () {
+                showCloudMessage(SUCCESS);
+                unblockUI();
+            },
+            function () {
+                showCloudMessage(FAIL);
+                unblockUI();
+            }
+        );
+    }
+});
+
+/* Cloud download */
+$("#lnkCloudDownload").click(function () {
+    var type = $("#sltCloud").val();
+    var cloudDriver = null;
+    if (type=="onedrive") {
+        cloudDriver = onedrive;
+
+    }
+    if (cloudDriver) {
+        blockUI(DOWNLOADING_CLOUD);
+        var downloading = cloudDriver.download("storage");
+        downloading.then(
+            function (data) {
+                if (data) {
+                    var obj = null;
+                    try {
+                        obj = JSON.parse(data);
+                    } finally {
+                        // do nothing
+                    }
+                    if (obj) {
+                        save({"storage": obj});
+                    }
+                }
+                showCloudMessage(SUCCESS);
+                unblockUI();
+            },
+            function () {
+                showCloudMessage(FAIL);
+                unblockUI();
+            }
+        );
+    }
+});
 
 /* Move a row up or down */
 function moveUpOrDown(tr, isUp) {
@@ -219,7 +307,7 @@ function displayAll() {
 
     if (storage.updateInterval) {
         var intervalMinutes = Math.round(storage.updateInterval / 60);
-        $("select").val(intervalMinutes);
+        $("#onlineInterval").val(intervalMinutes);
     }
     if (storage.updatedAt) {
         var updatedAt = new Date(storage.updatedAt);
