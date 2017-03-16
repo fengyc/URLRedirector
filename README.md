@@ -36,6 +36,7 @@ Release 中包含了各个版本的压缩包 [https://github.com/fengyc/URLRedir
 3. 支持自定义规则
 4. 支持规则测试示例
 5. 支持浏览器同步（chrome 或 firefox 53.0）
+6. 支持云盘同步（目前支持onedrive）
 
 限于 WebExtension 的能力，目前不支持以本地文件方式导入、导出配置。
 
