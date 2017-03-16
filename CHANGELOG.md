@@ -1,3 +1,5 @@
+**v1.3.9** 增加 onedrive 支持
+
 **v1.3.3** 修正 storage.sync 的处理
 
 **v1.3.2** 增加 storage.sync 的支持，在支持 storage.sync 的浏览器（firefox 53 和更新的版本）可进行浏览器同步
