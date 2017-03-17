@@ -1,3 +1,5 @@
+**v1.3.10** 根据审核邮件，在进行云同步时用 modal 替换掉 jquery.blockUI
+
 **v1.3.9** 增加 onedrive 支持
 
 **v1.3.3** 修正 storage.sync 的处理
