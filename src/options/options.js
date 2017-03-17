@@ -20,16 +20,12 @@ FAIL = getI18nMessage("fail");
 
 
 function blockUI(message) {
-    $.blockUI({
-        css: {
-            "font-size": "large"
-        },
-        message: message
-    })
+    $("#cloudMessage").text(message);
+    $("#modalCloud").modal("show");
 }
 
 function unblockUI() {
-    $.unblockUI();
+    $("#modalCloud").modal("hide");
 }
 
 function showCloudMessage(message) {
