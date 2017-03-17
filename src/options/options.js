@@ -28,6 +28,25 @@ function unblockUI() {
     $("#modalCloud").modal("hide");
 }
 
+var OPTION_TAB_URL = window.location.href;
+
+function activeOptionsTab() {
+    var querying = browser.tabs.query({
+        url: OPTION_TAB_URL
+    }, function (tabs) {
+        if (tabs && tabs.length > 0) {
+            browser.tabs.update(tabs[0].id, {active: true})
+        }
+    });
+    if (querying) {
+        querying.then(function (tabs) {
+            if (tabs && tabs.length > 0) {
+                browser.tabs.update(tabs[0].id, {active: true})
+            }
+        });
+    }
+}
+
 function showCloudMessage(message) {
     $("#spanCloudMessage").show();
     $("#spanCloudMessage").text(message);
@@ -49,10 +68,12 @@ $("#lnkCloudUpload").click(function () {
         uploading.then(
             function () {
                 showCloudMessage(SUCCESS);
+                activeOptionsTab();
                 unblockUI();
             },
             function () {
                 showCloudMessage(FAIL);
+                activeOptionsTab();
                 unblockUI();
             }
         );
