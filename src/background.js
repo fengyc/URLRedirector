@@ -178,3 +178,15 @@ browser.webRequest.onBeforeRequest.addListener(
     {urls: ["<all_urls>"]},
     ["blocking"]
 );
+
+/**
+ * Init
+ */
+function init() {
+    /* Load storage */
+
+    /* Set up event listeners and handlers */
+
+}
+
+init();

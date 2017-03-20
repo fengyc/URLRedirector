@@ -2,19 +2,44 @@
  * Models of URLRedirector.
  */
 
-/* A rule */
+/**
+ * Rule
+ * @constructor
+ */
 function Rule() {
-    this.description = null;    // Rule description
-    this.origin = null;         // Origin url pattern
-    this.exclude = null;        // Exclude url pattern
-    this.methods = [];          // Http methods
-    this.types = [];            // Resource types
-    this.target = null;         // Target url pattern
-    this.example = null;        // An Test example
-    this.enable = false;        // Enable or not
+    this.description = null;        // Rule description
+    this.origin = null;             // Origin url pattern
+    this.exclude = null;            // Exclude url pattern
+    this.methods = [];              // Http methods
+    this.types = [];                // Resource types
+    this.target = null;             // Target url pattern
+    this.example = null;            // An Test example
+    this.enable = false;            // Enable or not
+    this.event = "onBeforeRequest"; // Event
+    this.handler = "redirect";      // Handler
+    this.args = {};                 // Other handler args
 }
 
-/* From a plain object */
+/**
+ * Get a property of rule.
+ *
+ * @param name Name of the property
+ */
+Rule.prototype.get = function (name) {
+    if (this.hasOwnProperty(name)) {
+        return this[name];
+    }
+    if (this.args.hasOwnProperty(name)) {
+        return this.args[name];
+    }
+    return undefined;
+};
+
+/**
+ * Create a rule object from a plain object.
+ *
+ * @param obj Plain object
+ */
 Rule.prototype.fromObject = function (obj) {
     for (var i in obj){
         if (this.hasOwnProperty(i)) {
