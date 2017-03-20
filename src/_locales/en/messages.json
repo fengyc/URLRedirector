@@ -264,5 +264,9 @@
   "upload": {
     "message": "Upload",
     "description": "Upload"
+  },
+  "help": {
+    "message": "Help",
+    "description": "Help"
   }
 }

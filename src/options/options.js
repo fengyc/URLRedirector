@@ -19,17 +19,27 @@ var FAIL = "失败";
 FAIL = getI18nMessage("fail");
 
 
+/**
+ * Block the UI.
+ * @param message
+ */
 function blockUI(message) {
     $("#cloudMessage").text(message);
     $("#modalCloud").modal("show");
 }
 
+/**
+ * Unblock the UI.
+ */
 function unblockUI() {
     $("#modalCloud").modal("hide");
 }
 
 var OPTION_TAB_URL = window.location.href;
 
+/**
+ * Activate current options tab.
+ */
 function activeOptionsTab() {
     var querying = browser.tabs.query({
         url: OPTION_TAB_URL
@@ -47,6 +57,10 @@ function activeOptionsTab() {
     }
 }
 
+/**
+ * Show cloud sync result message.
+ * @param message
+ */
 function showCloudMessage(message) {
     $("#spanCloudMessage").show();
     $("#spanCloudMessage").text(message);
@@ -114,6 +128,17 @@ $("#lnkCloudDownload").click(function () {
         );
     }
 });
+
+
+function updateHelpLink() {
+    var lang = browser.i18n.getUILanguage();
+    if (lang.startsWith("zh")) {
+        $("#lnkHelp").attr("href", "../help/help-zh.html");
+    }
+    else {
+        $("#lnkHelp").attr("href", "../help/help-en.html");
+    }
+}
 
 /* Move a row up or down */
 function moveUpOrDown(tr, isUp) {

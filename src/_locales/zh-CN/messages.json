@@ -34,7 +34,7 @@
     "description": "Title of options page."
   },
   "projectHomepage": {
-    "message": "帮助主页",
+    "message": "项目主页",
     "description": "Project homepage."
   },
   "reviews": {
@@ -264,5 +264,9 @@
   "upload": {
     "message": "上传",
     "description": "Upload"
+  },
+  "help": {
+    "message": "帮助",
+    "description": "Help"
   }
 }
