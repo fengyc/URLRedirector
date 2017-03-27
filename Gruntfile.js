@@ -16,7 +16,8 @@ module.exports = function(grunt) {
         files: [
           {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/firefox/'},
           {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/firefox-offline/'},
-          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/chrome/'}
+          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/chrome/'},
+          {expand:true, cwd: 'src/', src: ['**'], dest: 'dist/edge/'}
         ]
       },
       firefox_manifest: {
@@ -77,6 +78,25 @@ module.exports = function(grunt) {
             return content.replace(/var.*ADDON_URL.*=.*/, 'var ADDON_URL = "' + chromeWebStoreURL + '";' );
           }
         }
+      },
+      edge_manifest: {
+        expand: true,
+        cwd: 'src',
+        src: 'manifest.json',
+        dest: 'dist/edge/',
+        options: {
+          process: function (content, srcpath) {
+            var pkg = grunt.file.readJSON('package.json');
+            var json = JSON.parse(content);
+            json.version = pkg.version;
+            json.author = pkg.author.name;
+            json.background.persistent = true;
+            json.options_page = json.options_ui.page;
+            delete json.options_ui;
+            delete json.browser_action.browser_style;
+            return JSON.stringify(json, null, 2);
+          }
+        }
       }
     },
     compress: {
@@ -102,6 +122,14 @@ module.exports = function(grunt) {
         },
         files: [
           {expand: true, cwd: 'dist/chrome', src: ['**'], dest: '/'}
+        ]
+      },
+      edge: {
+        options: {
+          archive: 'dist/<%= pkg.name %>-edge-v<%= pkg.version %>.zip'
+        },
+        files: [
+          {expand: true, cwd: 'dist/edge', src: ['**'], dest: '/'}
         ]
       }
     }
