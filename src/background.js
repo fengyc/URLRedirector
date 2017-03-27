@@ -6,7 +6,11 @@ var storage = null;
 var downloading = false;
 var downloadTimer = null;
 
-/* Reload callback */
+
+/**
+ * Reload storage callback.
+ * @param result
+ */
 function reload(result) {
     storage = new Storage();
     if (result && result.storage) {
@@ -83,7 +87,6 @@ function downloadOnlineURLs() {
     }
 }
 
-/* Reset download timer to download online urls */
 /* Setup a listener if alarm api supported */
 if (browser.alarms) {
     browser.alarms.onAlarm.addListener(function (alarm) {
@@ -178,15 +181,3 @@ browser.webRequest.onBeforeRequest.addListener(
     {urls: ["<all_urls>"]},
     ["blocking"]
 );
-
-/**
- * Init
- */
-function init() {
-    /* Load storage */
-
-    /* Set up event listeners and handlers */
-
-}
-
-init();
