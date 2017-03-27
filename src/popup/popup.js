@@ -44,7 +44,15 @@ $("#chbEnable").click(function () {
 });
 
 $("#btnOptions").click(function () {
-    browser.runtime.openOptionsPage();
+    if (browser.runtime.openOptionsPage) {
+        browser.runtime.openOptionsPage();
+    } else {
+        var options_url = browser.runtime.getURL("options/options.html");
+        browser.tabs.create({
+            active: true,
+            url: options_url
+        });
+    }
     window.close();
 });
 

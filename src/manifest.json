@@ -5,6 +5,8 @@
   "version": "1.3.10",
   "homepage_url": "https://github.com/fengyc/URLRedirector",
   "icons": {
+    "20": "static/images/r20.png",
+    "25": "static/images/r25.png",
     "30": "static/images/r30.png",
     "48": "static/images/r48.png",
     "96": "static/images/r96.png",
@@ -24,14 +26,21 @@
 
   "browser_action": {
     "browser_style": true,
-    "default_icon": "static/images/r48.png",
+    "default_icon": {
+      "20": "static/images/r20.png",
+      "25": "static/images/r25.png",
+      "30": "static/images/r30.png",
+      "40": "static/images/r40.png",
+      "48": "static/images/r48.png"
+    },
     "default_title": "URLRedirector",
     "default_popup": "popup/popup.html"
   },
 
   "background": {
     "scripts": [
-      "static/js/jquery.js", "common.js", "model.js", "storage.js", "background.js"]
+      "static/js/jquery.js", "common.js", "model.js", "storage.js", "background.js"
+    ]
   },
 
   "options_ui": {
