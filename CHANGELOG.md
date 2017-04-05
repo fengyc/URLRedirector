@@ -1,3 +1,5 @@
+**v1.3.11** 支持 edge 浏览器，onedrive 登录时自动返回到选项页
+
 **v1.3.10** 根据审核邮件，在进行云同步时用 modal 替换掉 jquery.blockUI
 
 **v1.3.9** 增加 onedrive 支持
