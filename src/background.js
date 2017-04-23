@@ -134,7 +134,7 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
 function redirect(details) {
     if (storage.enable && details.url) {
-        var newURL = storage.redirect(details.url, details.method, details.type);
+        var newURL = storage.redirect(details.url, details.method, details.type, details.decode);
         if (newURL){
             return {
                 redirectUrl: newURL
