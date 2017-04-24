@@ -196,6 +196,14 @@
     "message": "排除地址，可选",
     "description": "Exclude."
   },
+  "decode": {
+    "message": "解码处理",
+    "description": "Decode"
+  },
+  "urlDecode": {
+    "message": "URL解码",
+    "description": "Decode"
+  },
   "example": {
     "message": "地址示例",
     "description": "Example address."

@@ -196,6 +196,14 @@
     "message": "Exclude address pattern, optional",
     "description": "Exclude."
   },
+  "decode": {
+    "message": "Decode",
+    "description": "Decode"
+  },
+  "urlDecode": {
+    "message": "URL Decode",
+    "description": "Decode"
+  },
   "example": {
     "message": "Example",
     "description": "Example address."

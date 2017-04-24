@@ -9,6 +9,7 @@ function Rule() {
     this.exclude = null;        // Exclude url pattern
     this.methods = [];          // Http methods
     this.types = [];            // Resource types
+    this.decode = false;        // Decode url
     this.target = null;         // Target url pattern
     this.example = null;        // An Test example
     this.enable = false;        // Enable or not
@@ -24,7 +25,7 @@ Rule.prototype.fromObject = function (obj) {
 };
 
 /* Redirect of a rule */
-Rule.prototype.redirect = function (url, method, type) {
+Rule.prototype.redirect = function (url, method, type, decode) {
     if (this.enable && this.origin) {
         var ruleRe = new RegExp(this.origin);
         if (ruleRe.test(url)) {
@@ -58,7 +59,7 @@ Rule.prototype.redirect = function (url, method, type) {
                     }
                 }
             }
-            /* Exclude some rule */
+            /* Exclude some rules */
             if (this.exclude && this.exclude != "") {
                 var excludeRe = new RegExp(this.exclude);
                 if (excludeRe.test(url)) {
@@ -67,6 +68,9 @@ Rule.prototype.redirect = function (url, method, type) {
             }
             /* Return a new url */
             var newURL = url.replace(ruleRe, this.target);
+            if (this.decode) {
+                newURL = decodeURIComponent(newURL);
+            }
             return newURL;
         }
     }
@@ -104,10 +108,10 @@ OnlineURL.prototype.fromObject = function (obj) {
 };
 
 /* Redirect of an online url */
-OnlineURL.prototype.redirect = function (url, method, type) {
+OnlineURL.prototype.redirect = function (url, method, type, decode) {
     if (this.enable && this.rules && this.rules.length > 0) {
         for (var i=0; i<this.rules.length; i++){
-            var newURL = this.rules[i].redirect(url, method, type);
+            var newURL = this.rules[i].redirect(url, method, type, decode);
             if (newURL) {
                 return newURL;
             }
@@ -159,11 +163,11 @@ Storage.prototype.fromObject = function (obj) {
 };
 
 /* Redirect */
-Storage.prototype.redirect = function (url, method, type) {
+Storage.prototype.redirect = function (url, method, type, decode) {
     if (this.enable) {
         if (this.customRules && this.customRules.length > 0) {
             for (var i=0; i<this.customRules.length; i++) {
-                var newURL = this.customRules[i].redirect(url, method, type);
+                var newURL = this.customRules[i].redirect(url, method, type, decode);
                 if (newURL) {
                     return newURL;
                 }
@@ -171,7 +175,7 @@ Storage.prototype.redirect = function (url, method, type) {
         }
         if (this.onlineURLs && this.onlineURLs.length > 0) {
             for (var i=0; i<this.onlineURLs.length; i++) {
-                var newURL = this.onlineURLs[i].redirect(url, method, type);
+                var newURL = this.onlineURLs[i].redirect(url, method, type, decode);
                 if (newURL) {
                     return newURL;
                 }

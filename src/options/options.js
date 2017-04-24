@@ -510,6 +510,7 @@ $("#btnDeleteCustomRule").click(function () {
 
 /* Show Edit custom rule modal */
 function showEditCustomRuleModal(rule) {
+    $("#cbDecode").prop("checked", false);
     $("#divMethods input[type='checkbox']").prop('checked', false);
     $("#divTypes input[type='checkbox']").prop('checked', false);
     if (rule) {
@@ -517,6 +518,7 @@ function showEditCustomRuleModal(rule) {
         $("#txtOrigin").val(rule.origin);
         $("#txtTarget").val(rule.target);
         $("#txtExclude").val(rule.exclude);
+        $("#cbDecode").prop("checked", rule.decode);
         $("#txtExample").val(rule.example);
         $("#txtTestResult").val("");
         if (rule.methods && rule.methods.length > 0) {
@@ -545,6 +547,7 @@ function showEditCustomRuleModal(rule) {
         $("#txtOrigin").val("");
         $("#txtTarget").val("");
         $("#txtExclude").val("");
+        $("#cbDecode").prop("checked", false);
         $("#txtTestOrigin").val("");
         $("#txtTestResult").val("");
         $("#cbTypeAll").prop("checked", true);
@@ -565,9 +568,10 @@ $("#btnTest").click(function () {
     testRule.origin = $("#txtOrigin").val();
     testRule.exclude = $("#txtExclude").val();
     testRule.target = $("#txtTarget").val();
+    testRule.decode = $("#cbDecode").prop("checked");
     testRule.enable = true;
     var testOrigin = $("#txtExample").val();
-    var newURL = testRule.redirect(testOrigin);
+    var newURL = testRule.redirect(testOrigin, testRule.decode);
     $("#txtTestResult").val(newURL);
 });
 
@@ -613,6 +617,7 @@ $("#btnConfirmCustomRule").click(function () {
     editingRule.target = $("#txtTarget").val();
     editingRule.exclude = $("#txtExclude").val();
     editingRule.example = $("#txtExample").val();
+    editingRule.decode = $("#cbDecode").prop("checked");
     editingRule.methods = [];
     if (!$("#cbMethodAll").is(":checked")) {
         $("#divMethods input[type='checkbox']").each(function () {
@@ -666,3 +671,8 @@ browser.storage.onChanged.addListener(function (changes, area) {
 });
 
 reload();
+
+/* Fix the header when it hits top of the screen */
+$(document).ready(function(){
+    $(".sticky-header").sticky({topSpacing:0});
+});
