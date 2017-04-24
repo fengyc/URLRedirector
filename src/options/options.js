@@ -673,11 +673,16 @@ browser.storage.onChanged.addListener(function (changes, area) {
 reload();
 
 /* Fix the header when it hits top of the screen */
- $(document).ready(function(){
-    var div=$('.sticky-header');
-    var start=$(div).offset().top;
-    $.event.add(window,'scroll',function(){
-        var p=$(window).scrollTop();
-        $(div).css({'position':(p>start)?'fixed':'static', 'top':(p>start)?'0px':'', 'width':$(div).parent().css('width')});
+$(document).ready(function () {
+    var div = $('.sticky-header');
+    var start = $(div).offset().top;
+    $.event.add(window, 'scroll', function () {
+        var p = $(window).scrollTop();
+        $(div).css({
+            'position': (p>start)?'fixed':'static',
+            'top': (p>start)?'0px':'',
+            'width': $(div).parent().css('width')
+        });
+        $('#tblCustomRules').css('margin-top', (p>start)?$(div).height():'');
     });
 });
