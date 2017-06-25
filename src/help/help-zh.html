@@ -15,16 +15,37 @@
       <div data-spy="affix" data-offset-top="60" data-offset-bottom="200">
         <div class="col-md-10">
           <h2 id="intro">简介</h2>
-          <p>URLRedirector 是用于实现重定向的浏览器插件，帮助用户处理访问 CDN 、网页调试、修改原始请求等等。 URLRedirector 基于
-            WebExtension ，同时支持 Firefox 和 Chrome 浏览器，也能迁移到其它支持 WebExtension 插件技术的其它浏览器。</p>
+          <p>URLRedirector 是用于实现重定向的浏览器扩展，帮助用户处理访问 CDN 、网页调试、修改原始请求等等。 URLRedirector 基于
+            WebExtension ，同时支持 Firefox 和 Chrome 浏览器，也能迁移到其它支持 WebExtension 技术的其它浏览器。</p>
           <p>URLRedirector 为开源软件，项目主页为 <a target="_blank" href="https://github.com/fengyc/URLRedirector">https://github.com/fengyc/URLRedirector</a> 。</p>
           <p>本帮助手册列举了日常使用过程中的常见问题，如遇到无法解决的问题或需要新功能请到项目主页上进行讨论。</p>
+          <h2 id="workflow">工作流程</h2>
+          <p>URLRedirector 使用 webRequest api (<a target="_blank" href="https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/webRequest">链接</a>) ，
+            监听浏览器的 HTTP 请求，然后根据预定义的规则处理请求。</p>
+          <p>对于每个 HTTP 请求，URLRedirector 先后按照用户自定义规则、订阅的在线规则的顺序，检查该请求的 URL、请求方法、
+            资源类型是否与某条规则匹配。如果 HTTP 请求的各项参与匹配，则根据规则的目标进行重新定向。</p>
+          <p>有两种重定向方法，简单替换方法和匹配处理方法：<br>
+            (1) 简单替换：基于 String.replace 方法 ，使用目标地址替换掉请求 URL 中与原始地址匹配的部分；<br>
+          <pre>
+var originRE = new RegExp(origin, "g");
+var newURL = url.replace(originRe, target);</pre>
+            (2) 匹配处理：基于 RegExp.exec 方法，先以原始地址为正则表达式，执行 exec 找到请求 URL 中的匹配结果列表，然后在目标地址中，逐个替换掉 $i 部分的参数</p>
+          <pre>
+var originRE = new RegExp(origin, "g");
+var matches = originRE.exec(url);
+var newURL = target;
+for (var i = 1; i < matches.length; i++) {
+    newURL = target.replace("\\$" + i, matches[i]);
+}
+var newURL = url.replace(originRe, target);</pre>
+          <p>一般情况下使用简单替换即可，但遇到需要进行 URL/Base64 编解码等复杂场景时，需要使用匹配处理。</p>
           <h2 id="rules">规则</h2>
           <hr>
         </div>
         <div class="col-md-2">
           <ul class="nav nav-pills nav-stacked" data-spy="affix">
             <li><a href="#intro">简介</a></li>
+            <l2><a href="#workflow">工作流程</a></l2>
             <li><a href="#rules">规则</a></li>
           </ul>
         </div>
