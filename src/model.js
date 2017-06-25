@@ -2,10 +2,7 @@
  * Models of URLRedirector.
  */
 
-/**
- * Rule
- * @constructor
- */
+/* A rule */
 function Rule() {
     this.description = null;        // Rule description
     this.origin = null;             // Origin url pattern
@@ -18,6 +15,7 @@ function Rule() {
     this.event = "onBeforeRequest"; // Event
     this.handler = "redirect";      // Handler
     this.args = {};                 // Other handler args
+    this.process = null;            // Process match, urlEncode / urlDecode / base64Encode / base64Decode
 }
 
 /**
@@ -46,13 +44,19 @@ Rule.prototype.fromObject = function (obj) {
             this[i] = obj[i];
         }
     }
+    if (this.origin) {
+        this._originRe = new RegExp(this.origin, "g");
+    }
+    if (this.exclude) {
+        this._excludeRe = new RegExp(this.exclude, "g");
+    }
 };
 
 /* Redirect of a rule */
 Rule.prototype.redirect = function (url, method, type) {
-    if (this.enable && this.origin) {
-        var ruleRe = new RegExp(this.origin);
-        if (ruleRe.test(url)) {
+    if (this.enable && this._originRe) {
+        this._originRe.lastIndex = 0;
+        if (this._originRe.test(url)) {
             /* Check method */
             if (arguments.length > 1 && method) {
                 if (this.methods && this.methods.length > 0) {
@@ -84,15 +88,48 @@ Rule.prototype.redirect = function (url, method, type) {
                 }
             }
             /* Exclude some rule */
-            if (this.exclude && this.exclude != "") {
-                var excludeRe = new RegExp(this.exclude);
-                if (excludeRe.test(url)) {
+            if (this._excludeRe) {
+                this._excludeRe.lastIndex = 0;
+                if (this._excludeRe.test(url)) {
                     return null;
                 }
             }
-            /* Return a new url */
-            var newURL = url.replace(ruleRe, this.target);
-            return newURL;
+            /* Process match or not */
+            if (this.process) {
+                this._originRe.lastIndex = 0;
+                var matches = this._originRe.exec(url);
+                var newURL = this.target;
+                if (matches) {
+                    for (var i = 1; i < matches.length; i++) {
+                        var m = matches[i] || "";
+                        try {
+                            if (this.process == "urlEncode") {
+                                m = encodeURIComponent(m);
+                            }
+                            else if (this.process == "urlDecode") {
+                                m = decodeURIComponent(m);
+                            }
+                            else if (this.process == "base64Encode") {
+                                m = btoa(m);
+                            }
+                            else if (this.process == "base64Decode") {
+                                m = atob(m);
+                            }
+                        } catch (err) {
+                            // Something error, could not process
+                            // console.warn("Could not process " + this.process + " " + m);
+                            return null;
+                        }
+                        newURL = newURL.replace(new RegExp("\\$" + i, "g"), m);
+                    }
+                    return newURL;
+                }
+            } else {
+                /* Return a new url */
+                this._originRe.lastIndex = 0;
+                var newURL = url.replace(this._originRe, this.target);
+                return newURL;
+            }
         }
     }
     return null;

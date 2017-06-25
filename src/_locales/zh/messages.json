@@ -264,5 +264,29 @@
   "upload": {
     "message": "上传",
     "description": "Upload"
+  },
+  "process": {
+    "message": "匹配处理",
+    "description": "Matched process"
+  },
+  "none": {
+    "message": "无",
+    "description": "None"
+  },
+  "urlencode": {
+    "message": "URL编码",
+    "description": "URLEncode"
+  },
+  "urldecode": {
+    "message": "URL解码",
+    "description": "URLDecode"
+  },
+  "base64encode": {
+    "message": "Base64编码",
+    "description": "Base64Encode"
+  },
+  "base64decode": {
+    "message": "Base64解码",
+    "description": "Base64解码"
   }
 }
