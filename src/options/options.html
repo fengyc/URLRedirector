@@ -225,13 +225,19 @@
                     </div>
                     <!--匹配处理-->
                     <div class="form-group">
-                        <label class="col-sm-2 control-label i18n">匹配处理</label>
+                        <label class="col-sm-2 control-label i18n" data-i18n_text="process">匹配处理</label>
                         <div class="col-sm-10">
-                            <label><input type="radio" name="process" value="">无</label>
-                            <label><input type="radio" name="process" value="urlEncode">URL编码</label>
-                            <label><input type="radio" name="process" value="urlDecode">URL解码</label>
-                            <label><input type="radio" name="process" value="base64Encode">Base64编码</label>
-                            <label><input type="radio" name="process" value="base64Decode">Base64解码</label>
+                            <div class="row">
+                                <label class="col-sm-6"><input type="radio" name="process" value=""> <span class="i18n" data-i18n_text="none">无</span></label>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-6"><input type="radio" name="process" value="urlEncode"> <span class="i18n" data-i18n_text="urlencode">URL编码</span></label>
+                                <label class="col-sm-6"><input type="radio" name="process" value="urlDecode"> <span class="i18n" data-i18n_text="urldecode">URL解码</span></label>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-6"><input type="radio" name="process" value="base64Encode"> <span class="i18n" data-i18n_text="base64encode">Base64编码</span></label>
+                                <label class="col-sm-6"><input type="radio" name="process" value="base64Decode"> <span class="i18n" data-i18n_text="base64decode">Base64解码</span></label>
+                            </div>
                         </div>
                     </div>
                     <!--测试结果-->

@@ -264,5 +264,29 @@
   "upload": {
     "message": "Upload",
     "description": "Upload"
+  },
+  "process": {
+    "message": "Process",
+    "description": "Matched process"
+  },
+  "none": {
+    "message": "None",
+    "description": "None"
+  },
+  "urlencode": {
+    "message": "URL Encode",
+    "description": "URLEncode"
+  },
+  "urldecode": {
+    "message": "URL Decode",
+    "description": "URLDecode"
+  },
+  "base64encode": {
+    "message": "Base64 Encode",
+    "description": "Base64Encode"
+  },
+  "base64decode": {
+    "message": "Base64 Decode",
+    "description": "Base64Decode"
   }
 }
