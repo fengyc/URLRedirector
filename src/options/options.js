@@ -100,7 +100,6 @@ $("#lnkCloudDownload").click(function () {
     var cloudDriver = null;
     if (type=="onedrive") {
         cloudDriver = onedrive;
-
     }
     if (cloudDriver) {
         blockUI(DOWNLOADING_CLOUD);
@@ -543,6 +542,11 @@ function showEditCustomRuleModal(rule) {
         $("#txtTarget").val(rule.target);
         $("#txtExclude").val(rule.exclude);
         $("#txtExample").val(rule.example);
+        if (rule.process) {
+            $("input:radio[name='process'][value='"+ rule.process+ "']").prop("checked", true);
+        } else {
+            $("input:radio[name='process'][value='']").prop("checked", true);
+        }
         $("#txtTestResult").val("");
         if (rule.methods && rule.methods.length > 0) {
             $("#cbMethodAll").prop("checked", false);
@@ -570,11 +574,14 @@ function showEditCustomRuleModal(rule) {
         $("#txtOrigin").val("");
         $("#txtTarget").val("");
         $("#txtExclude").val("");
+        $("input:radio[name='process'][value='']").prop("checked", true);
         $("#txtTestOrigin").val("");
         $("#txtTestResult").val("");
         $("#cbTypeAll").prop("checked", true);
         $("#cbMethodAll").prop("checked", true);
     }
+    // Invoke testRule once
+    testRule();
     $("#modalEditUserRule").modal("show");
 }
 
@@ -585,15 +592,34 @@ $("button.remove").click(function () {
 });
 
 /* Test rule */
-$("#btnTest").click(function () {
+function testRule() {
     var testRule = new Rule();
-    testRule.origin = $("#txtOrigin").val();
-    testRule.exclude = $("#txtExclude").val();
-    testRule.target = $("#txtTarget").val();
-    testRule.enable = true;
-    var testOrigin = $("#txtExample").val();
-    var newURL = testRule.redirect(testOrigin);
+    testRule.fromObject({
+        origin: $("#txtOrigin").val(),
+        target: $("#txtTarget").val(),
+        exclude: $("#txtExclude").val(),
+        enable: true,
+        process: $("input:radio[name='process']:checked").val()
+    });
+    var exampleURL = $("#txtExample").val();
+    var newURL = testRule.redirect(exampleURL);
     $("#txtTestResult").val(newURL);
+}
+// Auto test
+$("#txtExample").bind('input propertychange', function () {
+    testRule();
+});
+$("#txtOrigin").bind('input propertychange', function () {
+    testRule();
+});
+$("#txtTarget").bind('input propertychange', function () {
+    testRule();
+});
+$("#txtExclude").bind('input propertychange', function () {
+    testRule();
+});
+$("input:radio[name='process']").change(function () {
+    testRule();
 });
 
 /* types */
@@ -638,6 +664,7 @@ $("#btnConfirmCustomRule").click(function () {
     editingRule.target = $("#txtTarget").val();
     editingRule.exclude = $("#txtExclude").val();
     editingRule.example = $("#txtExample").val();
+    editingRule.process = $("input:radio[name='process']:checked").val();
     editingRule.methods = [];
     if (!$("#cbMethodAll").is(":checked")) {
         $("#divMethods input[type='checkbox']").each(function () {

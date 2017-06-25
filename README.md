@@ -1,16 +1,19 @@
 URLRedirector
 =============
 
-使用 WebExtension 方式编写的 Firefox URL 重定向插件，并逐步发展到处理整个 webRequest 过程。
+使用 WebExtension 方式编写的 Firefox URL 重定向扩展，并逐步发展到处理整个 webRequest 过程。
 
-插件的开发受 [gooreplacer](https://github.com/jiacai2050/gooreplacer) 启发，由于 gooreplacer 在 MAC 下运行时会遇到停止运行的问题，因此采用 WebExtension 方式实现，目前测试结果良好。插件仅支持正则表达式替换方式，不支持通配符。
+扩展的开发受 [gooreplacer](https://github.com/jiacai2050/gooreplacer) 启发，由于 gooreplacer 在 MAC 下运行时会遇到停止运行的问题，因此采用 WebExtension 方式实现，目前测试结果良好。扩展仅支持正则表达式替换方式，不支持通配符。
 
-插件可以处理 URL 的自动重定向，可用于帮助网页开发和调试，以及解决国内无法访问 google CDN 之类的问题（ stackoverflow 等国外网站再也不用等了^_^）。
+扩展可以处理 URL 的自动重定向，可用于帮助网页开发和调试，以及解决国内无法访问 google CDN 之类的问题（ stackoverflow 等国外网站再也不用等了^_^）。
 
-firefox 版本已上线，上架地址 [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)，安装插件前，请升级 firefox 到 48.0 以上的最新版本（ AMO 的审核加快了，暂时不提供离线安装包）。
+firefox 版本已上线，上架地址 [https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/](https://addons.mozilla.org/zh-CN/firefox/addon/urlredirector/)，安装扩展前，请升级 firefox 到 48.0 以上的最新版本（**受 [bug1345893](https://bugzilla.mozilla.org/show_bug.cgi?id=1345893) 影响，firefox52 和更高版本重定向时存在问题**)。
+
 
 chrome 版本已上线，商店地址 [https://chrome.google.com/webstore/detail/maolmdhneopinciaokgohljhpdedekee](https://chrome.google.com/webstore/detail/maolmdhneopinciaokgohljhpdedekee)。
-（无法科学上网时可通过开发者模式加载插件：在 release 中找到 chrome 版本的 zip 压缩包，解压后，在 chrome 中打开开发者模式，加载已解压的扩展程序）
+（无法科学上网时可通过开发者模式加载扩展：在 release 中找到 chrome 版本的 zip 压缩包，解压后，在 chrome 中打开开发者模式，加载已解压的扩展程序）
+
+edge 版本提供离线包（注册需要 RMB :-< ），在 release 中可找到 edge 版本的 zip 压缩包，解压后，在 edge 的 about:flags 中启用开发者模式 （[英文说明](https://docs.microsoft.com/en-us/microsoft-edge/extensions/guides/adding-and-removing-extensions)），加载已解压的扩展程序。
 
 Release 中包含了各个版本的压缩包 [https://github.com/fengyc/URLRedirector/releases](https://github.com/fengyc/URLRedirector/releases)
 
@@ -28,6 +31,8 @@ Release 中包含了各个版本的压缩包 [https://github.com/fengyc/URLRedir
 -------
 
 版本变更历史请查看 CHANGELOG 。
+
+目前支持的浏览器：firefox、chrome、edge
 
 目前支持的特性：
 
