@@ -13,6 +13,11 @@
       "enable": true
     },
     {
+      "origin": "storage.googleapis.com",
+      "target": "storage-googleapis.proxy.ustclug.org",
+      "enable": true
+    },
+    {
       "origin": "themes.googleusercontent.com",
       "target": "google-themes.proxy.ustclug.org",
       "enable": true
