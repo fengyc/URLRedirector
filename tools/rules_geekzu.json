@@ -1,10 +1,10 @@
 {
-  "version": "1.0",
-  "createdAt": "2016-11-30T10:14:22.212Z",
+  "version": "2.0",
+  "createdAt": "2017-08-17",
   "rules": [
     {
       "origin": "ajax.googleapis.com",
-      "target": "sdn.geekzu.org/ajax",
+      "target": "gapis.geekzu.org/ajax",
       "enable": true
     },
     {
@@ -14,12 +14,12 @@
     },
     {
       "origin": "themes.googleusercontent.com",
-      "target": "sdn.geekzu.org/g-themes",
+      "target": "gapis.geekzu.org/g-themes",
       "enable": true
     },
     {
       "origin": "fonts.gstatic.com",
-      "target": "sdn.geekzu.org/g-fonts",
+      "target": "gapis.geekzu.org/g-fonts",
       "enable": true
     },
     {
