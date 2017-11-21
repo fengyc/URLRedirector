@@ -198,25 +198,21 @@ Storage.prototype.fromObject = function (obj) {
     }
 };
 
-/* Redirect */
 Storage.prototype.redirect = function (url, method, type) {
-    if (this.enable) {
-        if (this.customRules && this.customRules.length > 0) {
-            for (var i=0; i<this.customRules.length; i++) {
-                var newURL = this.customRules[i].redirect(url, method, type);
-                if (newURL) {
-                    return newURL;
-                }
-            }
-        }
-        if (this.onlineURLs && this.onlineURLs.length > 0) {
-            for (var i=0; i<this.onlineURLs.length; i++) {
-                var newURL = this.onlineURLs[i].redirect(url, method, type);
-                if (newURL) {
-                    return newURL;
-                }
-            }
-        }
+    if (!this.enable) {
+        return null;
     }
-    return null;
+    var isChanged = false;
+    while(true) {
+        var thisStageUrl;
+        if (!this.customRules.some(rule => thisStageUrl = rule.redirect(url, method, type))) {
+            this.onlineURLs.some(rule => thisStageUrl = rule.redirect(url, method, type));
+        }
+        if (!thisStageUrl) {
+            break;
+        }
+        isChanged = true;
+        url = thisStageUrl;
+    }
+    return isChanged ? url : null;
 };
