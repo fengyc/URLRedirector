@@ -28,7 +28,7 @@
       "enable": true
     },
     {
-      "origin": "gravatar.com",
+      "origin": "secure.gravatar.com",
       "target": "gravatar.cat.net",
       "enable": true
     }
