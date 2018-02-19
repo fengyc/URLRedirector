@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "createdAt": "2017-08-22",
+  "rules": [
+    {
+      "origin": "ajax.googleapis.com",
+      "target": "ajax.cat.net",
+      "enable": true
+    },
+    {
+      "origin": "fonts.googleapis.com",
+      "target": "fonts.cat.net",
+      "enable": true
+    },
+    {
+      "origin": "themes.googleusercontent.com",
+      "target": "themes.cat.net",
+      "enable": true
+    },
+    {
+      "origin": "fonts.gstatic.com",
+      "target": "gstatic.cat.net",
+      "enable": true
+    },
+    {
+      "origin": "cdnjs.cloudflare.com",
+      "target": "cdnjs.cat.net",
+      "enable": true
+    },
+    {
+      "origin": "secure.gravatar.com",
+      "target": "gravatar.cat.net",
+      "enable": true
+    }
+  ]
+}
