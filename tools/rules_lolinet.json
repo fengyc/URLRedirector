@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "createdAt": "2018-03-22",
+  "rules": [
+    {
+      "origin": "ajax.googleapis.com",
+      "target": "ajax.loli.net",
+      "enable": true
+    },
+    {
+      "origin": "fonts.googleapis.com",
+      "target": "fonts.loli.net",
+      "enable": true
+    },
+    {
+      "origin": "themes.googleusercontent.com",
+      "target": "themes.loli.net",
+      "enable": true
+    },
+    {
+      "origin": "fonts.gstatic.com",
+      "target": "gstatic.loli.net",
+      "enable": true
+    },
+    {
+      "origin": "cdnjs.cloudflare.com",
+      "target": "cdnjs.loli.net",
+      "enable": true
+    },
+    {
+      "origin": "secure.gravatar.com",
+      "target": "gravatar.loli.net",
+      "enable": true
+    }
+  ]
+}
