@@ -29,17 +29,17 @@
     },
     {
       "origin": "platform.twitter.com/widgets.js",
-      "target": "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/widgets.js",
+      "target": "cdn.jsdelivr.net/gh/jiacai2050/gooreplacer@gh-pages/proxy/widgets.js",
       "enable": true
     },
     {
       "origin": "apis.google.com/js/api.js",
-      "target": "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/api.js",
+      "target": "cdn.jsdelivr.net/gh/jiacai2050/gooreplacer@gh-pages/proxy/api.js",
       "enable": true
     },
     {
       "origin": "apis.google.com/js/plusone.js",
-      "target": "cdn.rawgit.com/jiacai2050/gooreplacer/gh-pages/proxy/plusone.js",
+      "target": "cdn.jsdelivr.net/gh/jiacai2050/gooreplacer@gh-pages/proxy/plusone.js",
       "enable": true
     },
     {
