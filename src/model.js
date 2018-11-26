@@ -203,7 +203,9 @@ Storage.prototype.redirect = function (url, method, type) {
         return null;
     }
     var isChanged = false;
-    while(true) {
+    var loopCount = 0;
+    // To avoid endless redirection
+    while(loopCount < 1000) {
         var thisStageUrl;
         if (!this.customRules.some(rule => thisStageUrl = rule.redirect(url, method, type))) {
             this.onlineURLs.some(rule => thisStageUrl = rule.redirect(url, method, type));
@@ -213,6 +215,7 @@ Storage.prototype.redirect = function (url, method, type) {
         }
         isChanged = true;
         url = thisStageUrl;
+        loopCount += 1;
     }
-    return isChanged ? url : null;
+    return isChanged && loopCount < 1000 ? url : null;
 };
