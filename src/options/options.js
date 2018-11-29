@@ -415,6 +415,16 @@ $("#btnDownload").click(function () {
     });
 });
 
+/* Handle runtime messages */
+browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (message.method == "downloaded") {
+        $("#downloadState").text("");
+    }
+    else {
+        console.error("Unknown method");
+    }
+});
+
 var editingOnlineURL = null;
 var editingOnlineURLIdx = 0;
 

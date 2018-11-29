@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "2.2.4",
+    "jquery": "3.3",
     "bootstrap": "3.3.7",
     "blockUI": "jquery.blockUI#*"
   }

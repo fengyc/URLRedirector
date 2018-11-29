@@ -36,50 +36,56 @@ function downloadOnlineURLs() {
     var toDownload = [];    // URLs that need to be downloaded
     for (var i = 0; i < storage.onlineURLs.length; i++) {
         var onlineURL = storage.onlineURLs[i];
-        if (onlineURL.auto && onlineURL.enable && onlineURL.url != "") {
+        if (onlineURL.auto && onlineURL.enable && onlineURL.url !== "") {
             toDownload.push(onlineURL.url);
-            download(onlineURL.url, function (url, content) {
-                toDownload.remove(url);
-                if (content) {
-                    try {
-                        var json = JSON.parse(content);
-                        json.url = url;
-                        json.enable = true;
-                        json.downloadAt = new Date();
-                        /* To compact with gooreplacer */
-                        /* version < 1.0, version >= 1.0 doesn't change */
-                        if (!json.version || json.version < "1.0") {
-                            var rules = [];
-                            for (var key in json.rules) {
-                                var rule = json.rules[key];
-                                rules.push({
-                                    origin: key,
-                                    target: rule.dstURL,
-                                    enable: rule.enable === undefined ? true : rule.enable,
-                                    kind: rule.kind
-                                });
-                            }
-                            json.rules = rules;
-                        }
-                        /* replace the onlineURL */
-                        for (var j = 0; j < storage.onlineURLs.length; j++){
-                            if (storage.onlineURLs[j].url == url){
-                                storage.onlineURLs[j] = new OnlineURL();
-                                storage.onlineURLs[j].fromObject(json);
-                                break;
-                            }
-                        }
-                    } catch (err) {
-                        console.error(err);
-                    }
-                }
-                if (toDownload.length <= 0) {
-                    downloading = false;
-                    storage.updatedAt = (new Date()).toISOString();
-                    save({"storage": storage});
-                }
-            });
         }
+    }
+    if (toDownload.length === 0) {
+        sendMessage("downloaded");
+    }
+    for (var i = 0; i<toDownload.length; i++) {
+        download(toDownload[i], function (url, content) {
+            toDownload.remove(url);
+            if (content) {
+                try {
+                    var json = JSON.parse(content);
+                    json.url = url;
+                    json.enable = true;
+                    json.downloadAt = new Date();
+                    /* To compact with gooreplacer */
+                    /* version < 1.0, version >= 1.0 doesn't change */
+                    if (!json.version || json.version < "1.0") {
+                        var rules = [];
+                        for (var key in json.rules) {
+                            var rule = json.rules[key];
+                            rules.push({
+                                origin: key,
+                                target: rule.dstURL,
+                                enable: rule.enable === undefined ? true : rule.enable,
+                                kind: rule.kind
+                            });
+                        }
+                        json.rules = rules;
+                    }
+                    /* replace the onlineURL */
+                    for (var j = 0; j < storage.onlineURLs.length; j++){
+                        if (storage.onlineURLs[j].url == url){
+                            storage.onlineURLs[j] = new OnlineURL();
+                            storage.onlineURLs[j].fromObject(json);
+                            break;
+                        }
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+            if (toDownload.length <= 0) {
+                downloading = false;
+                sendMessage("downloaded");
+                storage.updatedAt = (new Date()).toISOString();
+                save({"storage": storage});
+            }
+        });
     }
 }
 
@@ -121,7 +127,7 @@ function resetDownloadTimer() {
 
 /* Handle runtime messages */
 browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.method == "download") {
+    if (message.method == "download" && !downloading) {
         downloadOnlineURLs();
     }
     else if (message.method == "isDownloading") {
