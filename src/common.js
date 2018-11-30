@@ -69,17 +69,28 @@ if (!String.prototype.startsWith) {
 /* Message */
 /* Send message to background */
 function sendMessage(method, args, callback) {
-    if (arguments.length == 2){
+    if (arguments.length === 1) {
+        browser.runtime.sendMessage({
+            method: method,
+            args: {}
+        });
+    }
+    else if (arguments.length === 2){
         browser.runtime.sendMessage({
             method: method,
             args: args
         });
-    } else if (arguments.length == 3) {
+    }
+    else if (arguments.length === 3) {
         browser.runtime.sendMessage({
             method: method,
             args: args
         }, callback);
     }
+    else {
+        console.log("Invalid arguments length");
+    }
+
 }
 
 /* Download */
