@@ -420,6 +420,16 @@ browser.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (message.method == "downloaded") {
         $("#downloadState").text("");
     }
+    else if (message.method == "downloadError" || message.method == "parseError") {
+        // download error
+        var m = getI18nMessage(message.method);
+        m += "\n";
+        var urls = message.args;
+        for (var i=0; i< urls.length; i++) {
+            m += urls[i] + "\n";
+        }
+        alert(m);
+    }
     else {
         console.error("Unknown method");
     }

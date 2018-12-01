@@ -288,5 +288,13 @@
   "base64decode": {
     "message": "Base64解码",
     "description": "Base64解码"
+  },
+  "downloadError": {
+    "message": "无法下载",
+    "description": "无法下载"
+  },
+  "parseError": {
+    "message": "无法解析",
+    "description": "JsonParseError"
   }
 }
