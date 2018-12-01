@@ -288,5 +288,13 @@
   "base64decode": {
     "message": "Base64 Decode",
     "description": "Base64Decode"
+  },
+  "downloadError": {
+    "message": "Failed to download",
+    "description": "DownloadError"
+  },
+  "parseError": {
+    "message": "Failed to parse",
+    "description": "JsonParseError"
   }
 }

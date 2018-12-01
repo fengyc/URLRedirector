@@ -43,12 +43,20 @@ function downloadOnlineURLs() {
     if (toDownload.length === 0) {
         sendMessage("downloaded");
     }
+    var downloadErrors = [];
+    var parseErrors = [];
     for (var i = 0; i<toDownload.length; i++) {
         download(toDownload[i], function (url, content) {
             toDownload.remove(url);
             if (content) {
                 try {
-                    var json = JSON.parse(content);
+                    var json;
+                    // content may be a string or json object
+                    if (typeof content === "string") {
+                         json = JSON.parse(content);
+                    } else {
+                        json = content;
+                    }
                     json.url = url;
                     json.enable = true;
                     json.downloadAt = new Date();
@@ -76,12 +84,22 @@ function downloadOnlineURLs() {
                         }
                     }
                 } catch (err) {
+                    parseErrors.push(url);
                     console.error(err);
                 }
+            }
+            else {
+                downloadErrors.push(url);
             }
             if (toDownload.length <= 0) {
                 downloading = false;
                 sendMessage("downloaded");
+                if (downloadErrors.length > 0) {
+                    sendMessage("downloadError", downloadErrors);
+                }
+                if (parseErrors.length > 0) {
+                    sendMessage("parseError", parseErrors);
+                }
                 storage.updatedAt = (new Date()).toISOString();
                 save({"storage": storage});
             }
