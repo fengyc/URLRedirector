@@ -50,7 +50,13 @@ function downloadOnlineURLs() {
             toDownload.remove(url);
             if (content) {
                 try {
-                    var json = JSON.parse(content);
+                    var json;
+                    // content may be a string or json object
+                    if (typeof content === "string") {
+                         json = JSON.parse(content);
+                    } else {
+                        json = content;
+                    }
                     json.url = url;
                     json.enable = true;
                     json.downloadAt = new Date();
