@@ -21,6 +21,7 @@ Release 中包含了各个版本的压缩包 [https://github.com/fengyc/URLRedir
 * [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/gooreplacer.gson)
 * [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules.json)
 * [极客族的在线规则](http://cdn.geekzu.org/cached.html) [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_geekzu.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_geekzu.json)
+* [烧饼博客的在线规则](https://sb.sb/blog/css-cdn/) [https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_lolinet.json](https://raw.githubusercontent.com/fengyc/URLRedirector/master/tools/rules_lolinet.json)
 
 其它用户提供的规则：
 
