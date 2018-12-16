@@ -197,7 +197,7 @@ if (browser.runtime.getBrowserInfo) {
 }
 
 /* Add listener */
-browser.webRequest.onBeforeRequest.addListener(
+browser.webRequest.onHeadersReceived.addListener(
     handleRedirect,
     {urls: ["<all_urls>"]},
     ["blocking"]
