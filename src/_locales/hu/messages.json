@@ -1,0 +1,300 @@
+{
+  "extensionName": {
+    "message": "URLRedirector",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Bizonyos URL-ek automatikus átirányítása.",
+    "description": "Description of the extension."
+  },
+
+  "redirect": {
+    "message": "Átirányítás",
+    "description": "Redirect."
+  },
+  "enable": {
+    "message": "Engedélyezés",
+    "description": "Enable."
+  },
+  "updatedAt": {
+    "message": "Frissítve ekkor:",
+    "description": "Updated At."
+  },
+  "options": {
+    "message": "Beállítások",
+    "description": "Options."
+  },
+  "interval": {
+    "message": "Időköz",
+    "description": "Interval."
+  },
+
+  "optionsTitle": {
+    "message": "Az URLRedirector beállítása",
+    "description": "Title of options page."
+  },
+  "projectHomepage": {
+    "message": "Projekt honlapja",
+    "description": "Project homepage."
+  },
+  "reviews": {
+    "message": "Vélemények",
+    "description": "Project reviews."
+  },
+  "downloading": {
+    "message": "Letöltés…",
+    "description": "Downloading."
+  },
+  "syncNotSupported": {
+    "message": "A jelenlegi böngésző nem támogatja a tároló szinkronizálását",
+    "description": "Sync not supported."
+  },
+  "browserSync": {
+    "message": "Böngésző szinkronizálása",
+    "description": "Browser sync."
+  },
+  "save": {
+    "message": "Mentés",
+    "description": "Save."
+  },
+  "reset": {
+    "message": "Visszaállítás",
+    "description": "Reset."
+  },
+  "onlineURLs": {
+    "message": "Internetes szabályok",
+    "description": "Online URLs."
+  },
+  "add": {
+    "message": "Hozzáadás",
+    "description": "Add."
+  },
+  "delete": {
+    "message": "Törlés",
+    "description": "Delete."
+  },
+  "download": {
+    "message": "Letöltés",
+    "description": "Download."
+  },
+  "interval_15minutes": {
+    "message": "15 perc",
+    "description": "Interval."
+  },
+  "interval_30minutes": {
+    "message": "30 perc",
+    "description": "Interval."
+  },
+  "interval_45minutes": {
+    "message": "45 perc",
+    "description": "Interval."
+  },
+  "interval_1hours": {
+    "message": "1 óra",
+    "description": "Interval."
+  },
+  "interval_3hours": {
+    "message": "3 óra",
+    "description": "Interval."
+  },
+  "interval_6hours": {
+    "message": "6 óra",
+    "description": "Interval."
+  },
+  "interval_12hours": {
+    "message": "12 óra",
+    "description": "Interval."
+  },
+  "interval_1days": {
+    "message": "1 nap",
+    "description": "Interval."
+  },
+  "onlineURL": {
+    "message": "Internetes szabályok URL-e",
+    "description": "Online URL."
+  },
+  "auto": {
+    "message": "Automatikus",
+    "description": "Auto update."
+  },
+  "autoUpdate": {
+    "message": "Automatikus frissítés",
+    "description": "Auto update."
+  },
+  "priority": {
+    "message": "Prioritás",
+    "description": "Rule priority."
+  },
+
+  "userRules": {
+    "message": "Felhasználói szabályok",
+    "description": "User rules."
+  },
+  "edit": {
+    "message": "Szerkesztés",
+    "description": "Edit."
+  },
+  "asJSON": {
+    "message": "Megtekintés JSON formátumban",
+    "description": "Display as JSON format."
+  },
+  "description": {
+    "message": "Leírás",
+    "description": "Description of rule."
+  },
+  "origin": {
+    "message": "Eredet",
+    "description": "Origin URL pattern."
+  },
+  "target": {
+    "message": "Cél",
+    "description": "Target URL pattern."
+  },
+
+  "details": {
+    "message": "Részletek",
+    "description": "Details"
+  },
+  "close": {
+    "message": "Bezárás",
+    "description": "Close."
+  },
+  "originAndTarget": {
+    "message": "Eredet és cél",
+    "description": "Origin and target address pattern."
+  },
+  "ok": {
+    "message": "Rendben",
+    "description": "OK."
+  },
+  "cancel": {
+    "message": "Mégse",
+    "description": "Cancel."
+  },
+  "file": {
+    "message": "Fájl",
+    "description": "File."
+  },
+
+  "descriptionPlaceholder": {
+    "message": "Szabály leírása, elhagyható",
+    "description": "Description."
+  },
+  "originPlaceholder": {
+    "message": "Eredet címének mintája, kötelező",
+    "description": "Origin."
+  },
+  "targetPlaceholder": {
+    "message": "Cél címének mintája, kötelező",
+    "description": "Target."
+  },
+  "exclude": {
+    "message": "Kizárás",
+    "description": "Exclude address pattern."
+  },
+  "excludePlaceholder": {
+    "message": "Kizárási cím mintája, elhagyható",
+    "description": "Exclude."
+  },
+  "example": {
+    "message": "Példa",
+    "description": "Example address."
+  },
+  "examplePlaceholder": {
+    "message": "Példa cím, elhagyható",
+    "description": "Example address."
+  },
+  "result": {
+    "message": "Eredmény",
+    "description": "Test result."
+  },
+  "resultPlaceholder": {
+    "message": "Teszteredmény",
+    "description": "Test result."
+  },
+  "methods": {
+    "message": "Módszerek",
+    "description": "Http request methods."
+  },
+  "allMethods": {
+    "message": "Összes módszer",
+    "description": "All methods."
+  },
+  "types": {
+    "message": "Típusok",
+    "description": "Http resource types."
+  },
+  "allTypes": {
+    "message": "Összes típus",
+    "description": "All types."
+  },
+  "typesDescription": {
+    "message": "Leírás",
+    "description": "Types description."
+  },
+
+  "jsonFormat": {
+    "message": "JSON formátum",
+    "description": "JSON format."
+  },
+  "cloudHint": {
+    "message": "A lenti tartalom elmenthető az interneten (például GitHub vagy OneDrive), és megosztható másokkal.",
+    "description": "Cloud hint."
+  },
+  "cloud": {
+    "message": "Felhő",
+    "description": "Cloud"
+  },
+  "success": {
+    "message": "Sikeres",
+    "description": "Success"
+  },
+  "fail": {
+    "message": "Sikertelen",
+    "description": "Fail"
+  },
+  "uploading_cloud": {
+    "message": "Feltöltés…",
+    "description": "Uploading to cloud"
+  },
+  "downloading_cloud": {
+    "message": "Letöltés…",
+    "description": "Downloading from cloud"
+  },
+  "upload": {
+    "message": "Feltöltés",
+    "description": "Upload"
+  },
+  "process": {
+    "message": "Folyamat",
+    "description": "Matched process"
+  },
+  "none": {
+    "message": "Nincs",
+    "description": "None"
+  },
+  "urlencode": {
+    "message": "URL kódolás",
+    "description": "URLEncode"
+  },
+  "urldecode": {
+    "message": "URL visszafejtés",
+    "description": "URLDecode"
+  },
+  "base64encode": {
+    "message": "Base64 kódolás",
+    "description": "Base64Encode"
+  },
+  "base64decode": {
+    "message": "Base64 visszafejtés",
+    "description": "Base64Decode"
+  },
+  "downloadError": {
+    "message": "Nem sikerült letölteni",
+    "description": "DownloadError"
+  },
+  "parseError": {
+    "message": "Nem sikerült feldolgozni",
+    "description": "JsonParseError"
+  }
+}
